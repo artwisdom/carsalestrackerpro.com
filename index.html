@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CarSales Tracker Pro - Professional car sales tracking for dealership salespeople">
+  <title>CarSales Tracker Pro</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif; }
+    .icon { display: inline-flex; align-items: center; justify-content: center; }
+    .icon svg { stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+  </style>
+</head>
+<body>
+  <div id="root"><div style="height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0891b2,#0284c7);color:white;flex-direction:column"><h1 style="font-size:28px;margin-bottom:8px">CarSales Tracker Pro</h1><p style="opacity:0.8;margin-bottom:24px">Loading...</p><div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 1s linear infinite"></div></div><style>@keyframes spin{to{transform:rotate(360deg)}}</style></div>
+  <script type="text/babel">
+    const { useState, useEffect, useMemo } = React;
+
+    // Simple SVG Icon Components
+    const Icon = ({ d, size = 20, color = 'currentColor' }) => (
+      <span className="icon" style={{ width: size, height: size }}>
+        <svg width={size} height={size} viewBox="0 0 24 24" stroke={color}><path d={d}/></svg>
+      </span>
+    );
+    
+    const Search = (p) => <Icon {...p} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />;
+    const Plus = (p) => <Icon {...p} d="M12 5v14m-7-7h14" />;
+    const ChevronLeft = (p) => <Icon {...p} d="M15 18l-6-6 6-6" />;
+    const ChevronRight = (p) => <Icon {...p} d="M9 18l6-6-6-6" />;
+    const Settings = (p) => <Icon {...p} d="M12 15a3 3 0 100-6 3 3 0 000 6zm7.94-2.06a1.98 1.98 0 00.4 2.18l.06.06a2.4 2.4 0 11-3.4 3.4l-.06-.07a1.98 1.98 0 00-2.18-.4 1.98 1.98 0 00-1.2 1.82V21a2.4 2.4 0 11-4.8 0v-.13a1.98 1.98 0 00-1.3-1.82 1.98 1.98 0 00-2.18.4l-.06.07a2.4 2.4 0 11-3.4-3.4l.07-.07a1.98 1.98 0 00.4-2.18 1.98 1.98 0 00-1.82-1.2H3a2.4 2.4 0 110-4.8h.13a1.98 1.98 0 001.82-1.3 1.98 1.98 0 00-.4-2.18l-.07-.06a2.4 2.4 0 113.4-3.4l.07.07a1.98 1.98 0 002.18.4h.1a1.98 1.98 0 001.2-1.82V3a2.4 2.4 0 114.8 0v.13a1.98 1.98 0 001.2 1.82 1.98 1.98 0 002.18-.4l.06-.07a2.4 2.4 0 113.4 3.4l-.07.07a1.98 1.98 0 00-.4 2.18v.1a1.98 1.98 0 001.82 1.2H21a2.4 2.4 0 110 4.8h-.13a1.98 1.98 0 00-1.82 1.2z" />;
+    const X = (p) => <Icon {...p} d="M18 6L6 18M6 6l12 12" />;
+    const Check = (p) => <Icon {...p} d="M20 6L9 17l-5-5" />;
+    const Car = (p) => <Icon {...p} d="M5 17h14v-5H5v5zm2 2a2 2 0 100-4 2 2 0 000 4zm10 0a2 2 0 100-4 2 2 0 000 4zM5 12l2-5h10l2 5" />;
+    const User = (p) => <Icon {...p} d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2m8-10a4 4 0 100-8 4 4 0 000 8z" />;
+    const Phone = (p) => <Icon {...p} d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />;
+    const Mail = (p) => <Icon {...p} d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm16 2l-8 5-8-5" />;
+    const Calendar = (p) => <Icon {...p} d="M19 4H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm-3-2v4m-8-4v4m-5 4h18" />;
+    const FileText = (p) => <Icon {...p} d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-2 0v6h6m-4 5H8m8 4H8m2-8H8" />;
+    const Trash2 = (p) => <Icon {...p} d="M3 6h18m-2 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2m-6 5v6m4-6v6" />;
+    const Edit = (p) => <Icon {...p} d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7m-1.5-9.5a2.12 2.12 0 113 3L12 15l-4 1 1-4 9.5-9.5z" />;
+    const ChevronDown = (p) => <Icon {...p} d="M6 9l6 6 6-6" />;
+    const ChevronUp = (p) => <Icon {...p} d="M18 15l-6-6-6 6" />;
+    const Target = (p) => <Icon {...p} d="M12 22a10 10 0 100-20 10 10 0 000 20zm0-6a4 4 0 100-8 4 4 0 000 8zm0-2a2 2 0 100-4 2 2 0 000 4z" />;
+    const Star = (p) => <Icon {...p} d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />;
+    const Moon = (p) => <Icon {...p} d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />;
+    const Sun = (p) => <Icon {...p} d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 6a6 6 0 100 12 6 6 0 000-12z" />;
+    const DollarSign = (p) => <Icon {...p} d="M12 1v22m5-18H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6" />;
+    const ArrowLeftRight = (p) => <Icon {...p} d="M8 3L4 7l4 4m8-8l4 4-4 4M4 7h16" />;
+    const Home = (p) => <Icon {...p} d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />;
+    const Crown = (p) => <Icon {...p} d="M2 17l2.5-9L9 12l3-8 3 8 4.5-4L22 17H2zm0 3h20v2H2v-2z" />;
+
+    // Configuration
+    const ADSENSE_CLIENT_ID = 'ca-pub-9525656057819245';
+    
+    const defaultSettings = {
+      isDarkMode: false,
+      goalsEnabled: false,
+      isPremium: false,
+      commissionTrackerEnabled: false,
+      commissionRate: 25,
+    };
+
+    const defaultEntry = {
+      id: '', customerName: '', customerPhone: '', customerEmail: '',
+      stockNumber: '', year: '', make: '', model: '', vehicleType: 'new',
+      plateType: 'new', insuranceCompany: '', codAmount: '', isDelivered: false,
+      deliveryAppointment: '', hasDeliveryAppointment: false, isInspected: false,
+      isServiceComplete: false, isPaperworkComplete: false, isRegistered: false,
+      notes: '', isFinalized: false, createdAt: '', grossProfit: '',
+      hasTradeIn: false, tradeInYear: '', tradeInMake: '', tradeInModel: '',
+    };
+
+    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const storage = {
+      getEntries: () => { try { return JSON.parse(localStorage.getItem('carsales_entries')) || []; } catch { return []; }},
+      saveEntries: (e) => localStorage.setItem('carsales_entries', JSON.stringify(e)),
+      getSettings: () => { try { return {...defaultSettings, ...JSON.parse(localStorage.getItem('carsales_settings'))}; } catch { return defaultSettings; }},
+      saveSettings: (s) => localStorage.setItem('carsales_settings', JSON.stringify(s)),
+      getGoals: () => { try { return JSON.parse(localStorage.getItem('carsales_goals')) || {}; } catch { return {}; }},
+      saveGoals: (g) => localStorage.setItem('carsales_goals', JSON.stringify(g)),
+    };
+
+    const themes = {
+      light: { bg: '#f8fafc', card: '#ffffff', cardHover: '#f1f5f9', text: '#0f172a', textSecondary: '#64748b', border: '#e2e8f0', primary: '#0891b2', success: '#10b981', successBg: '#d1fae5', warning: '#f59e0b', danger: '#ef4444', inputBg: '#ffffff', inputBorder: '#cbd5e1', shadow: '0 4px 6px -1px rgba(0,0,0,0.1)' },
+      dark: { bg: '#0f172a', card: '#1e293b', cardHover: '#334155', text: '#f8fafc', textSecondary: '#94a3b8', border: '#334155', primary: '#06b6d4', success: '#34d399', successBg: '#064e3b', warning: '#fbbf24', danger: '#f87171', inputBg: '#1e293b', inputBorder: '#475569', shadow: '0 4px 6px -1px rgba(0,0,0,0.3)' },
+    };
+
+    // Ad Banner Component
+    const AdBanner = ({ theme, isPremium }) => {
+      if (isPremium) return null;
+      return (
+        <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: theme.card, borderTop: `1px solid ${theme.border}`, padding: '8px', textAlign: 'center', zIndex: 100 }}>
+          <div style={{ height: '50px', background: theme.border, borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: theme.textSecondary, fontSize: '12px' }}>
+            Advertisement
+          </div>
+        </div>
+      );
+    };
+
+    // Premium Modal
+    const PremiumModal = ({ theme, onClose, onSuccess }) => (
+      <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}>
+        <div style={{ background: theme.card, borderRadius: '20px', width: '100%', maxWidth: '420px', overflow: 'hidden' }}>
+          <div style={{ background: `linear-gradient(135deg, ${theme.warning} 0%, #f97316 100%)`, padding: '32px 24px', textAlign: 'center', position: 'relative' }}>
+            <button onClick={onClose} style={{ position: 'absolute', top: '12px', right: '12px', background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', color: '#fff' }}><X size={18}/></button>
+            <div style={{ width: '64px', height: '64px', background: 'rgba(255,255,255,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}><Crown size={32} color="#fff"/></div>
+            <h2 style={{ margin: 0, color: '#fff', fontSize: '24px', fontWeight: '700' }}>Upgrade to Premium</h2>
+          </div>
+          <div style={{ padding: '24px' }}>
+            {['🚫 Ad-free experience', '💰 Commission Tracker', '📊 Track earnings per deal', '⚡ Priority support'].map((t, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 0', borderBottom: i < 3 ? `1px solid ${theme.border}` : 'none' }}>
+                <span style={{ fontSize: '20px' }}>{t.slice(0,2)}</span>
+                <span style={{ color: theme.text }}>{t.slice(3)}</span>
+              </div>
+            ))}
+            <div style={{ background: theme.bg, borderRadius: '12px', padding: '20px', textAlign: 'center', margin: '20px 0' }}>
+              <div style={{ fontSize: '36px', fontWeight: '700', color: theme.text }}>$2.99<span style={{ fontSize: '16px', color: theme.textSecondary }}>/month</span></div>
+            </div>
+            <button onClick={onSuccess} style={{ width: '100%', padding: '16px', background: `linear-gradient(135deg, ${theme.warning} 0%, #f97316 100%)`, border: 'none', borderRadius: '12px', color: '#fff', fontSize: '16px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+              <Crown size={20}/> Subscribe Now
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+
+    function CarSalesTrackerPro() {
+      const [entries, setEntries] = useState([]);
+      const [settings, setSettings] = useState(defaultSettings);
+      const [goals, setGoals] = useState({});
+      const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+      const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+      const [activeFilter, setActiveFilter] = useState('all');
+      const [searchQuery, setSearchQuery] = useState('');
+      const [currentView, setCurrentView] = useState('home');
+      const [editingEntry, setEditingEntry] = useState(null);
+      const [expandedCards, setExpandedCards] = useState({});
+      const [showPremiumModal, setShowPremiumModal] = useState(false);
+
+      const theme = settings.isDarkMode ? themes.dark : themes.light;
+      const monthKey = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`;
+
+      useEffect(() => { setEntries(storage.getEntries()); setSettings(storage.getSettings()); setGoals(storage.getGoals()); }, []);
+      useEffect(() => { if (entries.length > 0 || localStorage.getItem('carsales_entries')) storage.saveEntries(entries); }, [entries]);
+      useEffect(() => { storage.saveSettings(settings); }, [settings]);
+      useEffect(() => { storage.saveGoals(goals); }, [goals]);
+
+      const monthEntries = useMemo(() => entries.filter(e => { const d = new Date(e.createdAt); return d.getMonth() === currentMonth && d.getFullYear() === currentYear; }).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)), [entries, currentMonth, currentYear]);
+      
+      const filteredEntries = useMemo(() => {
+        let f = monthEntries;
+        if (activeFilter === 'completed') f = f.filter(e => e.isFinalized);
+        else if (activeFilter === 'pending') f = f.filter(e => !e.isFinalized);
+        if (searchQuery) { const q = searchQuery.toLowerCase(); f = f.filter(e => e.customerName.toLowerCase().includes(q) || e.stockNumber.toLowerCase().includes(q) || e.make.toLowerCase().includes(q) || e.model.toLowerCase().includes(q)); }
+        return f;
+      }, [monthEntries, activeFilter, searchQuery]);
+
+      const stats = useMemo(() => ({ total: monthEntries.length, completed: monthEntries.filter(e => e.isFinalized).length, pending: monthEntries.filter(e => !e.isFinalized).length }), [monthEntries]);
+      
+      const goalProgress = useMemo(() => {
+        const goal = goals[monthKey];
+        if (!goal || !settings.goalsEnabled) return null;
+        return { goal, current: stats.total, percentage: Math.min((stats.total / goal) * 100, 100) };
+      }, [goals, monthKey, stats.total, settings.goalsEnabled]);
+
+      const navigateMonth = (dir) => {
+        if (dir === 'prev') { if (currentMonth === 0) { setCurrentMonth(11); setCurrentYear(y => y - 1); } else setCurrentMonth(m => m - 1); }
+        else { if (currentMonth === 11) { setCurrentMonth(0); setCurrentYear(y => y + 1); } else setCurrentMonth(m => m + 1); }
+      };
+
+      const saveEntry = (entry) => {
+        if (entry.id) setEntries(prev => prev.map(e => e.id === entry.id ? { ...entry, updatedAt: new Date().toISOString() } : e));
+        else setEntries(prev => [...prev, { ...entry, id: Date.now().toString(), createdAt: new Date().toISOString() }]);
+        setCurrentView('home'); setEditingEntry(null);
+      };
+
+      const deleteEntry = (id) => { if (window.confirm('Delete this entry?')) setEntries(prev => prev.filter(e => e.id !== id)); };
+
+      const styles = {
+        container: { minHeight: '100vh', background: theme.bg, color: theme.text, fontFamily: "'Outfit', sans-serif", paddingBottom: settings.isPremium ? 0 : '70px' },
+        header: { background: `linear-gradient(135deg, ${theme.primary} 0%, ${settings.isDarkMode ? '#0e7490' : '#0284c7'} 100%)`, padding: '24px 32px' },
+        headerContent: { maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
+        iconBtn: { background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: '10px', padding: '10px', cursor: 'pointer', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+        main: { maxWidth: '1200px', margin: '0 auto', padding: '24px 32px' },
+        statCard: { flex: 1, minWidth: '140px', background: theme.card, borderRadius: '12px', padding: '16px 20px', cursor: 'pointer', border: '2px solid transparent', boxShadow: theme.shadow },
+        searchInput: { width: '100%', padding: '12px 16px 12px 44px', borderRadius: '12px', border: `1px solid ${theme.inputBorder}`, background: theme.inputBg, color: theme.text, fontSize: '15px', outline: 'none', boxSizing: 'border-box' },
+        addBtn: { background: `linear-gradient(135deg, ${theme.success} 0%, #059669 100%)`, border: 'none', borderRadius: '12px', padding: '12px 24px', cursor: 'pointer', color: '#fff', fontWeight: '600', fontSize: '15px', display: 'flex', alignItems: 'center', gap: '8px' },
+        entryCard: { background: theme.card, borderRadius: '14px', overflow: 'hidden', boxShadow: theme.shadow, border: `2px solid ${theme.border}`, marginBottom: '12px' },
+        badge: { padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '600' },
+      };
+
+      // Toggle Component
+      const Toggle = ({ label, checked, onChange }) => (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: settings.isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)', borderRadius: '10px', marginBottom: '12px' }}>
+          <span style={{ color: theme.text, fontWeight: '500' }}>{label}</span>
+          <div onClick={() => onChange(!checked)} style={{ width: '48px', height: '26px', borderRadius: '13px', background: checked ? theme.success : theme.border, cursor: 'pointer', position: 'relative' }}>
+            <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#fff', position: 'absolute', top: '2px', left: checked ? '24px' : '2px', transition: 'left 0.2s', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }} />
+          </div>
+        </div>
+      );
+
+      // Entry Form Component
+      const EntryForm = ({ entry, onSave, onCancel }) => {
+        const [form, setForm] = useState(entry || defaultEntry);
+        const handleChange = (field, value) => setForm(prev => ({ ...prev, [field]: field === 'stockNumber' ? value.toUpperCase() : value }));
+        const handleSubmit = () => {
+          if (!form.customerName || !form.stockNumber || !form.year || !form.make || !form.model) { alert('Please fill required fields'); return; }
+          onSave(form);
+        };
+        const inputStyle = { width: '100%', padding: '12px 16px', borderRadius: '10px', border: `1px solid ${theme.inputBorder}`, background: theme.inputBg, color: theme.text, fontSize: '15px', outline: 'none', boxSizing: 'border-box', marginBottom: '12px' };
+        const labelStyle = { display: 'block', marginBottom: '6px', fontSize: '13px', fontWeight: '600', color: theme.textSecondary };
+
+        return (
+          <div style={{ padding: '24px' }}>
+            <h3 style={{ margin: '0 0 16px', color: theme.text, display: 'flex', alignItems: 'center', gap: '8px' }}><User size={18} color={theme.primary}/> Customer</h3>
+            <label style={labelStyle}>Name *</label><input value={form.customerName} onChange={e => handleChange('customerName', e.target.value)} style={inputStyle} placeholder="Required"/>
+            <label style={labelStyle}>Phone</label><input value={form.customerPhone} onChange={e => handleChange('customerPhone', e.target.value)} style={inputStyle}/>
+            <label style={labelStyle}>Email</label><input value={form.customerEmail} onChange={e => handleChange('customerEmail', e.target.value)} style={inputStyle}/>
+            
+            <h3 style={{ margin: '24px 0 16px', color: theme.text, display: 'flex', alignItems: 'center', gap: '8px' }}><Car size={18} color={theme.primary}/> Vehicle</h3>
+            <label style={labelStyle}>Stock # *</label><input value={form.stockNumber} onChange={e => handleChange('stockNumber', e.target.value)} style={inputStyle} placeholder="Auto-capitalizes"/>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+              <div><label style={labelStyle}>Year *</label><input value={form.year} onChange={e => handleChange('year', e.target.value)} style={inputStyle}/></div>
+              <div><label style={labelStyle}>Make *</label><input value={form.make} onChange={e => handleChange('make', e.target.value)} style={inputStyle}/></div>
+              <div><label style={labelStyle}>Model *</label><input value={form.model} onChange={e => handleChange('model', e.target.value)} style={inputStyle}/></div>
+            </div>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+              {['new', 'pre-owned'].map(t => <button key={t} type="button" onClick={() => handleChange('vehicleType', t)} style={{ flex: 1, padding: '12px', borderRadius: '10px', border: `2px solid ${form.vehicleType === t ? theme.primary : theme.border}`, background: form.vehicleType === t ? `${theme.primary}15` : 'transparent', color: form.vehicleType === t ? theme.primary : theme.text, fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize' }}>{t}</button>)}
+            </div>
+
+            <h3 style={{ margin: '24px 0 16px', color: theme.text, display: 'flex', alignItems: 'center', gap: '8px' }}><ArrowLeftRight size={18} color={theme.primary}/> Trade-In</h3>
+            <Toggle label="Has Trade-In" checked={form.hasTradeIn} onChange={v => handleChange('hasTradeIn', v)}/>
+            {form.hasTradeIn && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                <div><label style={labelStyle}>Year</label><input value={form.tradeInYear} onChange={e => handleChange('tradeInYear', e.target.value)} style={inputStyle}/></div>
+                <div><label style={labelStyle}>Make</label><input value={form.tradeInMake} onChange={e => handleChange('tradeInMake', e.target.value)} style={inputStyle}/></div>
+                <div><label style={labelStyle}>Model</label><input value={form.tradeInModel} onChange={e => handleChange('tradeInModel', e.target.value)} style={inputStyle}/></div>
+              </div>
+            )}
+
+            {settings.isPremium && settings.commissionTrackerEnabled && (
+              <>
+                <h3 style={{ margin: '24px 0 16px', color: theme.text, display: 'flex', alignItems: 'center', gap: '8px' }}><DollarSign size={18} color={theme.success}/> Commission <span style={{ fontSize: '11px', background: theme.warning, color: '#fff', padding: '2px 8px', borderRadius: '4px' }}>PREMIUM</span></h3>
+                <label style={labelStyle}>Gross Profit ($)</label><input type="number" value={form.grossProfit} onChange={e => handleChange('grossProfit', e.target.value)} style={inputStyle} placeholder="0.00"/>
+                <div style={{ ...inputStyle, background: theme.successBg, borderColor: theme.success, fontWeight: '600', color: theme.success }}>Est. Commission: ${form.grossProfit ? (parseFloat(form.grossProfit) * settings.commissionRate / 100).toFixed(2) : '0.00'}</div>
+              </>
+            )}
+
+            <h3 style={{ margin: '24px 0 16px', color: theme.text, display: 'flex', alignItems: 'center', gap: '8px' }}><FileText size={18} color={theme.primary}/> Details</h3>
+            <label style={labelStyle}>Insurance Company</label><input value={form.insuranceCompany} onChange={e => handleChange('insuranceCompany', e.target.value)} style={inputStyle}/>
+            <label style={labelStyle}>COD Amount</label><input value={form.codAmount} onChange={e => handleChange('codAmount', e.target.value)} style={inputStyle}/>
+
+            <h3 style={{ margin: '24px 0 16px', color: theme.text, display: 'flex', alignItems: 'center', gap: '8px' }}><Calendar size={18} color={theme.primary}/> Delivery</h3>
+            <Toggle label="Already Delivered" checked={form.isDelivered} onChange={v => handleChange('isDelivered', v)}/>
+            {!form.isDelivered && (
+              <>
+                <Toggle label="Has Appointment" checked={form.hasDeliveryAppointment} onChange={v => handleChange('hasDeliveryAppointment', v)}/>
+                {form.hasDeliveryAppointment && <input type="datetime-local" value={form.deliveryAppointment?.slice(0,16) || ''} onChange={e => handleChange('deliveryAppointment', e.target.value ? new Date(e.target.value).toISOString() : '')} style={inputStyle}/>}
+              </>
+            )}
+
+            <h3 style={{ margin: '24px 0 16px', color: theme.text, display: 'flex', alignItems: 'center', gap: '8px' }}><Check size={18} color={theme.primary}/> Status</h3>
+            <Toggle label="Service Complete" checked={form.isServiceComplete} onChange={v => handleChange('isServiceComplete', v)}/>
+            <Toggle label="Paperwork Complete" checked={form.isPaperworkComplete} onChange={v => handleChange('isPaperworkComplete', v)}/>
+            <Toggle label="Registration Complete" checked={form.isRegistered} onChange={v => handleChange('isRegistered', v)}/>
+            <Toggle label="Inspected" checked={form.isInspected} onChange={v => handleChange('isInspected', v)}/>
+
+            <h3 style={{ margin: '24px 0 16px', color: theme.text }}><FileText size={18} color={theme.primary}/> Notes</h3>
+            <textarea value={form.notes} onChange={e => handleChange('notes', e.target.value)} style={{ ...inputStyle, minHeight: '100px', resize: 'vertical' }} placeholder="Additional notes..."/>
+
+            <div style={{ border: `2px solid ${theme.success}`, borderRadius: '12px', padding: '16px', marginBottom: '24px', background: form.isFinalized ? theme.successBg : 'transparent' }}>
+              <Toggle label="Deal Finalized" checked={form.isFinalized} onChange={v => handleChange('isFinalized', v)}/>
+            </div>
+
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button onClick={onCancel} style={{ flex: 1, padding: '12px', borderRadius: '10px', border: 'none', background: theme.border, color: theme.text, fontWeight: '600', cursor: 'pointer' }}>Cancel</button>
+              <button onClick={handleSubmit} style={{ ...styles.addBtn, flex: 2, justifyContent: 'center' }}><Check size={18}/> {entry?.id ? 'Update' : 'Save'} Deal</button>
+            </div>
+          </div>
+        );
+      };
+
+      // Settings Panel
+      const SettingsPanel = ({ onClose }) => {
+        const [commissionInput, setCommissionInput] = useState(settings.commissionRate.toString());
+        return (
+          <div style={{ padding: '24px' }}>
+            <h3 style={{ margin: '0 0 16px', color: theme.text }}>Features</h3>
+            <Toggle label="Monthly Goals" checked={settings.goalsEnabled} onChange={v => setSettings(prev => ({ ...prev, goalsEnabled: v }))}/>
+
+            <h3 style={{ margin: '24px 0 16px', color: theme.text, display: 'flex', alignItems: 'center', gap: '8px' }}><Star size={18} color={theme.warning}/> Premium</h3>
+            {settings.isPremium ? (
+              <>
+                <div style={{ padding: '16px', background: `${theme.warning}15`, borderRadius: '10px', marginBottom: '16px' }}>
+                  <p style={{ margin: 0, color: theme.success, fontWeight: '600' }}>✓ Premium Active</p>
+                </div>
+                <Toggle label="Commission Tracker" checked={settings.commissionTrackerEnabled} onChange={v => setSettings(prev => ({ ...prev, commissionTrackerEnabled: v }))}/>
+                {settings.commissionTrackerEnabled && (
+                  <div style={{ marginTop: '12px' }}>
+                    <label style={{ display: 'block', marginBottom: '6px', fontSize: '13px', color: theme.textSecondary }}>Commission Rate (%)</label>
+                    <input type="number" value={commissionInput} onChange={e => setCommissionInput(e.target.value)} onBlur={e => setSettings(prev => ({ ...prev, commissionRate: parseFloat(e.target.value) || 25 }))} style={{ width: '100%', padding: '12px', borderRadius: '10px', border: `1px solid ${theme.inputBorder}`, background: theme.inputBg, color: theme.text, boxSizing: 'border-box' }}/>
+                  </div>
+                )}
+                <button onClick={() => setSettings(prev => ({ ...prev, isPremium: false, commissionTrackerEnabled: false }))} style={{ width: '100%', marginTop: '16px', padding: '10px', background: 'transparent', border: `1px solid ${theme.border}`, borderRadius: '8px', color: theme.textSecondary, cursor: 'pointer' }}>Deactivate Premium (Testing)</button>
+              </>
+            ) : (
+              <div style={{ padding: '20px', background: `${theme.warning}15`, borderRadius: '12px', textAlign: 'center' }}>
+                <Crown size={32} color={theme.warning}/>
+                <p style={{ margin: '12px 0 8px', fontWeight: '600', color: theme.text }}>Unlock Premium</p>
+                <p style={{ margin: '0 0 16px', fontSize: '13px', color: theme.textSecondary }}>Ad-free + Commission Tracker</p>
+                <button onClick={() => { onClose(); setTimeout(() => setShowPremiumModal(true), 100); }} style={{ width: '100%', padding: '12px', background: `linear-gradient(135deg, ${theme.warning}, #f97316)`, border: 'none', borderRadius: '10px', color: '#fff', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}><Crown size={18}/> Upgrade - $2.99/mo</button>
+              </div>
+            )}
+
+            <h3 style={{ margin: '24px 0 16px', color: theme.text }}>Export</h3>
+            <button onClick={() => {
+              const me = entries.filter(e => { const d = new Date(e.createdAt); return d.getMonth() === currentMonth && d.getFullYear() === currentYear; });
+              if (!me.length) { alert('No deals this month'); return; }
+              const csv = ['#,Name,Phone,Stock,Year,Make,Model,Finalized', ...me.map((e,i) => `${i+1},"${e.customerName}","${e.customerPhone}","${e.stockNumber}","${e.year}","${e.make}","${e.model}",${e.isFinalized?'Yes':'No'}`)].join('\n');
+              const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'})); a.download = `CarSales_${MONTHS[currentMonth]}_${currentYear}.csv`; a.click();
+            }} style={{ width: '100%', padding: '12px', borderRadius: '10px', border: `1px solid ${theme.primary}`, background: 'transparent', color: theme.primary, fontWeight: '600', cursor: 'pointer' }}>📥 Download {MONTHS[currentMonth]} CSV</button>
+
+            <h3 style={{ margin: '24px 0 16px', color: theme.text }}>Reset</h3>
+            <button onClick={() => { if (window.confirm(`Delete all ${MONTHS[currentMonth]} sales?`)) setEntries(prev => prev.filter(e => { const d = new Date(e.createdAt); return !(d.getMonth() === currentMonth && d.getFullYear() === currentYear); })); }} style={{ width: '100%', padding: '12px', borderRadius: '10px', border: `1px solid ${theme.warning}`, background: 'transparent', color: theme.warning, fontWeight: '600', cursor: 'pointer', marginBottom: '12px' }}>Reset {MONTHS[currentMonth]} Sales</button>
+            <button onClick={() => { if (window.confirm('Delete ALL data?') && window.confirm('Are you sure?')) { setEntries([]); setGoals({}); setSettings({...defaultSettings, isDarkMode: settings.isDarkMode}); localStorage.clear(); alert('Reset complete'); }}} style={{ width: '100%', padding: '12px', borderRadius: '10px', border: `1px solid ${theme.danger}`, background: 'transparent', color: theme.danger, fontWeight: '600', cursor: 'pointer' }}>⚠️ Reset All Data</button>
+
+            <div style={{ padding: '20px', background: settings.isDarkMode ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)', borderRadius: '12px', textAlign: 'center', margin: '24px 0' }}>
+              <h4 style={{ margin: '0 0 4px', color: theme.text }}>CarSales Tracker Pro</h4>
+              <p style={{ margin: 0, fontSize: '12px', color: theme.textSecondary }}>v2.2.0 • by Andromeda Kinship</p>
+              <p style={{ margin: '8px 0 0', fontSize: '11px', color: theme.textSecondary }}>© 2026 Andromeda Kinship</p>
+            </div>
+
+            <button onClick={onClose} style={{ ...styles.addBtn, width: '100%', justifyContent: 'center' }}>Close Settings</button>
+          </div>
+        );
+      };
+
+      // Entry Card
+      const EntryCard = ({ entry, index }) => {
+        const isExpanded = expandedCards[entry.id];
+        const checks = [['Delivered', entry.isDelivered], ['Service', entry.isServiceComplete], ['Paperwork', entry.isPaperworkComplete], ['Registered', entry.isRegistered], ['Inspected', entry.isInspected]];
+        return (
+          <div style={{ ...styles.entryCard, ...(entry.isFinalized ? { background: theme.successBg, borderColor: theme.success } : {}) }}>
+            <div onClick={() => setExpandedCards(p => ({...p, [entry.id]: !p[entry.id]}))} style={{ padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <span style={{ fontSize: '14px', fontWeight: '700', color: theme.primary, background: `${theme.primary}20`, padding: '4px 10px', borderRadius: '6px' }}>#{index + 1}</span>
+                <div><div style={{ fontWeight: '600', color: theme.text }}>{entry.customerName}</div><div style={{ fontSize: '14px', color: theme.textSecondary }}>{entry.year} {entry.make} {entry.model} • {entry.stockNumber}</div></div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ ...styles.badge, background: entry.isFinalized ? theme.success : theme.warning, color: '#fff' }}>{entry.isFinalized ? 'Finalized' : 'Pending'}</span>
+                {isExpanded ? <ChevronUp size={20} color={theme.textSecondary}/> : <ChevronDown size={20} color={theme.textSecondary}/>}
+              </div>
+            </div>
+            {isExpanded && (
+              <div style={{ padding: '0 20px 20px', borderTop: `1px solid ${theme.border}` }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginTop: '16px' }}>
+                  {entry.customerPhone && <div style={{ display: 'flex', gap: '10px' }}><Phone size={16} color={theme.primary}/><div><div style={{ fontSize: '11px', color: theme.textSecondary }}>PHONE</div><div style={{ color: theme.text }}>{entry.customerPhone}</div></div></div>}
+                  {entry.customerEmail && <div style={{ display: 'flex', gap: '10px' }}><Mail size={16} color={theme.primary}/><div><div style={{ fontSize: '11px', color: theme.textSecondary }}>EMAIL</div><div style={{ color: theme.text }}>{entry.customerEmail}</div></div></div>}
+                  {entry.hasTradeIn && <div style={{ display: 'flex', gap: '10px' }}><ArrowLeftRight size={16} color={theme.primary}/><div><div style={{ fontSize: '11px', color: theme.textSecondary }}>TRADE-IN</div><div style={{ color: theme.text }}>{entry.tradeInYear} {entry.tradeInMake} {entry.tradeInModel}</div></div></div>}
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px', marginTop: '16px' }}>
+                  {checks.map(([label, done]) => <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 12px', borderRadius: '8px', background: settings.isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)' }}><div style={{ width: '20px', height: '20px', borderRadius: '50%', background: done ? theme.success : theme.border, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>{done && <Check size={12}/>}</div><span style={{ fontSize: '13px', color: done ? theme.text : theme.textSecondary }}>{label}</span></div>)}
+                </div>
+                {entry.notes && <div style={{ marginTop: '16px', padding: '12px', background: settings.isDarkMode ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)', borderRadius: '8px' }}><div style={{ fontSize: '12px', color: theme.textSecondary, fontWeight: '600' }}>NOTES</div><p style={{ margin: '4px 0 0', color: theme.text }}>{entry.notes}</p></div>}
+                <div style={{ display: 'flex', gap: '8px', marginTop: '16px', paddingTop: '16px', borderTop: `1px solid ${theme.border}` }}>
+                  <button onClick={() => { setEditingEntry(entry); setCurrentView('edit'); }} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', background: theme.primary, color: '#fff', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}><Edit size={16}/> Edit</button>
+                  <button onClick={() => deleteEntry(entry.id)} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', background: theme.danger, color: '#fff', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}><Trash2 size={16}/> Delete</button>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      // Goal Card
+      const GoalCard = () => {
+        const [showModal, setShowModal] = useState(false);
+        const [input, setInput] = useState(goals[monthKey] || '');
+        if (!settings.goalsEnabled) return null;
+        const color = goalProgress ? (goalProgress.percentage >= 100 ? theme.success : goalProgress.percentage >= 50 ? theme.warning : theme.danger) : theme.primary;
+        return (
+          <>
+            <div onClick={() => setShowModal(true)} style={{ background: `linear-gradient(135deg, ${theme.primary}15, ${theme.success}15)`, borderRadius: '14px', padding: '20px', marginBottom: '24px', border: `1px solid ${theme.border}`, cursor: 'pointer' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '600', color: theme.text }}><Target size={20} color={theme.primary}/> Monthly Goal</div>
+                <span style={{ color: theme.textSecondary }}>{goalProgress ? `${goalProgress.current} / ${goalProgress.goal} (${Math.round(goalProgress.percentage)}%)` : 'Tap to set'}</span>
+              </div>
+              {goalProgress && <div style={{ height: '10px', background: theme.border, borderRadius: '5px', overflow: 'hidden' }}><div style={{ height: '100%', width: `${goalProgress.percentage}%`, background: color, borderRadius: '5px' }}/></div>}
+            </div>
+            {showModal && (
+              <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}>
+                <div style={{ background: theme.card, borderRadius: '16px', padding: '24px', width: '100%', maxWidth: '400px' }}>
+                  <h3 style={{ margin: '0 0 16px', color: theme.text }}>Set Goal for {MONTHS[currentMonth]}</h3>
+                  <input type="number" value={input} onChange={e => setInput(e.target.value)} placeholder="Enter goal" style={{ width: '100%', padding: '12px', borderRadius: '10px', border: `1px solid ${theme.inputBorder}`, background: theme.inputBg, color: theme.text, marginBottom: '16px', boxSizing: 'border-box' }}/>
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <button onClick={() => setShowModal(false)} style={{ flex: 1, padding: '12px', borderRadius: '10px', border: 'none', background: theme.border, color: theme.text, fontWeight: '600', cursor: 'pointer' }}>Cancel</button>
+                    <button onClick={() => { setGoals(p => ({...p, [monthKey]: parseInt(input) || 0})); setShowModal(false); }} style={{ ...styles.addBtn, flex: 1, justifyContent: 'center' }}>Save</button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        );
+      };
+
+      return (
+        <div style={styles.container}>
+          <header style={styles.header}>
+            <div style={styles.headerContent}>
+              <div><h1 style={{ fontSize: '28px', fontWeight: '700', color: '#fff', margin: 0 }}>CarSales Tracker Pro</h1><span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.8)', fontStyle: 'italic' }}>by Andromeda Kinship</span></div>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                {!settings.isPremium && <button onClick={() => setShowPremiumModal(true)} style={{ ...styles.iconBtn, background: 'rgba(251,191,36,0.3)', padding: '8px 14px', gap: '6px', fontSize: '13px', fontWeight: '600' }}><Crown size={16}/></button>}
+                <button onClick={() => setSettings(p => ({...p, isDarkMode: !p.isDarkMode}))} style={styles.iconBtn}>{settings.isDarkMode ? <Sun size={20}/> : <Moon size={20}/>}</button>
+                <button onClick={() => setCurrentView(currentView === 'settings' ? 'home' : 'settings')} style={styles.iconBtn}>{currentView === 'settings' ? <Home size={20}/> : <Settings size={20}/>}</button>
+              </div>
+            </div>
+          </header>
+
+          <main style={styles.main}>
+            {currentView === 'settings' ? (
+              <div style={{ maxWidth: '600px', margin: '0 auto', background: theme.card, borderRadius: '16px', boxShadow: theme.shadow }}><SettingsPanel onClose={() => setCurrentView('home')}/></div>
+            ) : currentView === 'add' || currentView === 'edit' ? (
+              <div style={{ maxWidth: '800px', margin: '0 auto', background: theme.card, borderRadius: '16px', boxShadow: theme.shadow }}>
+                <div style={{ padding: '20px 24px', borderBottom: `1px solid ${theme.border}` }}><h2 style={{ margin: 0, color: theme.text }}>{editingEntry ? 'Edit Deal' : 'New Deal'}</h2></div>
+                <EntryForm entry={editingEntry} onSave={saveEntry} onCancel={() => { setCurrentView('home'); setEditingEntry(null); }}/>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <button onClick={() => navigateMonth('prev')} style={{ background: theme.card, border: `1px solid ${theme.border}`, borderRadius: '10px', padding: '10px 12px', cursor: 'pointer', color: theme.text, boxShadow: theme.shadow }}><ChevronLeft size={20}/></button>
+                    <div><h2 style={{ fontSize: '24px', fontWeight: '600', color: theme.text, margin: 0 }}>{MONTHS[currentMonth]} {currentYear}</h2></div>
+                    <button onClick={() => navigateMonth('next')} style={{ background: theme.card, border: `1px solid ${theme.border}`, borderRadius: '10px', padding: '10px 12px', cursor: 'pointer', color: theme.text, boxShadow: theme.shadow }}><ChevronRight size={20}/></button>
+                  </div>
+                </div>
+
+                <GoalCard/>
+
+                <div style={{ display: 'flex', gap: '12px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                  {[['all', 'All Deals', stats.total], ['pending', 'Pending', stats.pending], ['completed', 'Completed', stats.completed]].map(([key, label, val]) => (
+                    <div key={key} onClick={() => setActiveFilter(key)} style={{ ...styles.statCard, ...(activeFilter === key ? { borderColor: theme.primary, background: `${theme.primary}10` } : {}) }}>
+                      <div style={{ fontSize: '32px', fontWeight: '700', color: theme.text }}>{val}</div>
+                      <div style={{ fontSize: '13px', color: theme.textSecondary, marginTop: '4px' }}>{label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                  <div style={{ flex: 1, minWidth: '250px', position: 'relative' }}>
+                    <Search size={18} color={theme.textSecondary} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }}/>
+                    <input placeholder="Search by name, stock #, make, model..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} style={styles.searchInput}/>
+                  </div>
+                  <button onClick={() => { setEditingEntry(null); setCurrentView('add'); }} style={styles.addBtn}><Plus size={20}/> Add Deal</button>
+                </div>
+
+                {filteredEntries.length === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '60px 20px', background: theme.card, borderRadius: '16px', boxShadow: theme.shadow }}>
+                    <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: `${theme.primary}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}><Car size={40} color={theme.primary}/></div>
+                    <h3 style={{ fontSize: '20px', fontWeight: '600', color: theme.text, margin: '0 0 8px' }}>{searchQuery ? 'No matching deals' : 'No deals yet'}</h3>
+                    <p style={{ color: theme.textSecondary, margin: 0 }}>{searchQuery ? 'Try different search' : 'Click "Add Deal" to start'}</p>
+                  </div>
+                ) : (
+                  <div>{filteredEntries.map((entry, i) => <EntryCard key={entry.id} entry={entry} index={i}/>)}</div>
+                )}
+              </>
+            )}
+          </main>
+
+          <AdBanner theme={theme} isPremium={settings.isPremium}/>
+          {showPremiumModal && <PremiumModal theme={theme} onClose={() => setShowPremiumModal(false)} onSuccess={() => { setSettings(p => ({...p, isPremium: true})); setShowPremiumModal(false); }}/>}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<CarSalesTrackerPro />);
+  </script>
+</body>
+</html>
