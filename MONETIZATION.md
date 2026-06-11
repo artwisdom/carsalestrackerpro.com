@@ -1,13 +1,17 @@
 # Monetization — Phase 1: Website ads (AdSense)
 
-The iOS app earns through **AdMob** (`ca-app-pub-…`). The website earns through
-**AdSense** (`ca-pub-…`). Same Google account, same publisher number
-(9525656057819245), two different consoles. Everything on the site side is
-already wired — the steps below are the account side.
+The iOS app earns through **AdMob**; the website earns through **AdSense**.
+These are two separate Google publisher accounts with **different pub IDs**:
+
+- AdMob (iOS apps, app-ads.txt): `pub-9525656057819245`
+- AdSense (this website):        `pub-9318320959789814`
+
+The website must use the AdSense ID everywhere. Everything on the site side
+is already wired — the steps below are the account side.
 
 ## Already live on the site (no action)
 
-- `/ads.txt` → `google.com, pub-9525656057819245, DIRECT, f08c47fec0942fa0`
+- `/ads.txt` → `google.com, pub-9318320959789814, DIRECT, f08c47fec0942fa0`
 - Site-verification meta tag (`google-adsense-account`) in `<head>`
 - Two responsive ad containers + the AdSense loader in `index.html`,
   shown **only to free-tier users** — Premium/Advanced stay ad-free,
