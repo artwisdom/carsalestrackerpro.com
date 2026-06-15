@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Salesman Commission Calculator (2026) — Estimate Your Monthly Pay</title>
+<meta name="description" content="Free car salesman commission calculator. Enter units sold, average gross, pay plan %, mini deals and pack to estimate your monthly commission. Plus how car sales pay plans actually work.">
+<link rel="canonical" href="https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/">
+<meta name="theme-color" content="#0891B2">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Car Salesman Commission Calculator — Estimate Your Monthly Pay">
+<meta property="og:description" content="Plug in your units, gross, and pay plan to see what your commission check should look like.">
+<meta property="og:url" content="https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" href="/assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Car Salesman Commission Calculator","url":"https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/","applicationCategory":"FinanceApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Estimate a car salesperson's monthly commission from units sold, average gross, pay-plan percentage, mini deals and pack.","publisher":{"@type":"Organization","name":"CarSales Tracker Pro","url":"https://carsalestrackerpro.com"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How is car salesman commission calculated?","acceptedAnswer":{"@type":"Answer","text":"Most dealerships pay a percentage (often 20–30%) of the gross profit on each car — the difference between what the customer pays and the dealership's cost, sometimes after a 'pack' is subtracted. Low-profit deals usually pay a flat 'mini' instead. Monthly commission is the sum across every car sold, plus any base salary, spiffs, or volume bonuses."}},
+{"@type":"Question","name":"What is a typical car salesman commission rate?","acceptedAnswer":{"@type":"Answer","text":"Front-end commission is commonly 20–30% of gross profit. Many stores also pay a smaller cut of back-end (F&I) gross. Exact rates vary by dealership and pay plan."}},
+{"@type":"Question","name":"What is a mini deal?","acceptedAnswer":{"@type":"Answer","text":"A 'mini' is the flat minimum commission a salesperson earns when a car's gross profit is too low to beat the percentage — often $50 to $150. If you sell a car at little or no front gross, you get the mini instead of a percentage."}},
+{"@type":"Question","name":"Do car salesmen get a base salary?","acceptedAnswer":{"@type":"Answer","text":"Some do. Many salespeople are paid on commission with a small 'draw' (an advance against future commission), while others have a modest base plus commission. Volume bonuses for hitting unit targets are common on top of either structure."}}
+]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Home","item":"https://carsalestrackerpro.com/"},
+{"@type":"ListItem","position":2,"name":"Tools","item":"https://carsalestrackerpro.com/tools/"},
+{"@type":"ListItem","position":3,"name":"Commission Calculator","item":"https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/"}]}
+</script>
+</head>
+<body>
+<header class="site-hdr"><div class="site-hdr-in">
+  <a class="site-logo" href="/"><img src="/assets/icon.png" alt="CarSales Tracker Pro">CarSales Tracker Pro</a>
+  <nav class="site-nav">
+    <a class="ghost" href="/blog/">Blog</a>
+    <a class="cta" href="/">Open the tracker</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Commission Calculator</p>
+  <div class="post-head">
+    <h1 class="page-title">Car Salesman Commission Calculator</h1>
+    <p class="lede">Plug in your units, average gross, and pay plan to estimate this month's commission check — including mini deals and pack. Built by the team behind the #1 deal-tracking app for car salespeople.</p>
+  </div>
+
+  <section class="calc" aria-label="Commission calculator">
+    <h2>Estimate your monthly commission</h2>
+    <p class="hint">All numbers stay in your browser. This is an estimate based on your averages.</p>
+    <div class="calc-grid">
+      <div>
+        <label for="units">Cars sold this month</label>
+        <input id="units" type="number" inputmode="numeric" min="0" value="12">
+      </div>
+      <div>
+        <label for="front">Avg front-end gross / car <span class="q">($)</span></label>
+        <input id="front" type="number" inputmode="numeric" min="0" value="1800">
+      </div>
+      <div>
+        <label for="back">Avg back-end / F&amp;I gross / car <span class="q">($)</span></label>
+        <input id="back" type="number" inputmode="numeric" min="0" value="0">
+      </div>
+      <div>
+        <label for="rate">Commission rate <span class="q">(% of gross)</span></label>
+        <input id="rate" type="number" inputmode="decimal" min="0" max="100" value="25">
+      </div>
+      <div>
+        <label for="pack">Pack per car <span class="q">($ taken before commission)</span></label>
+        <input id="pack" type="number" inputmode="numeric" min="0" value="0">
+      </div>
+      <div>
+        <label for="base">Base salary / draw <span class="q">($ / month)</span></label>
+        <input id="base" type="number" inputmode="numeric" min="0" value="0">
+      </div>
+
+      <div class="row-full">
+        <div class="toggle-row">
+          <div class="tl"><b>Mini deals</b><span>Flat minimum when a car's gross is too low</span></div>
+          <button class="sw" id="miniSw" type="button" role="switch" aria-checked="false" aria-label="Toggle mini deals"></button>
+        </div>
+        <div class="mini-fields" id="miniFields">
+          <div>
+            <label for="miniThresh">Mini threshold <span class="q">($ gross)</span></label>
+            <input id="miniThresh" type="number" inputmode="numeric" min="0" value="1000">
+          </div>
+          <div>
+            <label for="miniAmt">Mini amount <span class="q">($ / car)</span></label>
+            <input id="miniAmt" type="number" inputmode="numeric" min="0" value="150">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-out">
+      <div class="lbl">Estimated monthly commission</div>
+      <div class="big" id="outTotal">$5,400</div>
+    </div>
+    <div class="calc-break">
+      <div><b id="outPer">$450</b><span>per car</span></div>
+      <div><b id="outGross">$21,600</b><span>total gross</span></div>
+      <div><b id="outYear">$64,800</b><span>annualized</span></div>
+    </div>
+  </section>
+
+  <div class="cta-box">
+    <h3>Stop guessing — track every deal automatically</h3>
+    <p>This calculator uses averages. CarSales Tracker Pro logs the real gross and commission on every car you sell, shows your month-to-date pay, and flags C.O.D. and unfinished paperwork. Free on the web.</p>
+    <a class="btn" href="/">Open the free tracker →</a>
+  </div>
+
+  <article>
+    <h2>How car salesman commission actually works</h2>
+    <p>Almost every dealership pays salespeople a cut of <strong>gross profit</strong> — the difference between what the customer pays for the car and what the dealership has in it. The most common front-end rate is <strong>20–30%</strong> of that gross. Sell a car with $2,000 of front gross on a 25% plan and you've earned $500 on that unit.</p>
+    <p>Three things complicate the simple math, and this calculator handles all of them:</p>
+    <ul>
+      <li><strong>Pack.</strong> Many stores subtract a fixed "pack" (often $300–$800) from the gross <em>before</em> calculating your commission. A $2,000 deal with an $800 pack only pays you on $1,200.</li>
+      <li><strong>Mini deals.</strong> When a car sells at little or no profit, the percentage would pay you almost nothing — so the store pays a flat <strong>mini</strong> instead, usually $50–$150. Turn on the mini toggle to model deals that fall below your threshold.</li>
+      <li><strong>Back-end (F&amp;I) gross.</strong> Some pay plans give you a slice of the finance-and-insurance profit too. Add your average back-end gross per car and set your blended rate.</li>
+    </ul>
+    <p>On top of the per-car math, most plans layer on <strong>volume bonuses</strong> (hit 15 units, earn an extra $X each) and <strong>spiffs</strong> (cash for aging units or specific models). Those vary too much to calculate generically — but they're exactly the kind of thing worth tracking deal by deal.</p>
+    <p>Want the full breakdown with real examples? Read <a href="/blog/how-car-salesman-commission-works/">How Car Salesman Commission Really Works</a> and <a href="/blog/what-is-a-mini-deal/">What Is a Mini Deal in Car Sales?</a></p>
+
+    <div class="cta-soft">
+      <span class="ic">🧮</span>
+      <div>
+        <b>Quoting a customer's monthly payment?</b>
+        <span>Run the numbers with our free auto loan calculator.</span>
+      </div>
+      <a href="https://benchcalcs.com/calculators/auto-loan-calculator" target="_blank" rel="noopener">Auto loan calculator →</a>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details open><summary>How is car salesman commission calculated?</summary><div class="ans">Most dealerships pay a percentage — often 20–30% — of the gross profit on each car, sometimes after subtracting a fixed pack. Low-profit deals pay a flat "mini" instead. Your monthly commission is the sum across every car you sold, plus any base salary, spiffs, or volume bonuses.</div></details>
+      <details><summary>What is a typical car salesman commission rate?</summary><div class="ans">Front-end commission is commonly 20–30% of gross profit. Many stores also pay a smaller percentage of back-end (F&amp;I) gross. Your exact rate is set by your dealership's pay plan — check it line by line.</div></details>
+      <details><summary>What is a mini deal?</summary><div class="ans">A "mini" is the flat minimum commission you earn when a car's gross is too low to beat the percentage — often $50 to $150. If you sell at little or no front gross, you get the mini instead of a percentage.</div></details>
+      <details><summary>Do car salesmen get a base salary?</summary><div class="ans">Some do. Many are paid pure commission with a small "draw" (an advance against future commission); others get a modest base plus commission. Volume bonuses for hitting unit targets usually sit on top of either structure.</div></details>
+    </div>
+
+    <h2>Keep reading</h2>
+    <div class="cards">
+      <a class="card" href="/blog/how-much-do-car-salesmen-make/"><span class="k">Money</span><h3>How much do car salesmen really make?</h3><p>Realistic monthly and annual numbers — green peas to top dogs.</p></a>
+      <a class="card" href="/blog/how-to-sell-more-cars/"><span class="k">Skills</span><h3>How to sell more cars</h3><p>Field-tested ways to add units without burning out.</p></a>
+      <a class="card" href="/blog/first-30-days-in-car-sales/"><span class="k">Career</span><h3>Your first 30 days in car sales</h3><p>What to do, what to ignore, and how to survive the floor.</p></a>
+    </div>
+  </article>
+</main>
+
+<footer class="site-foot"><div class="site-foot-in">
+  <p class="tag">Your deals. Your pipeline. Your edge.</p>
+  <p class="sub">CarSales Tracker Pro is the deal, delivery, and commission tracker built exclusively for automotive sales professionals.</p>
+  <nav>
+    <a href="/">Free web tracker</a>
+    <a href="/blog/">Blog</a>
+    <a href="https://apps.apple.com/us/app/carsales-tracker-pro/id6756135308" target="_blank" rel="noopener">iOS app</a>
+    <a href="https://benchcalcs.com" target="_blank" rel="noopener">BenchCalcs</a>
+  </nav>
+  <p class="copy">© 2026 CarSales Tracker Pro · by Andromeda Kinship</p>
+</div></footer>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var fmt=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+  var num=function(el){var v=parseFloat($(el).value);return isNaN(v)||v<0?0:v};
+  var miniOn=false;
+  function calc(){
+    var units=Math.floor(num('units'));
+    var front=num('front'),back=num('back'),rate=num('rate'),pack=num('pack'),base=num('base');
+    var grossPerCar=Math.max(0,front+back-pack);
+    var commPerCar;
+    if(miniOn){
+      var thresh=num('miniThresh'),mini=num('miniAmt');
+      commPerCar=grossPerCar<thresh?mini:grossPerCar*(rate/100);
+    }else{
+      commPerCar=grossPerCar*(rate/100);
+    }
+    var monthly=commPerCar*units+base;
+    var totalGross=(front+back)*units;
+    $('outTotal').textContent=fmt.format(monthly);
+    $('outPer').textContent=fmt.format(units?monthly/units:commPerCar);
+    $('outGross').textContent=fmt.format(totalGross);
+    $('outYear').textContent=fmt.format(monthly*12);
+  }
+  ['units','front','back','rate','pack','base','miniThresh','miniAmt'].forEach(function(id){
+    $(id).addEventListener('input',calc);
+  });
+  $('miniSw').addEventListener('click',function(){
+    miniOn=!miniOn;this.classList.toggle('on',miniOn);this.setAttribute('aria-checked',miniOn);
+    $('miniFields').classList.toggle('show',miniOn);calc();
+  });
+  calc();
+})();
+</script>
+</body>
+</html>
