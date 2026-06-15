@@ -22,6 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@revenuecat/purchases-js@1.42.4/dist/style.css">
 <style>
 /* ============================================================
    CarSales Tracker Pro — Web 2.9
@@ -334,26 +335,34 @@ html.dark .store-badge{background:#fff;color:#000}
       AD_SLOTS. Ads only ever show for free-tier (Pro) users.
    3. ads.txt is already live at /ads.txt.
 
-   PAYMENTS (optional)
-   Create Stripe Payment Links (or Gumroad) per tier/cycle and
-   paste the URLs into PAYMENT_LINKS. Until set, Subscribe
-   buttons send people to the App Store, where subscriptions
-   already exist. To hand out web unlocks after a purchase,
-   generate a code and add its SHA-256 hash here:
+   PAYMENTS — RevenueCat Web Billing (Stripe-backed)
+   Subscribe buttons open real card checkout via the module script
+   at the bottom of <body>. Web purchases unlock the same tier the
+   iOS app uses (entitlements carsales_premium / carsales_advanced)
+   and renew/cancel automatically. Products: web_premium_monthly,
+   web_premium_yearly, web_advanced_monthly, web_advanced_yearly in
+   the "web" offering. If checkout is ever unavailable, buttons fall
+   back to the App Store. Legacy: UPGRADE_CODE_HASHES still grants a
+   tier from a redeem code (Settings → Redeem upgrade code):
      echo -n "CSTP-MYCODE-123" | shasum -a 256
-   Buyers redeem via Settings → Redeem upgrade code.
    ============================================================ */
 var CONFIG={
   APP_STORE_URL:'https://apps.apple.com/us/app/carsales-tracker-pro/id6756135308',
   ADSENSE_CLIENT:'ca-pub-9318320959789814',
   AD_SLOTS:{top:'8359165880',bottom:'4036777491'},
-  PAYMENT_LINKS:{
-    premium:{monthly:'',yearly:''},
-    advanced:{monthly:'',yearly:''}
-  },
+  /* RevenueCat Web Billing (Stripe-backed). Public SDK key — safe in front-end.
+     Checkout + entitlement sync handled by the module script at the bottom. */
+  RC_PUBLIC_KEY:'rcb_TLBMwRyxlnDXdhuhsztqUlHkiGRK',
+  RC_OFFERING:'web',
   UPGRADE_CODE_HASHES:{premium:[],advanced:[]},
   FREE_DEAL_LIMIT:5,
   NUDGE_EVERY:5
+};
+
+/* tier + billing cycle -> RevenueCat web product identifier */
+var RC_PRODUCTS={
+  premium:{monthly:'web_premium_monthly',yearly:'web_premium_yearly'},
+  advanced:{monthly:'web_advanced_monthly',yearly:'web_advanced_yearly'}
 };
 
 /* ---------- tiers (mirrors iOS v2.9.0, Elite/AI excluded) ---------- */
@@ -726,9 +735,8 @@ function tierCard(id,feats,opts){
   if(cur)cta='<button class="tier-cta cur">Your current plan</button>';
   else if(id==='pro')cta='<button class="tier-cta cur">Included free</button>';
   else{
-    var link=CONFIG.PAYMENT_LINKS[id]&&CONFIG.PAYMENT_LINKS[id][billCycle];
-    cta='<button class="tier-cta'+(id==='advanced'?' adv':'')+'" data-sub="'+id+'">'+(link?'Subscribe':'Get '+t.name)+'</button>'
-      +'<a class="tier-ios" href="'+CONFIG.APP_STORE_URL+'" target="_blank" rel="noopener">7-day free trial on <b>iOS</b> — subscriptions sync with the app</a>';
+    cta='<button class="tier-cta'+(id==='advanced'?' adv':'')+'" data-sub="'+id+'">Subscribe</button>'
+      +'<a class="tier-ios" href="'+CONFIG.APP_STORE_URL+'" target="_blank" rel="noopener">Also on <b>iOS</b> — subscriptions sync across your devices</a>';
   }
   return '<div class="tier'+(opts&&opts.hot?' hot':'')+'">'+(opts&&opts.hot?'<span class="ribbon">MOST POPULAR</span>':'')
     +'<div class="tier-head"><span class="tier-dot" style="background:'+t.hex+'"></span><h3>'+t.name+'</h3>'
@@ -741,12 +749,36 @@ function renderTiers(){
     +tierCard('premium',[['Everything in Pro',1],['Unlimited deals',1],['Ad-free experience',1],['Commission tracker',0]])
     +tierCard('advanced',[['Everything in Premium',1],['Commission tracker',1],['Mini commission rules',1],['Custom font size',1],['Card density options',1]],{hot:true});
 }
+/* Apply a tier unlocked via RevenueCat (web purchase or active entitlement). */
+function applyPurchasedTier(tier){
+  if(!(tier in TIERS))return;
+  S.settings.subscriptionTier=tier;
+  if(tier==='advanced')S.settings.commissionTrackerEnabled=true;
+  S.meta.tierSource='rc';save(K.meta,S.meta);
+  persistSettings();
+}
 function wireSub(){
   $$('[data-sub]').forEach(function(b){b.onclick=function(){
     var id=b.dataset.sub;
-    var link=CONFIG.PAYMENT_LINKS[id]&&CONFIG.PAYMENT_LINKS[id][billCycle];
-    if(link){location.href=link}
-    else{open(CONFIG.APP_STORE_URL,'_blank','noopener')}
+    var productId=RC_PRODUCTS[id]&&RC_PRODUCTS[id][billCycle];
+    if(window.rcBilling&&productId){
+      var label=b.textContent;b.disabled=true;b.textContent='Opening checkout…';
+      window.rcBilling.ready.then(function(){
+        if(!window.rcBilling.configured){open(CONFIG.APP_STORE_URL,'_blank','noopener');return null}
+        return window.rcBilling.purchase(productId);
+      })
+        .then(function(tier){
+          if(tier){applyPurchasedTier(tier);closeSheet();toast(TIERS[tier].name+' unlocked 🎉')}
+          else{b.disabled=false;b.textContent=label}
+        })
+        .catch(function(err){
+          b.disabled=false;b.textContent=label;
+          if(!(err&&(err.userCancelled||err.errorCode==='UserCancelledError')))toast('Checkout didn’t complete');
+        });
+      return;
+    }
+    /* SDK unavailable / no product mapping — send to the App Store. */
+    open(CONFIG.APP_STORE_URL,'_blank','noopener');
   }});
 }
 function openPaywall(reason){
@@ -755,7 +787,7 @@ function openPaywall(reason){
     +'<p class="pw-sub">'+esc(reason||'Rated 5.0 by car salespeople. Same plans as the iOS app.')+'</p>'
     +'<div class="seg bill-seg" id="billSeg"><button type="button" data-c="monthly"'+(billCycle==='monthly'?' class="on"':'')+'>Monthly</button><button type="button" data-c="yearly"'+(billCycle==='yearly'?' class="on"':'')+'>Yearly</button></div>'
     +'<div class="tiers" id="tierWrap">'+renderTiers()+'</div>'
-    +'<p class="pw-fine">Prices in USD. Subscriptions purchased on iOS auto-renew through the App Store and unlock every device. Already subscribed? Redeem your web code in Settings.<br>Web data lives in this browser — the iOS app adds push reminders, delivery notifications, and the ATLAS AI assistant.</p>');
+    +'<p class="pw-fine">Prices in USD. Subscribe securely with any card — auto-renews until cancelled. Purchases made on iOS also unlock here.<br>Your deal data lives in this browser; the iOS app adds push reminders, delivery notifications, and the ATLAS AI assistant.</p>');
   $('#billSeg').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;billCycle=b.dataset.c;
     $$('#billSeg button').forEach(function(x){x.classList.toggle('on',x===b)});$('#tierWrap').innerHTML=renderTiers();wireSub()});
   wireSub();
@@ -835,7 +867,7 @@ function openRedeem(){
       var tier=null;
       if(CONFIG.UPGRADE_CODE_HASHES.advanced.indexOf(hex)>-1)tier='advanced';
       else if(CONFIG.UPGRADE_CODE_HASHES.premium.indexOf(hex)>-1)tier='premium';
-      if(tier){S.settings.subscriptionTier=tier;if(tier==='advanced')S.settings.commissionTrackerEnabled=true;persistSettings();closeSheet();toast(TIERS[tier].name+' unlocked 🎉')}
+      if(tier){S.settings.subscriptionTier=tier;if(tier==='advanced')S.settings.commissionTrackerEnabled=true;S.meta.tierSource='code';save(K.meta,S.meta);persistSettings();closeSheet();toast(TIERS[tier].name+' unlocked 🎉')}
       else toast('Code not recognized');
     });
   };
@@ -921,10 +953,91 @@ if(S.settings.subscriptionTier==='pro'&&S.meta.sessions>1&&S.meta.sessions%CONFI
   setTimeout(function(){openPaywall('Unlock more power — remove ads, go unlimited, and track every commission.')},1200);
 }
 
+/* ---------- RevenueCat entitlement sync ----------
+   The module script dispatches 'rc-entitlement' on load and after a purchase,
+   with the highest active web tier (or null). Entitlements are authoritative
+   for tiers we granted via RevenueCat; redeem-code grants are left untouched. */
+addEventListener('rc-entitlement',function(ev){
+  var tier=ev.detail&&ev.detail.tier;
+  if(tier&&(TIERS[tier]||{}).rank>rank()){applyPurchasedTier(tier);toast(TIERS[tier].name+' active')}
+  else if(!tier&&S.meta.tierSource==='rc'&&rank()>0){
+    S.settings.subscriptionTier='pro';S.settings.commissionTrackerEnabled=false;
+    S.meta.tierSource=null;save(K.meta,S.meta);persistSettings();
+  }
+});
+
 /* ---------- boot ---------- */
 function renderAll(){applyPrefs();renderChrome();renderMonth();renderStats();renderList();initAds()}
 renderAll();
 })();
+</script>
+<script type="module">
+/* ============================================================
+   RevenueCat Web Billing — checkout + entitlement sync.
+   Loaded as a module (runs after the main script). Exposes
+   window.rcBilling for the paywall, and fires 'rc-entitlement'
+   so the app can unlock/downgrade tiers automatically.
+   ============================================================ */
+import { Purchases } from "https://esm.sh/@revenuecat/purchases-js@1.42.4";
+
+var KEY='rcb_TLBMwRyxlnDXdhuhsztqUlHkiGRK';
+var OFFERING='web';
+var ENT_TIER={carsales_advanced:'advanced',carsales_premium:'premium'};
+var RANK={pro:0,premium:1,advanced:2};
+
+/* Highest web tier among active entitlements, or null. */
+function tierFromInfo(info){
+  var active=(info&&info.entitlements&&info.entitlements.active)||{};
+  var best=null,bestRank=-1;
+  Object.keys(active).forEach(function(id){
+    var t=ENT_TIER[id];if(t&&RANK[t]>bestRank){best=t;bestRank=RANK[t]}
+  });
+  return best;
+}
+function announce(info){
+  try{dispatchEvent(new CustomEvent('rc-entitlement',{detail:{tier:tierFromInfo(info)}}))}catch(e){}
+}
+
+/* Stable per-browser RevenueCat user id, so entitlements persist across visits. */
+var uid;
+try{uid=localStorage.getItem('cstp_rc_uid')}catch(e){}
+if(!uid){uid=Purchases.generateRevenueCatAnonymousAppUserId();try{localStorage.setItem('cstp_rc_uid',uid)}catch(e){}}
+
+var resolveReady;
+var rc={
+  configured:false,
+  ready:new Promise(function(r){resolveReady=r}),
+  /* Open checkout for a web product id; resolve to the unlocked tier (or null). */
+  purchase:function(productId){
+    return Purchases.getSharedInstance().getOfferings().then(function(offerings){
+      var offering=(offerings.all&&offerings.all[OFFERING])||offerings.current;
+      if(!offering)throw new Error('offering-missing');
+      var pkg=offering.availablePackages.filter(function(p){
+        var prod=p.webBillingProduct||p.rcBillingProduct||{};
+        return prod.identifier===productId;
+      })[0];
+      if(!pkg)throw new Error('package-missing');
+      return Purchases.getSharedInstance().purchase({rcPackage:pkg});
+    }).then(function(result){
+      var info=result&&result.customerInfo;
+      announce(info);
+      return tierFromInfo(info);
+    });
+  }
+};
+window.rcBilling=rc;
+
+try{
+  Purchases.configure({apiKey:KEY,appUserId:uid});
+  rc.configured=true;
+  resolveReady();
+  /* Sync entitlements on load (handles renewals & cancellations across sessions). */
+  Purchases.getSharedInstance().getCustomerInfo().then(announce).catch(function(){});
+}catch(e){
+  /* If configure fails, leave window.rcBilling but unresolved-safe: the paywall
+     falls back to the App Store. Resolve ready so awaiting buttons don't hang. */
+  rc.configured=false;resolveReady();
+}
 </script>
 </body>
 </html>
