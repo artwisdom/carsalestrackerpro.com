@@ -15,8 +15,8 @@ SEO is a 3–6 month compounding game. The same posts double as **social fuel**
 **Hub tool**
 - `/tools/car-salesman-commission-calculator/` — interactive, ranks + converts
 
-**Blog (6 posts, 3 pillars)**
-- Money: `how-car-salesman-commission-works`, `what-is-a-mini-deal`, `how-much-do-car-salesmen-make`
+**Blog (7 posts, 3 pillars)**
+- Money: `car-salesman-pay-plan-explained` (1st auto-engine post, 2026-06-18), `how-car-salesman-commission-works`, `what-is-a-mini-deal`, `how-much-do-car-salesmen-make`
 - Skills/Career: `how-to-sell-more-cars`, `first-30-days-in-car-sales`
 - Dealership life: `day-in-the-life-car-salesman`
 
@@ -57,7 +57,7 @@ description, canonical, schema, and body. No build step.
 ## 12-topic backlog (ordered by leverage)
 
 **Money (highest intent — best product fit)**
-1. Car salesman pay plan explained (sample plans + how to read yours) → calc
+1. ✅ DONE 2026-06-18 — Car salesman pay plan explained (`car-salesman-pay-plan-explained`)
 2. How to read your car sales pay plan / commission statement → calc
 3. Spiffs, bonuses & PVR: the extras that pad your check
 4. Front-end vs back-end gross: what counts toward your commission → calc
