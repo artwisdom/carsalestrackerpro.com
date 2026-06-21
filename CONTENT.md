@@ -15,9 +15,9 @@ SEO is a 3–6 month compounding game. The same posts double as **social fuel**
 **Hub tool**
 - `/tools/car-salesman-commission-calculator/` — interactive, ranks + converts
 
-**Blog (7 posts, 3 pillars)**
+**Blog (8 posts, 3 pillars)**
 - Money: `car-salesman-pay-plan-explained` (1st auto-engine post, 2026-06-18), `how-car-salesman-commission-works`, `what-is-a-mini-deal`, `how-much-do-car-salesmen-make`
-- Skills/Career: `how-to-sell-more-cars`, `first-30-days-in-car-sales`
+- Skills/Career: `how-to-follow-up-with-car-leads` (2nd auto-engine post, 2026-06-18), `how-to-sell-more-cars`, `first-30-days-in-car-sales`
 - Dealership life: `day-in-the-life-car-salesman`
 
 **Plumbing**: `/blog/` index, `/tools/` index, `sitemap.xml`, `robots.txt`,
@@ -64,7 +64,7 @@ description, canonical, schema, and body. No build step.
 5. Car sales draw explained (recoverable vs non-recoverable)
 
 **Skills / career**
-6. How to follow up with car leads (cadence + scripts)
+6. ✅ DONE 2026-06-18 — How to follow up with car leads (`how-to-follow-up-with-car-leads`)
 7. Overcoming "I want to think about it" (and 4 other objections)
 8. How to hit 20 cars a month (volume systems)
 9. Best CRM/apps for car salespeople (we're on the list) → app
