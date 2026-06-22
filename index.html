@@ -17,6 +17,7 @@
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"CarSales Tracker Pro","operatingSystem":"iOS, Web","applicationCategory":"BusinessApplication","url":"https://carsalestrackerpro.com/","downloadUrl":"https://apps.apple.com/us/app/carsales-tracker-pro/id6756135308","aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","ratingCount":"10"},"offers":[{"@type":"Offer","name":"Pro","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"Premium Monthly","price":"1.99","priceCurrency":"USD"},{"@type":"Offer","name":"Premium Yearly","price":"19.99","priceCurrency":"USD"},{"@type":"Offer","name":"Advanced Monthly","price":"4.99","priceCurrency":"USD"},{"@type":"Offer","name":"Advanced Yearly","price":"49.99","priceCurrency":"USD"}],"author":{"@type":"Organization","name":"Andromeda Kinship","url":"https://andromedakinship.com"}}
 </script>
 <meta name="google-adsense-account" content="ca-pub-9318320959789814">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9318320959789814" crossorigin="anonymous"></script>
 <link rel="icon" type="image/png" href="/assets/icon.png">
 <link rel="apple-touch-icon" href="/assets/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -902,11 +903,8 @@ function importData(ev){
 function initAds(){
   var top=$('#adTop'),bot=$('#adBottom');
   if(hasAdFree()||(!CONFIG.AD_SLOTS.top&&!CONFIG.AD_SLOTS.bottom)){top.classList.remove('on');bot.classList.remove('on');return}
-  if(!initAds.loaded){
-    var s=document.createElement('script');s.async=true;
-    s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client='+CONFIG.ADSENSE_CLIENT;
-    s.crossOrigin='anonymous';document.head.appendChild(s);initAds.loaded=true;
-  }
+  /* The adsbygoogle.js loader is now a static <script> in <head> (better for
+     AdSense review + no double-load), so we only create the ad units here. */
   [[top,CONFIG.AD_SLOTS.top],[bot,CONFIG.AD_SLOTS.bottom]].forEach(function(pair){
     var box=pair[0],slot=pair[1];
     if(!slot)return;
