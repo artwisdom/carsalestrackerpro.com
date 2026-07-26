@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Sales Pay Plan Comparison Calculator | Free Tool</title>
+<meta name="description" content="Compare two car-sales pay plans side by side. Model rate, pack, minis, back-end share, base or draw, and bonuses to see the monthly difference.">
+<link rel="canonical" href="https://carsalestrackerpro.com/tools/pay-plan-comparison-calculator/">
+<meta name="theme-color" content="#0891B2">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Car Sales Pay Plan Comparison Calculator">
+<meta property="og:description" content="A larger commission percentage does not always mean a larger check. Compare the whole structure for free.">
+<meta property="og:url" content="https://carsalestrackerpro.com/tools/pay-plan-comparison-calculator/">
+<meta property="og:image" content="https://carsalestrackerpro.com/assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://carsalestrackerpro.com/assets/og-card.png">
+<link rel="icon" type="image/png" href="/assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Car Sales Pay Plan Comparison Calculator",
+  "url":"https://carsalestrackerpro.com/tools/pay-plan-comparison-calculator/",
+  "applicationCategory":"FinanceApplication",
+  "operatingSystem":"Any",
+  "isAccessibleForFree":true,
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "author":{"@type":"Person","name":"Michael Dube","url":"https://carsalestrackerpro.com/authors/michael-dube/"}
+}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"Why can a lower commission rate pay more?","acceptedAnswer":{"@type":"Answer","text":"Because pack, minis, back-end participation, base pay, and bonuses can outweigh the headline rate. A 25% plan with a low pack can pay more than a 30% plan with a high pack."}},
+  {"@type":"Question","name":"How does this calculator treat mini deals?","acceptedAnswer":{"@type":"Answer","text":"For the number of low-gross units you enter, the tool calculates the front-end percentage after pack and uses the larger of that amount or the plan's mini. Back-end participation is then added separately."}},
+  {"@type":"Question","name":"Should I enter a recoverable draw as base pay?","acceptedAnswer":{"@type":"Answer","text":"Usually no. A recoverable draw is an advance against commission, not extra compensation. Enter only a non-recoverable monthly base or guarantee that remains yours in addition to the modeled commission."}},
+  {"@type":"Question","name":"Does the result replace my written pay plan?","acceptedAnswer":{"@type":"Answer","text":"No. The comparison is an estimate based on the values you enter. Your signed plan and the dealership's official accounting determine actual compensation."}}
+]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+  {"@type":"ListItem","position":1,"name":"Home","item":"https://carsalestrackerpro.com/"},
+  {"@type":"ListItem","position":2,"name":"Tools","item":"https://carsalestrackerpro.com/tools/"},
+  {"@type":"ListItem","position":3,"name":"Pay Plan Comparison Calculator","item":"https://carsalestrackerpro.com/tools/pay-plan-comparison-calculator/"}
+]}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-hdr"><div class="site-hdr-in">
+  <a class="site-logo" href="/"><img src="/assets/icon.png" alt="">CarSales Tracker Pro</a>
+  <nav class="site-nav" aria-label="Main navigation"><a class="ghost" href="/blog/">Guides</a><a class="ghost" href="/tools/car-salesman-commission-calculator/">Commission calculator</a><a class="cta" href="/tracker/">Open tracker</a></nav>
+</div></header>
+
+<main class="wrap" id="main">
+  <p class="crumbs"><a href="/">Home</a> › <a href="/tools/">Tools</a> › Pay Plan Comparison</p>
+  <div class="post-head">
+    <div class="post-meta"><span class="pill">Free tool</span><span>Updated July 2026</span></div>
+    <h1>Car Sales Pay Plan Comparison Calculator</h1>
+  </div>
+  <p class="lede">A bigger percentage does not automatically mean a better pay plan. Compare two complete structures—rate, pack, minis, back-end share, base or guarantee, and monthly bonuses—using the volume and gross you realistically expect.</p>
+  <div class="byline">
+    <img src="/assets/icon.png" alt="">
+    <div><strong><a href="/authors/michael-dube/">Published by Michael Dube</a></strong><span>Creator of CarSales Tracker Pro · formula and assumptions documented below</span></div>
+  </div>
+
+  <section class="calc" aria-labelledby="monthAssumptions">
+    <h2 id="monthAssumptions">Your expected month</h2>
+    <p class="hint">Use a recent full month if you have one. Your figures stay in this browser and are not saved.</p>
+    <div class="calc-grid">
+      <div><label for="units">Total cars sold</label><input id="units" type="number" inputmode="numeric" min="0" value="12"></div>
+      <div><label for="miniUnits">Low-gross / mini candidates</label><input id="miniUnits" type="number" inputmode="numeric" min="0" value="4"></div>
+      <div><label for="frontGross">Avg front gross on regular deals ($)</label><input id="frontGross" type="number" inputmode="decimal" min="0" value="2200"></div>
+      <div><label for="miniGross">Avg front gross on low-gross deals ($)</label><input id="miniGross" type="number" inputmode="decimal" min="0" value="300"></div>
+      <div class="row-full"><label for="backGross">Avg back-end / F&amp;I gross per car ($)</label><input id="backGross" type="number" inputmode="decimal" min="0" value="1200"></div>
+    </div>
+  </section>
+
+  <div class="compare-grid">
+    <section class="plan-card" aria-labelledby="planATitle">
+      <h2 id="planATitle">Plan A</h2>
+      <p class="hint">Example: larger headline rate, larger pack.</p>
+      <div class="plan-fields">
+        <div><label for="aRate">Front rate (%)</label><input id="aRate" type="number" inputmode="decimal" min="0" value="30"></div>
+        <div><label for="aPack">Pack per car ($)</label><input id="aPack" type="number" inputmode="decimal" min="0" value="1000"></div>
+        <div><label for="aBackRate">Back-end share (%)</label><input id="aBackRate" type="number" inputmode="decimal" min="0" value="0"></div>
+        <div><label for="aMini">Mini amount ($)</label><input id="aMini" type="number" inputmode="decimal" min="0" value="150"></div>
+        <div><label for="aBase">Non-recoverable base ($)</label><input id="aBase" type="number" inputmode="decimal" min="0" value="0"></div>
+        <div><label for="aBonus">Monthly bonus ($)</label><input id="aBonus" type="number" inputmode="decimal" min="0" value="500"></div>
+      </div>
+    </section>
+
+    <section class="plan-card" aria-labelledby="planBTitle">
+      <h2 id="planBTitle">Plan B</h2>
+      <p class="hint">Example: smaller rate, smaller pack, back-end share.</p>
+      <div class="plan-fields">
+        <div><label for="bRate">Front rate (%)</label><input id="bRate" type="number" inputmode="decimal" min="0" value="25"></div>
+        <div><label for="bPack">Pack per car ($)</label><input id="bPack" type="number" inputmode="decimal" min="0" value="400"></div>
+        <div><label for="bBackRate">Back-end share (%)</label><input id="bBackRate" type="number" inputmode="decimal" min="0" value="5"></div>
+        <div><label for="bMini">Mini amount ($)</label><input id="bMini" type="number" inputmode="decimal" min="0" value="125"></div>
+        <div><label for="bBase">Non-recoverable base ($)</label><input id="bBase" type="number" inputmode="decimal" min="0" value="0"></div>
+        <div><label for="bBonus">Monthly bonus ($)</label><input id="bBonus" type="number" inputmode="decimal" min="0" value="0"></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="compare-results" aria-live="polite" aria-labelledby="resultTitle">
+    <h2 id="resultTitle">Estimated comparison</h2>
+    <p>Based on the assumptions above. Recoverable draws are deliberately excluded because they are advances, not extra compensation.</p>
+    <div class="result-grid">
+      <div class="result-card"><span>Plan A estimated month</span><b id="aTotal">$0</b><em id="aPer">$0 per car</em></div>
+      <div class="result-card"><span>Plan B estimated month</span><b id="bTotal">$0</b><em id="bPer">$0 per car</em></div>
+    </div>
+    <div class="winner" id="winner">Enter your numbers to compare the plans.</div>
+  </section>
+
+  <article>
+    <h2>How the pay-plan comparison works</h2>
+    <p>The calculator splits your expected month into regular-gross deals and low-gross deals. For regular deals, it subtracts each plan's pack from the average front gross, floors the result at zero, and applies that plan's front-end percentage. For low-gross deals, it runs the same calculation and then uses whichever is larger: the percentage result or the plan's mini. Back-end participation is calculated separately on every unit.</p>
+    <p>Finally, the tool adds a non-recoverable base or guarantee and any monthly bonus you reasonably expect to earn. It does not assume that a bonus will fire just because the plan contains one. If you only hit a volume tier occasionally, compare the plans once with the bonus and once without it.</p>
+
+    <h2>Do not enter a recoverable draw as extra pay</h2>
+    <p>A recoverable draw smooths the timing of your check, but it does not increase total compensation. If a store advances $1,500 and later subtracts that $1,500 from earned commission, adding it as base pay would count the same money twice. Only enter an amount in the base field when the plan describes a non-recoverable salary, guarantee, or floor that remains yours under the scenario you are modeling.</p>
+    <p>If you are unsure which kind of draw is in front of you, read <a href="/blog/car-sales-draw-explained/">recoverable versus non-recoverable draw</a> before comparing the plans.</p>
+
+    <h2>Why the lower rate can win</h2>
+    <p>Suppose Plan A pays 30% after a $1,000 pack, while Plan B pays 25% after a $400 pack. On a $2,000 front-gross deal, Plan A pays 30% of $1,000, or $300. Plan B pays 25% of $1,600, or $400. The plan with the smaller percentage is already $100 ahead before back-end participation or bonuses enter the picture.</p>
+    <p>That does not make a low pack automatically better. One plan may offer a stronger mini, a meaningful monthly guarantee, retroactive unit bonuses, or a back-end split. The point is to compare the whole system at the volume and gross you can actually produce.</p>
+
+    <h2>Questions to ask before choosing</h2>
+    <ul>
+      <li>Is pack fixed, and does it differ between new and used inventory?</li>
+      <li>Is the advertised percentage calculated before or after pack?</li>
+      <li>Does back-end participation apply to all F&amp;I gross or only certain products?</li>
+      <li>Is the draw recoverable, and can a negative balance carry into the next month?</li>
+      <li>Are volume bonuses retroactive to every unit or paid only on units above the threshold?</li>
+      <li>What triggers chargebacks, and how long can the dealership claw them back?</li>
+      <li>How many people at the store actually hit the bonus tier in a typical month?</li>
+    </ul>
+
+    <div class="editor-note"><strong>Method note:</strong> This is a transparent planning model, not payroll software. It uses only the values you enter and cannot see your signed plan or dealership accounting. See the full <a href="/editorial-policy/">editorial and calculator methodology</a>.</div>
+
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details open><summary>Why can a lower commission rate pay more?</summary><div class="ans">Because pack, minis, back-end participation, base pay, and bonuses can outweigh the headline rate. A 25% plan with a low pack can pay more than a 30% plan with a high pack.</div></details>
+      <details><summary>How does this calculator treat mini deals?</summary><div class="ans">For the low-gross units you enter, it calculates front-end percentage after pack and uses the larger of that amount or the plan's mini. Back-end participation is added separately.</div></details>
+      <details><summary>Should I enter a recoverable draw as base pay?</summary><div class="ans">Usually no. A recoverable draw is an advance against commission, not extra compensation. Enter only a non-recoverable monthly base or guarantee that remains yours in addition to the modeled commission.</div></details>
+      <details><summary>Does the result replace my written pay plan?</summary><div class="ans">No. The comparison is an estimate based on the values you enter. Your signed plan and the dealership's official accounting determine actual compensation.</div></details>
+    </div>
+
+    <h2>Next steps</h2>
+    <div class="cards">
+      <a class="card" href="/blog/car-salesman-pay-plan-explained/"><span class="k">Guide</span><h3>Read a pay plan line by line</h3><p>Know what to ask about rate, pack, mini, draw, bonuses, and chargebacks.</p></a>
+      <a class="card" href="/tools/car-salesman-commission-calculator/"><span class="k">Tool</span><h3>Estimate one monthly plan</h3><p>Use the full commission calculator when you want a deeper month-to-date estimate.</p></a>
+      <a class="card" href="/tracker/"><span class="k">Tracker</span><h3>Measure your real averages</h3><p>Log each deal so future comparisons use your actual units and gross instead of guesses.</p></a>
+    </div>
+  </article>
+</main>
+
+<footer class="site-foot"><div class="site-foot-in">
+  <p class="tag">Your deals. Your pipeline. Your edge.</p>
+  <p class="sub">Free commission tools, practical pay-plan guides, and a private deal tracker for automotive sales professionals.</p>
+  <nav aria-label="Footer navigation"><a href="/">Commission hub</a><a href="/tracker/">Free web tracker</a><a href="/tools/">Tools</a><a href="/blog/">Guides</a><a href="/about/">About</a><a href="/authors/michael-dube/">Publisher</a><a href="/editorial-policy/">Editorial policy</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/disclaimer/">Disclaimer</a></nav>
+  <p class="copy">© 2026 CarSales Tracker Pro · published by Michael Dube through <a href="https://andromedakinship.com" target="_blank" rel="noopener" style="color:inherit">Andromeda Kinship</a></p>
+</div></footer>
+
+<script>
+(function(){
+  'use strict';
+  var ids=['units','miniUnits','frontGross','miniGross','backGross','aRate','aPack','aBackRate','aMini','aBase','aBonus','bRate','bPack','bBackRate','bMini','bBase','bBonus'];
+  var $=function(id){return document.getElementById(id)};
+  var money=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+  function num(id){var value=parseFloat($(id).value);return Number.isFinite(value)&&value>0?value:0}
+  function plan(prefix,units,miniUnits,regularUnits,frontGross,miniGross,backGross){
+    var rate=num(prefix+'Rate')/100;
+    var pack=num(prefix+'Pack');
+    var backRate=num(prefix+'BackRate')/100;
+    var miniAmount=num(prefix+'Mini');
+    var regularFront=Math.max(0,frontGross-pack)*rate;
+    var lowFront=Math.max(miniAmount,Math.max(0,miniGross-pack)*rate);
+    var backPay=backGross*backRate;
+    var total=regularUnits*(regularFront+backPay)+miniUnits*(lowFront+backPay)+num(prefix+'Base')+num(prefix+'Bonus');
+    return {total:total,per:units?total/units:0};
+  }
+  function calculate(){
+    var units=Math.floor(num('units'));
+    var miniUnits=Math.min(units,Math.floor(num('miniUnits')));
+    var regularUnits=Math.max(0,units-miniUnits);
+    var frontGross=num('frontGross'),miniGross=num('miniGross'),backGross=num('backGross');
+    var a=plan('a',units,miniUnits,regularUnits,frontGross,miniGross,backGross);
+    var b=plan('b',units,miniUnits,regularUnits,frontGross,miniGross,backGross);
+    $('aTotal').textContent=money.format(a.total);
+    $('aPer').textContent=money.format(a.per)+' per car';
+    $('bTotal').textContent=money.format(b.total);
+    $('bPer').textContent=money.format(b.per)+' per car';
+    var difference=Math.abs(a.total-b.total);
+    if(!units){$('winner').textContent='Enter at least one expected unit to compare the plans.';return}
+    if(difference<1){$('winner').textContent='The plans are effectively tied under these assumptions.';return}
+    var winner=a.total>b.total?'Plan A':'Plan B';
+    $('winner').textContent=winner+' pays about '+money.format(difference)+' more per month ('+money.format(difference*12)+' per year) under these assumptions.';
+  }
+  ids.forEach(function(id){$(id).addEventListener('input',calculate)});
+  calculate();
+})();
+</script>
+</body>
+</html>

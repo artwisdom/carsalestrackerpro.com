@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<!-- Free local-first web tracker -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Free Car Sales Deal &amp; Commission Tracker | CarSales Pro</title>
+<meta name="description" content="Use the free CarSales Tracker Pro web app to log deals, deliveries, follow-ups, goals, gross, and commission. Your deal data stays in your browser.">
+<link rel="canonical" href="https://carsalestrackerpro.com/tracker/">
+<meta name="theme-color" content="#0891B2">
+<meta name="apple-itunes-app" content="app-id=6756135308">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Car Sales Deal &amp; Commission Tracker">
+<meta property="og:description" content="Track sales, deliveries, follow-ups, goals, gross, and commissions for free. Your deal data stays in your browser.">
+<meta property="og:url" content="https://carsalestrackerpro.com/tracker/">
+<meta property="og:image" content="https://carsalestrackerpro.com/assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://carsalestrackerpro.com/assets/og-card.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"CarSales Tracker Pro","operatingSystem":"iOS, Web","applicationCategory":"BusinessApplication","url":"https://carsalestrackerpro.com/tracker/","downloadUrl":"https://apps.apple.com/us/app/carsales-tracker-pro/id6756135308","aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","ratingCount":"10"},"offers":[{"@type":"Offer","name":"Pro","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"Premium Monthly","price":"1.99","priceCurrency":"USD"},{"@type":"Offer","name":"Premium Yearly","price":"19.99","priceCurrency":"USD"},{"@type":"Offer","name":"Advanced Monthly","price":"4.99","priceCurrency":"USD"},{"@type":"Offer","name":"Advanced Yearly","price":"49.99","priceCurrency":"USD"}],"author":{"@type":"Person","name":"Michael Dube","url":"https://carsalestrackerpro.com/authors/michael-dube/"}}
+</script>
+<meta name="google-adsense-account" content="ca-pub-9318320959789814">
+<link rel="icon" type="image/png" href="/assets/icon.png">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@revenuecat/purchases-js@1.42.4/dist/style.css">
+<style>
+/* ============================================================
+   CarSales Tracker Pro — local-first web companion
+   ============================================================ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#0891B2;--primary-soft:rgba(8,145,178,.1);--secondary:#06B6D4;
+  --accent:#10B981;--success:#10B981;--success-bg:#D1FAE5;
+  --warning:#F59E0B;--danger:#EF4444;
+  --bg:#F8FAFC;--surface:#FFFFFF;--surface2:#F1F5F9;
+  --text:#0F172A;--text2:#64748B;--border:#E2E8F0;--input-border:#CBD5E1;
+  --tier-pro:#6B7280;--tier-premium:#3B82F6;--tier-advanced:#8B5CF6;
+  --shadow:0 4px 6px -1px rgba(0,0,0,.08),0 2px 4px -2px rgba(0,0,0,.05);
+  --shadow-lg:0 20px 40px -12px rgba(0,0,0,.18);
+  --radius:14px;--fs:16px;
+}
+html.dark{
+  --primary:#06B6D4;--primary-soft:rgba(6,182,212,.14);--secondary:#0891B2;
+  --success:#34D399;--success-bg:#064E3B;--warning:#FBBF24;--danger:#F87171;
+  --bg:#0F172A;--surface:#1E293B;--surface2:#283548;
+  --text:#F8FAFC;--text2:#94A3B8;--border:#334155;--input-border:#475569;
+  --shadow:0 4px 6px -1px rgba(0,0,0,.3);
+  --shadow-lg:0 20px 40px -12px rgba(0,0,0,.5);
+}
+html{font-size:var(--fs)}
+html.fs-small{--fs:14px}html.fs-medium{--fs:16px}html.fs-large{--fs:18px}html.fs-xlarge{--fs:20px}
+body{font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .25s,color .25s;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit;font-size:1rem;color:var(--text);background:var(--surface);border:1px solid var(--input-border);border-radius:10px;padding:11px 13px;width:100%;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--primary)}
+::placeholder{color:var(--text2);opacity:.7}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+
+/* ---------- iOS banner ---------- */
+.ios-strip{display:none;align-items:center;gap:10px;background:linear-gradient(90deg,#0891B2,#0284C7);color:#fff;padding:9px 14px;font-size:.85rem}
+.ios-strip.show{display:flex}
+.ios-strip a{color:#fff;font-weight:600;text-decoration:none;flex:1}
+.ios-strip button{color:#fff;opacity:.8;font-size:1.05rem;padding:2px 6px}
+
+/* ---------- header ---------- */
+.hdr{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+.hdr-in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:12px 16px}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#0891B2,#0284C7);display:flex;align-items:center;justify-content:center;flex:none;font-size:1.2rem;overflow:hidden;box-shadow:var(--shadow)}
+.logo img{width:100%;height:100%;display:block;object-fit:cover}
+.hdr-t{flex:1;min-width:0}
+.hdr-t h1{font-size:1.02rem;font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr-t p{font-size:.68rem;color:var(--text2)}
+.tier-chip{font-size:.62rem;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:100px;color:#fff;text-transform:uppercase;flex:none;cursor:pointer}
+.ios-pill{display:none;font-size:.78rem;font-weight:600;color:var(--primary);border:1.5px solid var(--primary);border-radius:100px;padding:7px 14px;text-decoration:none;white-space:nowrap;transition:background .2s}
+.ios-pill:hover{background:var(--primary-soft)}
+@media(min-width:560px){.ios-pill{display:inline-block}}
+.icon-btn{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:background .2s,color .2s;flex:none}
+.icon-btn:hover{background:var(--surface2);color:var(--text)}
+.icon-btn svg{width:21px;height:21px;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+
+/* ---------- layout ---------- */
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 110px}
+
+/* ---------- month nav ---------- */
+.mnav{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:14px}
+.mnav button.arr{width:36px;height:36px;border-radius:10px;color:var(--text2);font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+.mnav button.arr:hover{background:var(--surface2);color:var(--text)}
+.mnav .cur{font-weight:700;font-size:1.05rem;padding:7px 14px;border-radius:10px;min-width:170px;text-align:center}
+.mnav .cur:hover{background:var(--surface2)}
+
+/* ---------- stats ---------- */
+.stats{display:flex;gap:10px;margin-bottom:10px}
+.stat-card{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center;box-shadow:var(--shadow)}
+.stat-card b{display:block;font-size:1.7rem;font-weight:700;color:var(--primary);line-height:1.1}
+.stat-card.green b{color:var(--success)}
+.stat-card span{font-size:.72rem;color:var(--text2);font-weight:500}
+.goal-card{flex:none;width:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer}
+.goal-ring{position:relative;width:62px;height:62px}
+.goal-ring svg{transform:rotate(-90deg)}
+.goal-ring .pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700}
+.commission-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:13px 16px;display:flex;align-items:center;gap:10px;margin-bottom:10px;box-shadow:var(--shadow);cursor:pointer;transition:transform .15s}
+.commission-card:hover{transform:translateY(-1px)}
+.commission-card .amt{font-weight:700;color:var(--success);font-size:1.05rem}
+.commission-card .lbl{flex:1;font-size:.92rem;font-weight:600}
+.commission-card.locked .lbl{color:var(--text2);font-weight:500}
+.commission-card .lock-cta{font-size:.72rem;font-weight:700;color:#fff;background:var(--tier-advanced);padding:5px 11px;border-radius:100px;white-space:nowrap}
+
+/* ---------- search & filters ---------- */
+.toolbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:200px}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:17px;height:17px;stroke:var(--text2);stroke-width:2;fill:none;stroke-linecap:round}
+.search-wrap input{padding-left:38px}
+.pills{display:flex;gap:6px}
+.pill-btn{font-size:.82rem;font-weight:600;padding:9px 16px;border-radius:100px;color:var(--text2);background:var(--surface);border:1px solid var(--border)}
+.pill-btn.on{color:#fff;background:var(--primary);border-color:var(--primary)}
+
+/* ---------- deal cards ---------- */
+.list{display:flex;flex-direction:column;gap:10px}
+html.cs-compact .deal{padding:10px 13px}
+html.cs-comfortable .deal{padding:14px 16px}
+html.cs-spacious .deal{padding:19px 18px}
+.deal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:border-color .2s}
+.deal.done{border-left:4px solid var(--success)}
+.deal-head{display:flex;align-items:center;gap:11px;cursor:pointer}
+.stock{font-size:.68rem;font-weight:700;letter-spacing:.04em;background:var(--primary-soft);color:var(--primary);padding:4px 9px;border-radius:7px;white-space:nowrap}
+.deal-id{flex:1;min-width:0}
+.deal-id .cust{font-weight:600;font-size:.98rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deal-id .veh{font-size:.78rem;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deal-flags{display:flex;align-items:center;gap:5px;flex:none}
+.flag{width:9px;height:9px;border-radius:50%;background:var(--border)}
+.flag.ok{background:var(--success)}
+.cod-flag{font-size:.6rem;font-weight:700;color:#fff;background:var(--warning);border-radius:6px;padding:2px 7px}
+.chev{color:var(--text2);transition:transform .25s;flex:none}
+.deal.open .chev{transform:rotate(180deg)}
+.deal-body{display:none;border-top:1px solid var(--border);margin-top:12px;padding-top:12px}
+.deal.open .deal-body{display:block}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.badge{font-size:.7rem;font-weight:600;padding:5px 11px;border-radius:100px;border:1px solid var(--border);color:var(--text2);cursor:pointer;user-select:none;transition:all .15s}
+.badge.ok{background:var(--success-bg);border-color:transparent;color:var(--success)}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 14px;margin-bottom:12px}
+.kv div span{display:block;font-size:.64rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text2)}
+.kv div b{font-size:.88rem;font-weight:600}
+.note-line{font-size:.85rem;color:var(--text2);background:var(--surface2);border-radius:9px;padding:9px 12px;margin-bottom:12px;white-space:pre-wrap}
+.deal-actions{display:flex;gap:8px}
+.da-btn{flex:1;font-size:.85rem;font-weight:600;padding:10px;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:7px}
+.da-btn svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.da-edit{background:var(--primary-soft);color:var(--primary)}
+.da-del{background:rgba(239,68,68,.1);color:var(--danger)}
+.empty{text-align:center;padding:54px 20px;color:var(--text2)}
+.empty .big{font-size:2.6rem;margin-bottom:10px}
+.empty p{font-size:.92rem;max-width:280px;margin:0 auto;line-height:1.5}
+
+/* ---------- FAB ---------- */
+.fab{position:fixed;bottom:26px;right:max(18px,calc(50vw - 362px));width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,#0891B2,#0284C7);color:#fff;font-size:1.8rem;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(8,145,178,.45);transition:transform .2s;z-index:40}
+.fab:hover{transform:scale(1.06)}
+
+/* ---------- modal system ---------- */
+.ovl{position:fixed;inset:0;background:rgba(2,8,23,.55);backdrop-filter:blur(3px);z-index:100;display:none;align-items:flex-end;justify-content:center}
+@media(min-width:560px){.ovl{align-items:center;padding:20px}}
+.ovl.on{display:flex}
+.sheet{background:var(--bg);width:100%;max-width:620px;max-height:92vh;overflow-y:auto;border-radius:22px 22px 0 0;padding:20px 18px 30px;overscroll-behavior:contain}
+@media(min-width:560px){.sheet{border-radius:22px;max-height:86vh}}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.sheet-head h2{font-size:1.2rem;font-weight:700}
+.x-btn{width:34px;height:34px;border-radius:50%;background:var(--surface2);color:var(--text2);font-size:1rem;display:flex;align-items:center;justify-content:center}
+.sec-t{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin:18px 0 9px}
+.frow{margin-bottom:11px}
+.frow label{display:block;font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:5px}
+.frow label em{color:var(--danger);font-style:normal}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.seg{display:flex;background:var(--surface2);border-radius:11px;padding:3px;gap:3px}
+.seg button{flex:1;font-size:.84rem;font-weight:600;padding:9px 6px;border-radius:9px;color:var(--text2)}
+.seg button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
+.switch-row:last-child{border-bottom:none}
+.switch-row .sl{flex:1}
+.switch-row .sl b{display:block;font-size:.93rem;font-weight:600}
+.switch-row .sl span{font-size:.76rem;color:var(--text2)}
+.sw{position:relative;width:48px;height:28px;border-radius:100px;background:var(--input-border);transition:background .2s;flex:none}
+.sw::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.sw.on{background:var(--success)}
+.sw.on::after{left:23px}
+.save-btn{width:100%;font-size:1rem;font-weight:700;color:#fff;background:linear-gradient(135deg,#0891B2,#0284C7);border-radius:13px;padding:15px;margin-top:16px;box-shadow:0 6px 18px rgba(8,145,178,.35)}
+.danger-btn{width:100%;font-size:.9rem;font-weight:600;color:var(--danger);background:rgba(239,68,68,.08);border-radius:11px;padding:12px;margin-top:8px}
+.ghost-btn{width:100%;font-size:.9rem;font-weight:600;color:var(--text);background:var(--surface2);border-radius:11px;padding:12px;margin-top:8px}
+.est-line{display:flex;align-items:center;justify-content:space-between;background:var(--success-bg);border-radius:10px;padding:11px 13px;font-size:.9rem;font-weight:600;color:var(--success)}
+.lock-note{font-size:.8rem;color:var(--text2);background:var(--surface2);border-radius:10px;padding:11px 13px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.lock-note button{color:var(--tier-advanced);font-weight:700;font-size:.8rem}
+
+/* ---------- paywall ---------- */
+.pw-sub{text-align:center;color:var(--text2);font-size:.88rem;margin:-6px 0 14px}
+.bill-seg{max-width:280px;margin:0 auto 16px}
+.tiers{display:flex;flex-direction:column;gap:12px}
+.tier{border:2px solid var(--border);border-radius:16px;padding:16px;position:relative;background:var(--surface)}
+.tier.hot{border-color:var(--tier-advanced)}
+.tier .ribbon{position:absolute;top:-10px;right:14px;font-size:.6rem;font-weight:800;letter-spacing:.08em;color:#fff;background:var(--tier-advanced);padding:4px 10px;border-radius:100px}
+.tier-head{display:flex;align-items:baseline;gap:8px;margin-bottom:2px}
+.tier-dot{width:10px;height:10px;border-radius:50%;flex:none;align-self:center}
+.tier-head h3{font-size:1.05rem;font-weight:700;flex:1}
+.tier-head .pr{font-size:1.15rem;font-weight:800}
+.tier-head .pr small{font-size:.7rem;color:var(--text2);font-weight:600}
+.save-badge{display:inline-block;font-size:.64rem;font-weight:700;color:var(--success);background:var(--success-bg);padding:3px 9px;border-radius:100px;margin-bottom:6px}
+.tier ul{list-style:none;margin:8px 0 12px}
+.tier li{font-size:.84rem;padding:3px 0;display:flex;gap:8px;align-items:center}
+.tier li::before{content:'✓';color:var(--success);font-weight:800}
+.tier li.no{color:var(--text2);opacity:.6}
+.tier li.no::before{content:'✕';color:var(--text2)}
+.tier-cta{width:100%;font-size:.92rem;font-weight:700;padding:12px;border-radius:11px;color:#fff;background:linear-gradient(135deg,#0891B2,#0284C7)}
+.tier-cta.adv{background:linear-gradient(135deg,#8B5CF6,#7C3AED)}
+.tier-cta.cur{background:var(--surface2);color:var(--text2);cursor:default}
+.tier-ios{display:block;text-align:center;font-size:.74rem;color:var(--text2);margin-top:7px;text-decoration:none}
+.tier-ios b{color:var(--primary)}
+.pw-fine{font-size:.68rem;color:var(--text2);text-align:center;line-height:1.6;margin-top:14px}
+.stars{text-align:center;margin-bottom:4px;color:var(--warning);letter-spacing:2px}
+
+/* ---------- commission modal ---------- */
+.cm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.cm-cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
+.cm-cell b{display:block;font-size:1.25rem;font-weight:700;color:var(--success)}
+.cm-cell span{font-size:.68rem;color:var(--text2)}
+.cm-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.cm-row:last-child{border:none}
+.cm-row .st{font-weight:700;color:var(--primary);font-size:.75rem;min-width:64px}
+.cm-row .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cm-row .gp{color:var(--text2);font-size:.78rem}
+.cm-row .cv{font-weight:700;color:var(--success)}
+.mini-b{font-size:.56rem;font-weight:800;color:#fff;background:var(--warning);border-radius:5px;padding:2px 5px}
+
+/* ---------- toast ---------- */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);font-size:.88rem;font-weight:600;padding:12px 22px;border-radius:100px;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:all .3s;z-index:300;white-space:nowrap}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--border);margin-top:40px;padding:30px 16px 40px;text-align:center}
+.foot .tag{font-weight:700;font-size:1rem;margin-bottom:4px}
+.foot .sub{font-size:.8rem;color:var(--text2);max-width:430px;margin:0 auto 16px;line-height:1.6}
+.store-badge{display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;border-radius:12px;padding:9px 18px;text-decoration:none;margin-bottom:18px}
+html.dark .store-badge{background:#fff;color:#000}
+.store-badge .ap{font-size:1.5rem}
+.store-badge div{text-align:left;line-height:1.15}
+.store-badge span{font-size:.58rem;letter-spacing:.04em}
+.store-badge b{font-size:.95rem}
+.foot-links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:.78rem}
+.foot-links a{color:var(--text2);text-decoration:none}
+.foot-links a:hover{color:var(--primary)}
+.foot .v{font-size:.66rem;color:var(--text2);opacity:.6;margin-top:14px}
+</style>
+</head>
+<body>
+
+<div class="ios-strip" id="iosStrip">
+  <span>📱</span><a href="https://apps.apple.com/us/app/carsales-tracker-pro/id6756135308" target="_blank" rel="noopener">Get the full app — push reminders, AI coach &amp; more on iOS&nbsp;›</a>
+  <button id="iosStripX" aria-label="Dismiss">✕</button>
+</div>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="logo"><img src="/assets/icon.png" alt="" width="38" height="38"></div>
+    <div class="hdr-t">
+      <h1>CarSales Tracker Pro</h1>
+      <p>by Andromeda Kinship</p>
+    </div>
+    <button class="tier-chip" id="tierChip" title="See plans">PRO</button>
+    <a class="ios-pill" href="https://apps.apple.com/us/app/carsales-tracker-pro/id6756135308" target="_blank" rel="noopener">Get iOS App</a>
+    <button class="icon-btn" id="settingsBtn" aria-label="Settings"><svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="mnav">
+    <button class="arr" id="mPrev" aria-label="Previous month">‹</button>
+    <button class="cur" id="mCur">June 2026</button>
+    <button class="arr" id="mNext" aria-label="Next month">›</button>
+  </div>
+
+  <div class="stats" id="statsRow"></div>
+  <div id="commissionRow"></div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input id="search" type="search" placeholder="Search name, stock #, vehicle…" autocomplete="off">
+    </div>
+    <div class="pills">
+      <button class="pill-btn on" data-f="all">All</button>
+      <button class="pill-btn" data-f="pending">Pending</button>
+      <button class="pill-btn" data-f="done">Completed</button>
+    </div>
+  </div>
+
+  <div class="list" id="list"></div>
+
+</main>
+
+<button class="fab" id="fab" aria-label="Add deal">+</button>
+
+<div class="ovl" id="ovl"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<footer class="foot">
+  <p class="tag">Your deals. Your pipeline. Your edge.</p>
+  <p class="sub">CarSales Tracker Pro is the deal, delivery, and commission tracker built exclusively for automotive sales professionals. Free on the web — full power, push reminders, and the ATLAS AI assistant on iOS.</p>
+  <a class="store-badge" href="https://apps.apple.com/us/app/carsales-tracker-pro/id6756135308" target="_blank" rel="noopener">
+    <span class="ap"></span><div><span>Download on the</span><br><b>App Store</b></div>
+  </a>
+  <nav class="foot-links">
+    <a href="/">Commission hub</a>
+    <a href="/blog/">Blog</a>
+    <a href="/tools/car-salesman-commission-calculator/">Commission calculator</a>
+    <a href="/about/">About</a>
+    <a href="/contact/">Contact</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/terms/">Terms</a>
+    <a href="/disclaimer/">Disclaimer</a>
+    <a href="https://andromedakinship.com" target="_blank" rel="noopener">Andromeda Kinship</a>
+  </nav>
+  <p class="v">Free web companion · your deal data stays in this browser</p>
+</footer>
+
+<script>
+(function(){
+'use strict';
+/* ============================================================
+   CONFIG — Michael: fill these in as you set things up.
+
+   PAYMENTS — RevenueCat Web Billing (Stripe-backed)
+   Subscribe buttons open real card checkout via the module script
+   at the bottom of <body>. Web purchases unlock the same tier the
+   iOS app uses (entitlements carsales_premium / carsales_advanced)
+   and renew/cancel automatically. Products: web_premium_monthly,
+   web_premium_yearly, web_advanced_monthly, web_advanced_yearly in
+   the "web" offering. If checkout is ever unavailable, buttons fall
+   back to the App Store. Legacy: UPGRADE_CODE_HASHES still grants a
+   tier from a redeem code (Settings → Redeem upgrade code):
+     echo -n "CSTP-MYCODE-123" | shasum -a 256
+   ============================================================ */
+var CONFIG={
+  APP_STORE_URL:'https://apps.apple.com/us/app/carsales-tracker-pro/id6756135308',
+  /* RevenueCat Web Billing (Stripe-backed). Public SDK key — safe in front-end.
+     Checkout + entitlement sync handled by the module script at the bottom. */
+  RC_PUBLIC_KEY:'rcb_TLBMwRyxlnDXdhuhsztqUlHkiGRK',
+  RC_OFFERING:'web',
+  UPGRADE_CODE_HASHES:{premium:[],advanced:[]},
+  FREE_DEAL_LIMIT:5,
+  NUDGE_EVERY:5
+};
+
+/* tier + billing cycle -> RevenueCat web product identifier */
+var RC_PRODUCTS={
+  premium:{monthly:'web_premium_monthly',yearly:'web_premium_yearly'},
+  advanced:{monthly:'web_advanced_monthly',yearly:'web_advanced_yearly'}
+};
+
+/* ---------- tiers (mirrors iOS v2.9.0, Elite/AI excluded) ---------- */
+var TIERS={
+  pro:{name:'Pro',hex:'#6B7280',rank:0,price:{monthly:0,yearly:0}},
+  premium:{name:'Premium',hex:'#3B82F6',rank:1,price:{monthly:1.99,yearly:19.99}},
+  advanced:{name:'Advanced',hex:'#8B5CF6',rank:2,price:{monthly:4.99,yearly:49.99}}
+};
+
+/* ---------- storage (same keys as the old site = data carries over) ---------- */
+var K={entries:'carsales_entries',settings:'carsales_settings',goals:'carsales_goals',meta:'carsales_web_meta'};
+function load(k,fb){try{var v=JSON.parse(localStorage.getItem(k));return v==null?fb:v}catch(e){return fb}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var DEF_SETTINGS={
+  isDarkMode:null,
+  showCompletedFirst:false,
+  goalsEnabled:true,
+  subscriptionTier:'pro',
+  cardSize:'comfortable',
+  fontSizePreset:'medium',
+  commissionTrackerEnabled:false,
+  commissionRate:25,
+  miniCommissionEnabled:false,
+  miniCommissionThreshold:1000,
+  miniCommissionAmount:150
+};
+var now=new Date();
+var S={
+  entries:load(K.entries,[]),
+  settings:Object.assign({},DEF_SETTINGS,load(K.settings,{})),
+  goals:load(K.goals,{}),
+  meta:Object.assign({sessions:0,iosStripDismissed:false,nudgedAt:0},load(K.meta,{})),
+  month:now.getMonth(),year:now.getFullYear(),
+  filter:'all',query:'',openId:null
+};
+if(!(S.settings.subscriptionTier in TIERS))S.settings.subscriptionTier='pro';
+
+function rank(){return (TIERS[S.settings.subscriptionTier]||TIERS.pro).rank}
+function hasAdFree(){return rank()>=1}
+function hasUnlimited(){return rank()>=1}
+function hasCommission(){return rank()>=2}
+function hasDisplayOpts(){return rank()>=2}
+
+/* ---------- helpers ---------- */
+function $(s,el){return (el||document).querySelector(s)}
+function $$(s,el){return Array.prototype.slice.call((el||document).querySelectorAll(s))}
+function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
+var fmt$=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'});
+function money(v){var n=parseFloat(String(v==null?'':v).replace(/[^0-9.\-]/g,''));return isNaN(n)?0:n}
+var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function mKey(y,m){return y+'-'+String(m+1).padStart(2,'0')}
+function toast(msg){var t=$('#toast');t.textContent=msg;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on')},2200)}
+function uid(){return Date.now().toString()}
+
+/* ---------- theme / display prefs ---------- */
+function applyPrefs(){
+  var dark=S.settings.isDarkMode===null?matchMedia('(prefers-color-scheme: dark)').matches:!!S.settings.isDarkMode;
+  var fs=hasDisplayOpts()?S.settings.fontSizePreset:'medium';
+  var cs=hasDisplayOpts()?S.settings.cardSize:'comfortable';
+  var html=document.documentElement;
+  html.className='fs-'+fs+' cs-'+cs+(dark?' dark':'');
+}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){if(S.settings.isDarkMode===null)applyPrefs()});
+
+/* ---------- commission math (mirrors iOS) ---------- */
+function dealCommission(e){
+  var gp=money(e.grossProfit);
+  if(gp<=0)return 0;
+  if(S.settings.miniCommissionEnabled&&gp<money(S.settings.miniCommissionThreshold))return money(S.settings.miniCommissionAmount);
+  return gp*(money(S.settings.commissionRate)/100);
+}
+
+/* ---------- month data ---------- */
+function monthEntries(y,m){
+  return S.entries.filter(function(e){var d=new Date(e.date);return d.getFullYear()===y&&d.getMonth()===m});
+}
+function monthStats(){
+  var es=monthEntries(S.year,S.month);
+  var done=es.filter(function(e){return e.isFinalized}).length;
+  var gp=0,comm=0,withGp=0;
+  es.forEach(function(e){var g=money(e.grossProfit);if(g>0){gp+=g;comm+=dealCommission(e);withGp++}});
+  return {total:es.length,done:done,gp:gp,comm:comm,withGp:withGp};
+}
+
+/* ---------- render: stats ---------- */
+function ringColor(p){if(p>=100)return 'var(--success)';if(p>=50)return 'var(--warning)';return 'var(--danger)'}
+function renderStats(){
+  var st=monthStats();
+  var goal=parseInt(S.goals[mKey(S.year,S.month)])||0;
+  var html='<div class="stat-card"><b>'+st.total+'</b><span>Sold this month</span></div>'
+    +'<div class="stat-card green"><b>'+st.done+'</b><span>Completed deals</span></div>';
+  if(S.settings.goalsEnabled){
+    var p=goal>0?Math.min(Math.round(st.total/goal*100),999):0;
+    var dash=(2*Math.PI*26).toFixed(2), off=goal>0?(dash*(1-Math.min(p,100)/100)).toFixed(2):dash;
+    html+='<div class="stat-card goal-card" id="goalCard" title="Tap to set goal">'
+      +'<div class="goal-ring"><svg width="62" height="62"><circle cx="31" cy="31" r="26" stroke="var(--border)" stroke-width="6" fill="none"/>'
+      +(goal>0?'<circle cx="31" cy="31" r="26" stroke="'+ringColor(p)+'" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="'+dash+'" stroke-dashoffset="'+off+'"/>':'')
+      +'</svg><span class="pct">'+(goal>0?p+'%':'＋')+'</span></div>'
+      +'<span>'+(goal>0?st.total+'/'+goal+' goal':'Set goal')+'</span></div>';
+  }
+  $('#statsRow').innerHTML=html;
+  var gc=$('#goalCard');if(gc)gc.onclick=openGoal;
+  var cr=$('#commissionRow');
+  if(hasCommission()&&S.settings.commissionTrackerEnabled){
+    cr.innerHTML='<div class="commission-card" id="commCard"><span>💰</span><span class="lbl">Commission this month</span><span class="amt">'+fmt$.format(st.comm)+'</span></div>';
+    $('#commCard').onclick=openCommission;
+  }else if(!hasCommission()){
+    cr.innerHTML='<div class="commission-card locked" id="commCard"><span>💰</span><span class="lbl">Commission Tracker</span><span class="lock-cta">Unlock with Advanced</span></div>';
+    $('#commCard').onclick=function(){openPaywall('Track gross profit and commission on every deal.')};
+  }else cr.innerHTML='';
+}
+
+/* ---------- render: month nav ---------- */
+function renderMonth(){
+  $('#mCur').textContent=MONTHS[S.month]+' '+S.year;
+}
+
+/* ---------- render: list ---------- */
+var FLAGS=[['isDelivered','Delivered'],['isPaperworkComplete','Paperwork'],['isServiceComplete','Service'],['isRegistered','Registered'],['isInspected','Inspected'],['isFueled','Fueled']];
+function flagLabel(k){for(var i=0;i<FLAGS.length;i++)if(FLAGS[i][0]===k)return FLAGS[i][1];return k}
+function renderList(){
+  var q=S.query.toLowerCase();
+  var es=monthEntries(S.year,S.month).filter(function(e){
+    if(S.filter==='pending'&&e.isFinalized)return false;
+    if(S.filter==='done'&&!e.isFinalized)return false;
+    if(!q)return true;
+    return [e.customerName,e.stockNumber,e.make,e.model,e.customerPhone,e.customerEmail].some(function(v){return String(v||'').toLowerCase().indexOf(q)>-1});
+  });
+  es.sort(function(a,b){
+    if(a.isFinalized!==b.isFinalized)return (a.isFinalized?1:-1)*(S.settings.showCompletedFirst?-1:1);
+    return new Date(b.date)-new Date(a.date);
+  });
+  var el=$('#list');
+  if(!es.length){
+    el.innerHTML='<div class="empty"><div class="big">🚗</div><p>'+(S.query||S.filter!=='all'?'No deals match your search.':'No deals in '+MONTHS[S.month]+' yet. Tap + to log your first sale.')+'</p></div>';
+    return;
+  }
+  el.innerHTML=es.map(function(e){
+    var open=S.openId===e.id;
+    var flags=FLAGS.map(function(f){return '<span class="flag'+(e[f[0]]?' ok':'')+'" title="'+f[1]+'"></span>'}).join('');
+    var cod=money(e.codAmount)>0&&!e.codPaid?'<span class="cod-flag">C.O.D.</span>':'';
+    var h='<div class="deal'+(e.isFinalized?' done':'')+(open?' open':'')+'" data-id="'+e.id+'">'
+      +'<div class="deal-head"><span class="stock">'+esc(e.stockNumber||'—')+'</span>'
+      +'<div class="deal-id"><div class="cust">'+esc(e.customerName||'Unnamed customer')+'</div>'
+      +'<div class="veh">'+esc([e.year,e.make,e.model].filter(Boolean).join(' '))+(e.vehicleType?' · '+(e.vehicleType==='new'?'New':'Pre-Owned'):'')+'</div></div>'
+      +'<div class="deal-flags">'+cod+flags+'</div>'
+      +'<span class="chev">▾</span></div>';
+    if(open){
+      h+='<div class="deal-body"><div class="badges">'+FLAGS.map(function(f){
+        return '<span class="badge'+(e[f[0]]?' ok':'')+'" data-flag="'+f[0]+'">'+(e[f[0]]?'✓ ':'')+f[1]+'</span>';
+      }).join('')+'</div><div class="kv">';
+      if(e.dealType)h+='<div><span>Deal type</span><b>'+esc(e.dealType.charAt(0).toUpperCase()+e.dealType.slice(1))+'</b></div>';
+      if(e.plateType)h+='<div><span>Plates</span><b>'+(e.plateType==='new'?'New':'Transfer')+'</b></div>';
+      if(e.insuranceCompany)h+='<div><span>Insurance</span><b>'+esc(e.insuranceCompany)+'</b></div>';
+      if(money(e.codAmount)>0)h+='<div><span>C.O.D.</span><b>'+fmt$.format(money(e.codAmount))+(e.codPaid?' ✓ paid':' due')+'</b></div>';
+      if(e.customerPhone)h+='<div><span>Phone</span><b>'+esc(e.customerPhone)+'</b></div>';
+      if(e.customerEmail)h+='<div><span>Email</span><b>'+esc(e.customerEmail)+'</b></div>';
+      if(e.hasDeliveryAppointment&&e.deliveryAppointment){var d=new Date(e.deliveryAppointment);h+='<div><span>Delivery appt</span><b>'+d.toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+'</b></div>'}
+      if(e.actualDeliveryDate)h+='<div><span>Delivered on</span><b>'+new Date(e.actualDeliveryDate).toLocaleDateString()+'</b></div>';
+      if(e.hasTradeIn)h+='<div><span>Trade-in</span><b>'+esc([e.tradeInYear,e.tradeInMake,e.tradeInModel].filter(Boolean).join(' ')||'Yes')+'</b></div>';
+      if(hasCommission()&&S.settings.commissionTrackerEnabled&&money(e.grossProfit)>0){
+        h+='<div><span>Gross profit</span><b>'+fmt$.format(money(e.grossProfit))+'</b></div>'
+          +'<div><span>Commission'+(e.commissionPaid?' ✓ paid':'')+'</span><b>'+fmt$.format(dealCommission(e))+'</b></div>';
+      }
+      h+='<div><span>Sale date</span><b>'+new Date(e.date).toLocaleDateString()+'</b></div></div>';
+      if(e.notes)h+='<div class="note-line">'+esc(e.notes)+'</div>';
+      h+='<div class="deal-actions">'
+        +'<button class="da-btn da-edit" data-act="edit"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7m-1.5-9.5a2.12 2.12 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit</button>'
+        +'<button class="da-btn da-del" data-act="del"><svg viewBox="0 0 24 24"><path d="M3 6h18m-2 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>Delete</button>'
+        +'</div></div>';
+    }
+    return h+'</div>';
+  }).join('');
+}
+
+/* ---------- list interactions (delegated) ---------- */
+$('#list').addEventListener('click',function(ev){
+  var deal=ev.target.closest('.deal');if(!deal)return;
+  var id=deal.dataset.id;
+  var e=S.entries.find(function(x){return x.id===id});if(!e)return;
+  var badge=ev.target.closest('.badge');
+  if(badge){e[badge.dataset.flag]=!e[badge.dataset.flag];e.updatedAt=new Date().toISOString();save(K.entries,S.entries);renderList();renderStats();return}
+  var act=ev.target.closest('[data-act]');
+  if(act){
+    if(act.dataset.act==='edit'){openForm(e);return}
+    if(act.dataset.act==='del'){
+      openConfirm('Delete this deal?',esc(e.customerName||e.stockNumber||'This deal')+' will be permanently removed.',function(){
+        S.entries=S.entries.filter(function(x){return x.id!==id});save(K.entries,S.entries);S.openId=null;renderList();renderStats();toast('Deal deleted');
+      });return;
+    }
+  }
+  if(ev.target.closest('.deal-head')){S.openId=S.openId===id?null:id;renderList()}
+});
+
+/* ---------- modal plumbing ---------- */
+var ovl=$('#ovl'),sheet=$('#sheet');
+function openSheet(html){sheet.innerHTML=html;ovl.classList.add('on');sheet.scrollTop=0;document.body.style.overflow='hidden';
+  $$('.x-btn',sheet).forEach(function(b){b.onclick=closeSheet})}
+function closeSheet(){ovl.classList.remove('on');document.body.style.overflow='';sheet.innerHTML=''}
+ovl.addEventListener('click',function(e){if(e.target===ovl)closeSheet()});
+addEventListener('keydown',function(e){if(e.key==='Escape'&&ovl.classList.contains('on'))closeSheet()});
+function sheetHead(t){return '<div class="sheet-head"><h2>'+t+'</h2><button class="x-btn" type="button">✕</button></div>'}
+
+/* ---------- confirm dialog ---------- */
+function openConfirm(title,body,onYes){
+  openSheet(sheetHead(esc(title))+'<p style="font-size:.9rem;color:var(--text2);line-height:1.55">'+body+'</p>'
+    +'<button class="danger-btn" id="cfYes" style="margin-top:18px">Yes, continue</button>'
+    +'<button class="ghost-btn" id="cfNo">Cancel</button>');
+  $('#cfYes').onclick=function(){closeSheet();onYes()};
+  $('#cfNo').onclick=closeSheet;
+}
+
+/* ---------- goal modal ---------- */
+function openGoal(){
+  var key=mKey(S.year,S.month),cur=S.goals[key]||'';
+  openSheet(sheetHead('Goal for '+MONTHS[S.month])
+    +'<div class="frow"><label>Monthly sales goal (vehicles)</label><input id="goalIn" type="number" min="0" inputmode="numeric" value="'+esc(cur)+'" placeholder="e.g. 15"></div>'
+    +'<button class="save-btn" id="goalSave">Save goal</button>'
+    +(cur?'<button class="danger-btn" id="goalRm">Remove goal</button>':''));
+  var inp=$('#goalIn');inp.focus();
+  function commit(){var v=parseInt(inp.value);if(v>0){S.goals[key]=v}else{delete S.goals[key]}save(K.goals,S.goals);closeSheet();renderStats();if(v>0)toast('Goal set: '+v+' vehicles')}
+  $('#goalSave').onclick=commit;
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')commit()});
+  var rm=$('#goalRm');if(rm)rm.onclick=function(){delete S.goals[key];save(K.goals,S.goals);closeSheet();renderStats();toast('Goal removed')};
+}
+
+/* ---------- deal form ---------- */
+function seg(name,opts,val){
+  return '<div class="seg" data-seg="'+name+'">'+opts.map(function(o){
+    return '<button type="button" data-v="'+o[0]+'"'+(val===o[0]?' class="on"':'')+'>'+o[1]+'</button>';
+  }).join('')+'</div>';
+}
+function openForm(e){
+  var isNew=!e;
+  e=e||{};
+  if(isNew&&!hasUnlimited()){
+    var d0=new Date();
+    if(monthEntries(d0.getFullYear(),d0.getMonth()).length>=CONFIG.FREE_DEAL_LIMIT){
+      openPaywall('You’ve hit the free limit of '+CONFIG.FREE_DEAL_LIMIT+' deals this month. Go unlimited with Premium.');return;
+    }
+  }
+  var today=new Date();
+  var todayStr=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  var saleDate=e.date?new Date(e.date):today;
+  var saleStr=new Date(saleDate.getTime()-saleDate.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  var apptVal='';
+  if(e.deliveryAppointment){var ap=new Date(e.deliveryAppointment);apptVal=new Date(ap.getTime()-ap.getTimezoneOffset()*60000).toISOString().slice(0,16)}
+  var commSec='';
+  if(hasCommission()&&S.settings.commissionTrackerEnabled){
+    commSec='<p class="sec-t">Commission</p>'
+      +'<div class="grid2"><div class="frow"><label>Gross profit ($)</label><input id="f_gp" inputmode="decimal" value="'+esc(e.grossProfit||'')+'" placeholder="2500"></div>'
+      +'<div class="frow"><label>&nbsp;</label><div class="est-line"><span>Est. commission</span><b id="estComm">$0.00</b></div></div></div>'
+      +'<div class="switch-row"><div class="sl"><b>Commission paid</b></div><button type="button" class="sw'+(e.commissionPaid?' on':'')+'" id="f_commPaid"></button></div>';
+  }else if(!hasCommission()){
+    commSec='<p class="sec-t">Commission</p><div class="lock-note">🔒 Gross profit &amp; commission tracking is an Advanced feature.<button type="button" id="commUp">See plans</button></div>';
+  }
+  openSheet(sheetHead(isNew?'New deal':'Edit deal')
+    +'<p class="sec-t">Customer</p>'
+    +'<div class="frow"><label>Customer name <em>*</em></label><input id="f_name" value="'+esc(e.customerName||'')+'" placeholder="John Doe"></div>'
+    +'<div class="grid2"><div class="frow"><label>Phone</label><input id="f_phone" type="tel" value="'+esc(e.customerPhone||'')+'" placeholder="(555) 123-4567"></div>'
+    +'<div class="frow"><label>Email</label><input id="f_email" type="email" value="'+esc(e.customerEmail||'')+'" placeholder="customer@example.com"></div></div>'
+    +'<p class="sec-t">Vehicle</p>'
+    +'<div class="grid2"><div class="frow"><label>Stock # <em>*</em></label><input id="f_stock" value="'+esc(e.stockNumber||'')+'" placeholder="ABC123"></div>'
+    +'<div class="frow"><label>Year <em>*</em></label><input id="f_year" inputmode="numeric" value="'+esc(e.year||'')+'" placeholder="2024"></div></div>'
+    +'<div class="grid2"><div class="frow"><label>Make <em>*</em></label><input id="f_make" value="'+esc(e.make||'')+'" placeholder="Toyota"></div>'
+    +'<div class="frow"><label>Model <em>*</em></label><input id="f_model" value="'+esc(e.model||'')+'" placeholder="Camry"></div></div>'
+    +'<div class="grid2"><div class="frow"><label>Condition</label>'+seg('vehicleType',[['new','New'],['pre-owned','Pre-Owned']],e.vehicleType||'new')+'</div>'
+    +'<div class="frow"><label>Plates</label>'+seg('plateType',[['new','New'],['transfer','Transfer']],e.plateType||'new')+'</div></div>'
+    +'<div class="frow"><label>Deal type</label>'+seg('dealType',[['cash','Cash'],['finance','Finance'],['lease','Lease']],e.dealType||'finance')+'</div>'
+    +'<div class="switch-row"><div class="sl"><b>Trade-in</b><span>Customer is trading a vehicle</span></div><button type="button" class="sw'+(e.hasTradeIn?' on':'')+'" id="f_trade"></button></div>'
+    +'<div class="grid3" id="tradeFields" style="display:'+(e.hasTradeIn?'grid':'none')+';margin-top:10px">'
+    +'<div class="frow"><label>Trade year</label><input id="f_tyear" value="'+esc(e.tradeInYear||'')+'" placeholder="2019"></div>'
+    +'<div class="frow"><label>Trade make</label><input id="f_tmake" value="'+esc(e.tradeInMake||'')+'" placeholder="Honda"></div>'
+    +'<div class="frow"><label>Trade model</label><input id="f_tmodel" value="'+esc(e.tradeInModel||'')+'" placeholder="Civic"></div></div>'
+    +'<p class="sec-t">Insurance &amp; payment</p>'
+    +'<div class="grid2"><div class="frow"><label>Insurance company</label><input id="f_ins" value="'+esc(e.insuranceCompany||'')+'" placeholder="Geico"></div>'
+    +'<div class="frow"><label>C.O.D. amount ($)</label><input id="f_cod" inputmode="decimal" value="'+esc(e.codAmount||'')+'" placeholder="0"></div></div>'
+    +'<div class="switch-row"><div class="sl"><b>C.O.D. paid</b></div><button type="button" class="sw'+(e.codPaid?' on':'')+'" id="f_codPaid"></button></div>'
+    +commSec
+    +'<p class="sec-t">Status checklist</p>'
+    +'<div class="badges" id="f_flags">'+FLAGS.filter(function(f){return f[0]!=='isDelivered'}).map(function(f){
+      return '<span class="badge'+(e[f[0]]?' ok':'')+'" data-flag="'+f[0]+'">'+(e[f[0]]?'✓ ':'')+f[1]+'</span>';
+    }).join('')+'</div>'
+    +'<p class="sec-t">Delivery</p>'
+    +'<div class="switch-row"><div class="sl"><b>Delivery appointment</b><span>Schedule the handoff</span></div><button type="button" class="sw'+(e.hasDeliveryAppointment?' on':'')+'" id="f_hasAppt"></button></div>'
+    +'<div class="frow" id="apptField" style="display:'+(e.hasDeliveryAppointment?'block':'none')+';margin-top:10px"><label>Appointment date &amp; time</label><input id="f_appt" type="datetime-local" value="'+apptVal+'"></div>'
+    +'<div class="switch-row"><div class="sl"><b>Delivered</b><span>Vehicle handed to customer</span></div><button type="button" class="sw'+(e.isDelivered?' on':'')+'" id="f_delivered"></button></div>'
+    +'<div class="frow" id="actualField" style="display:'+(e.isDelivered?'block':'none')+';margin-top:10px"><label>Actual delivery date</label><input id="f_actual" type="date" value="'+(e.actualDeliveryDate?e.actualDeliveryDate.slice(0,10):todayStr)+'"></div>'
+    +'<p class="sec-t">Details</p>'
+    +'<div class="frow"><label>Sale date</label><input id="f_date" type="date" value="'+saleStr+'"></div>'
+    +'<div class="frow"><label>Notes</label><textarea id="f_notes" rows="3" placeholder="Add any additional notes…">'+esc(e.notes||'')+'</textarea></div>'
+    +'<div class="switch-row"><div class="sl"><b>Deal finalized</b><span>Counts as a completed deal</span></div><button type="button" class="sw'+(e.isFinalized?' on':'')+'" id="f_final"></button></div>'
+    +'<button class="save-btn" id="dealSave">'+(isNew?'Add deal':'Save changes')+'</button>');
+
+  $$('.sw',sheet).forEach(function(sw){sw.addEventListener('click',function(){sw.classList.toggle('on');
+    if(sw.id==='f_trade')$('#tradeFields').style.display=sw.classList.contains('on')?'grid':'none';
+    if(sw.id==='f_hasAppt')$('#apptField').style.display=sw.classList.contains('on')?'block':'none';
+    if(sw.id==='f_delivered')$('#actualField').style.display=sw.classList.contains('on')?'block':'none';
+  })});
+  $$('[data-seg] button',sheet).forEach(function(b){b.addEventListener('click',function(){
+    $$('button',b.parentElement).forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+  })});
+  $('#f_flags').addEventListener('click',function(ev){var b=ev.target.closest('.badge');if(!b)return;b.classList.toggle('ok');
+    b.textContent=(b.classList.contains('ok')?'✓ ':'')+flagLabel(b.dataset.flag)});
+  var up=$('#commUp');if(up)up.onclick=function(){openPaywall('Track gross profit and commission on every deal.')};
+  var gpIn=$('#f_gp');
+  function updEst(){$('#estComm').textContent=fmt$.format(dealCommission({grossProfit:gpIn.value}))}
+  if(gpIn){gpIn.addEventListener('input',updEst);updEst()}
+
+  $('#dealSave').onclick=function(){
+    var name=$('#f_name').value.trim(),stock=$('#f_stock').value.trim(),yr=$('#f_year').value.trim(),make=$('#f_make').value.trim(),model=$('#f_model').value.trim();
+    if(!name||!stock||!yr||!make||!model){toast('Fill the required fields (*)');return}
+    function segVal(n){var on=$('[data-seg="'+n+'"] .on',sheet);return on?on.dataset.v:''}
+    function swOn(id){var el=$('#'+id);return el?el.classList.contains('on'):false}
+    var flags={};$$('#f_flags .badge',sheet).forEach(function(b){flags[b.dataset.flag]=b.classList.contains('ok')});
+    var nowIso=new Date().toISOString();
+    var obj={
+      id:e.id||uid(),
+      date:new Date($('#f_date').value+'T12:00:00').toISOString(),
+      customerName:name,customerPhone:$('#f_phone').value.trim(),customerEmail:$('#f_email').value.trim(),
+      stockNumber:stock,year:yr,make:make,model:model,
+      vehicleType:segVal('vehicleType'),plateType:segVal('plateType'),dealType:segVal('dealType'),
+      insuranceCompany:$('#f_ins').value.trim(),
+      codAmount:$('#f_cod').value.trim(),codPaid:swOn('f_codPaid'),
+      hasTradeIn:swOn('f_trade'),tradeInYear:$('#f_tyear').value.trim(),tradeInMake:$('#f_tmake').value.trim(),tradeInModel:$('#f_tmodel').value.trim(),
+      isPaperworkComplete:!!flags.isPaperworkComplete,isServiceComplete:!!flags.isServiceComplete,isRegistered:!!flags.isRegistered,isInspected:!!flags.isInspected,isFueled:!!flags.isFueled,
+      hasDeliveryAppointment:swOn('f_hasAppt'),deliveryAppointment:swOn('f_hasAppt')&&$('#f_appt').value?new Date($('#f_appt').value).toISOString():'',
+      isDelivered:swOn('f_delivered'),actualDeliveryDate:swOn('f_delivered')&&$('#f_actual').value?new Date($('#f_actual').value+'T12:00:00').toISOString():'',
+      notes:$('#f_notes').value.trim(),
+      isFinalized:swOn('f_final'),
+      grossProfit:gpIn?gpIn.value.trim():(e.grossProfit||''),
+      commissionPaid:$('#f_commPaid')?swOn('f_commPaid'):!!e.commissionPaid,
+      createdAt:e.createdAt||nowIso,updatedAt:nowIso
+    };
+    if(e.id){S.entries=S.entries.map(function(x){return x.id===e.id?obj:x})}else{S.entries.unshift(obj)}
+    save(K.entries,S.entries);
+    var d=new Date(obj.date);S.year=d.getFullYear();S.month=d.getMonth();
+    closeSheet();renderAll();toast(e.id?'Deal updated':'Deal added 🎉');
+  };
+}
+
+/* ---------- commission breakdown ---------- */
+function openCommission(){
+  var es=monthEntries(S.year,S.month).filter(function(e){return money(e.grossProfit)>0});
+  var st=monthStats();
+  var rows=es.map(function(e){
+    var c=dealCommission(e);
+    var mini=S.settings.miniCommissionEnabled&&money(e.grossProfit)<money(S.settings.miniCommissionThreshold);
+    return '<div class="cm-row"><span class="st">'+esc(e.stockNumber||'—')+'</span><span class="nm">'+esc(e.customerName)+'</span>'
+      +(mini?'<span class="mini-b">MINI</span>':'')
+      +'<span class="gp">'+fmt$.format(money(e.grossProfit))+'</span><span class="cv">'+fmt$.format(c)+'</span>'+(e.commissionPaid?' <span title="Paid">✓</span>':'')+'</div>';
+  }).join('')||'<p style="text-align:center;color:var(--text2);font-size:.85rem;padding:14px">No deals with gross profit this month.</p>';
+  openSheet(sheetHead('Commission — '+MONTHS[S.month])
+    +'<div class="cm-grid">'
+    +'<div class="cm-cell"><b>'+fmt$.format(st.gp)+'</b><span>Total gross profit</span></div>'
+    +'<div class="cm-cell"><b>'+fmt$.format(st.comm)+'</b><span>Your commission</span></div>'
+    +'<div class="cm-cell"><b>'+st.withGp+'</b><span>Deals with GP</span></div>'
+    +'<div class="cm-cell"><b>'+fmt$.format(st.withGp?st.comm/st.withGp:0)+'</b><span>Average per deal</span></div>'
+    +'</div>'+rows);
+}
+
+/* ---------- paywall ---------- */
+var billCycle='yearly';
+function tierCard(id,feats,opts){
+  var t=TIERS[id],cur=S.settings.subscriptionTier===id;
+  var p=t.price[billCycle];
+  var per=billCycle==='monthly'?'/mo':'/yr';
+  var savings=billCycle==='yearly'&&id!=='pro'?(t.price.monthly*12-t.price.yearly):0;
+  var cta;
+  if(cur)cta='<button class="tier-cta cur">Your current plan</button>';
+  else if(id==='pro')cta='<button class="tier-cta cur">Included free</button>';
+  else{
+    cta='<button class="tier-cta'+(id==='advanced'?' adv':'')+'" data-sub="'+id+'">Subscribe</button>'
+      +'<a class="tier-ios" href="'+CONFIG.APP_STORE_URL+'" target="_blank" rel="noopener">Also on <b>iOS</b> — subscriptions sync across your devices</a>';
+  }
+  return '<div class="tier'+(opts&&opts.hot?' hot':'')+'">'+(opts&&opts.hot?'<span class="ribbon">MOST POPULAR</span>':'')
+    +'<div class="tier-head"><span class="tier-dot" style="background:'+t.hex+'"></span><h3>'+t.name+'</h3>'
+    +'<span class="pr">'+(p===0?'Free':'$'+p.toFixed(2))+'<small>'+(p===0?'':per)+'</small></span></div>'
+    +(savings>0.01?'<span class="save-badge">Save $'+savings.toFixed(2)+' a year</span>':'')
+    +'<ul>'+feats.map(function(f){return '<li'+(f[1]?'':' class="no"')+'>'+f[0]+'</li>'}).join('')+'</ul>'+cta+'</div>';
+}
+function renderTiers(){
+  return tierCard('pro',[['Deal tracking ('+CONFIG.FREE_DEAL_LIMIT+'/month)',1],['Monthly statistics',1],['Delivery checklist',1],['Dark mode',1],['Ad-free experience',0],['Unlimited deals',0]])
+    +tierCard('premium',[['Everything in Pro',1],['Unlimited deals',1],['Ad-free experience',1],['Commission tracker',0]])
+    +tierCard('advanced',[['Everything in Premium',1],['Commission tracker',1],['Mini commission rules',1],['Custom font size',1],['Card density options',1]],{hot:true});
+}
+/* Apply a tier unlocked via RevenueCat (web purchase or active entitlement). */
+function applyPurchasedTier(tier){
+  if(!(tier in TIERS))return;
+  S.settings.subscriptionTier=tier;
+  if(tier==='advanced')S.settings.commissionTrackerEnabled=true;
+  S.meta.tierSource='rc';save(K.meta,S.meta);
+  persistSettings();
+}
+function wireSub(){
+  $$('[data-sub]').forEach(function(b){b.onclick=function(){
+    var id=b.dataset.sub;
+    var productId=RC_PRODUCTS[id]&&RC_PRODUCTS[id][billCycle];
+    if(window.rcBilling&&productId){
+      var label=b.textContent;b.disabled=true;b.textContent='Opening checkout…';
+      window.rcBilling.ready.then(function(){
+        if(!window.rcBilling.configured){open(CONFIG.APP_STORE_URL,'_blank','noopener');return null}
+        return window.rcBilling.purchase(productId);
+      })
+        .then(function(tier){
+          if(tier){applyPurchasedTier(tier);closeSheet();toast(TIERS[tier].name+' unlocked 🎉')}
+          else{b.disabled=false;b.textContent=label}
+        })
+        .catch(function(err){
+          b.disabled=false;b.textContent=label;
+          if(!(err&&(err.userCancelled||err.errorCode==='UserCancelledError')))toast('Checkout didn’t complete');
+        });
+      return;
+    }
+    /* SDK unavailable / no product mapping — send to the App Store. */
+    open(CONFIG.APP_STORE_URL,'_blank','noopener');
+  }});
+}
+function openPaywall(reason){
+  openSheet(sheetHead('Choose your plan')
+    +'<div class="stars">★★★★★</div>'
+    +'<p class="pw-sub">'+esc(reason||'Rated 5.0 by car salespeople. Same plans as the iOS app.')+'</p>'
+    +'<div class="seg bill-seg" id="billSeg"><button type="button" data-c="monthly"'+(billCycle==='monthly'?' class="on"':'')+'>Monthly</button><button type="button" data-c="yearly"'+(billCycle==='yearly'?' class="on"':'')+'>Yearly</button></div>'
+    +'<div class="tiers" id="tierWrap">'+renderTiers()+'</div>'
+    +'<p class="pw-fine">Prices in USD. Subscribe securely with any card — auto-renews until cancelled. Purchases made on iOS also unlock here.<br>Your deal data lives in this browser; the iOS app adds push reminders, delivery notifications, and the ATLAS AI assistant.</p>');
+  $('#billSeg').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;billCycle=b.dataset.c;
+    $$('#billSeg button').forEach(function(x){x.classList.toggle('on',x===b)});$('#tierWrap').innerHTML=renderTiers();wireSub()});
+  wireSub();
+}
+
+/* ---------- settings ---------- */
+function openSettings(){
+  var t=TIERS[S.settings.subscriptionTier];
+  var adv=hasDisplayOpts();
+  openSheet(sheetHead('Settings')
+    +'<div class="commission-card" id="planRow" style="margin-bottom:4px"><span style="width:10px;height:10px;border-radius:50%;background:'+t.hex+';flex:none"></span><span class="lbl">'+t.name+' plan</span><span class="lock-cta" style="background:'+t.hex+'">See plans</span></div>'
+    +'<p class="sec-t">Appearance</p>'
+    +'<div class="frow"><label>Theme</label>'+seg('theme',[['system','System'],['light','Light'],['dark','Dark']],S.settings.isDarkMode===null?'system':(S.settings.isDarkMode?'dark':'light'))+'</div>'
+    +(adv?'<div class="frow"><label>Card density</label>'+seg('cardSize',[['compact','Compact'],['comfortable','Comfortable'],['spacious','Spacious']],S.settings.cardSize)+'</div>'
+      +'<div class="frow"><label>Font size</label>'+seg('fontSize',[['small','S'],['medium','M'],['large','L'],['xlarge','XL']],S.settings.fontSizePreset)+'</div>'
+      :'<div class="lock-note">🔒 Card density &amp; font size unlock with Advanced.<button type="button" id="dispUp">See plans</button></div>')
+    +'<p class="sec-t">Behavior</p>'
+    +'<div class="switch-row"><div class="sl"><b>Sales goals</b><span>Track a monthly goal ring</span></div><button type="button" class="sw'+(S.settings.goalsEnabled?' on':'')+'" data-set="goalsEnabled"></button></div>'
+    +'<div class="switch-row"><div class="sl"><b>Completed first</b><span>Sort finalized deals to the top</span></div><button type="button" class="sw'+(S.settings.showCompletedFirst?' on':'')+'" data-set="showCompletedFirst"></button></div>'
+    +'<p class="sec-t">Commission tracker'+(adv?'':' — Advanced')+'</p>'
+    +(adv
+      ?'<div class="switch-row"><div class="sl"><b>Enable commission tracker</b><span>Gross profit &amp; commission per deal</span></div><button type="button" class="sw'+(S.settings.commissionTrackerEnabled?' on':'')+'" data-set="commissionTrackerEnabled"></button></div>'
+       +'<div class="grid3" style="margin-top:10px"><div class="frow"><label>Rate %</label><input id="s_rate" inputmode="decimal" value="'+esc(S.settings.commissionRate)+'"></div>'
+       +'<div class="frow"><label>Mini threshold $</label><input id="s_thresh" inputmode="decimal" value="'+esc(S.settings.miniCommissionThreshold)+'"></div>'
+       +'<div class="frow"><label>Mini amount $</label><input id="s_mini" inputmode="decimal" value="'+esc(S.settings.miniCommissionAmount)+'"></div></div>'
+       +'<div class="switch-row"><div class="sl"><b>Mini commission</b><span>Flat amount when GP is under the threshold</span></div><button type="button" class="sw'+(S.settings.miniCommissionEnabled?' on':'')+'" data-set="miniCommissionEnabled"></button></div>'
+      :'<div class="lock-note">🔒 Track gross profit, commission rate, and mini deals with Advanced.<button type="button" id="commUp2">See plans</button></div>')
+    +'<p class="sec-t">Data</p>'
+    +'<button class="ghost-btn" id="expBtn" style="margin-top:0">Export data (JSON)</button>'
+    +'<button class="ghost-btn" id="impBtn">Import data</button><input type="file" id="impFile" accept=".json,application/json" hidden>'
+    +'<button class="ghost-btn" id="redeemBtn">Redeem upgrade code</button>'
+    +'<button class="danger-btn" id="wipeBtn">Erase all data</button>'
+    +'<p class="sec-t">About</p>'
+    +'<p style="font-size:.8rem;color:var(--text2);line-height:1.7">CarSales Tracker Pro · local-first web companion<br>'
+    +'<a href="/" style="color:var(--primary)">Commission resource hub</a> · '
+    +'<a href="'+CONFIG.APP_STORE_URL+'" target="_blank" rel="noopener" style="color:var(--primary)">Get the iOS app</a> · '
+    +'<a href="mailto:support@andromedakinship.com" style="color:var(--primary)">Support</a> · '
+    +'<a href="/privacy/" style="color:var(--primary)">Privacy</a> · '
+    +'<a href="/terms/" style="color:var(--primary)">Terms</a></p>');
+
+  $('#planRow').onclick=function(){openPaywall()};
+  $$('[data-set]',sheet).forEach(function(sw){sw.addEventListener('click',function(){
+    sw.classList.toggle('on');S.settings[sw.dataset.set]=sw.classList.contains('on');persistSettings();
+  })});
+  $('[data-seg="theme"]',sheet).addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;
+    S.settings.isDarkMode=b.dataset.v==='system'?null:b.dataset.v==='dark';persistSettings()});
+  var cs=$('[data-seg="cardSize"]',sheet);if(cs)cs.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;S.settings.cardSize=b.dataset.v;persistSettings()});
+  var fs=$('[data-seg="fontSize"]',sheet);if(fs)fs.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;S.settings.fontSizePreset=b.dataset.v;persistSettings()});
+  ['s_rate','s_thresh','s_mini'].forEach(function(id){var el=$('#'+id);if(el)el.addEventListener('change',function(){
+    if(id==='s_rate')S.settings.commissionRate=money(el.value);
+    if(id==='s_thresh')S.settings.miniCommissionThreshold=money(el.value);
+    if(id==='s_mini')S.settings.miniCommissionAmount=money(el.value);
+    persistSettings();
+  })});
+  var u1=$('#dispUp');if(u1)u1.onclick=function(){openPaywall()};
+  var u2=$('#commUp2');if(u2)u2.onclick=function(){openPaywall()};
+  $('#expBtn').onclick=exportData;
+  $('#impBtn').onclick=function(){$('#impFile').click()};
+  $('#impFile').addEventListener('change',importData);
+  $('#redeemBtn').onclick=openRedeem;
+  $('#wipeBtn').onclick=function(){openConfirm('Erase all data?','Every deal, goal, and setting in this browser will be permanently deleted.',function(){
+    localStorage.removeItem(K.entries);localStorage.removeItem(K.goals);localStorage.removeItem(K.settings);location.reload();
+  })};
+}
+function persistSettings(){save(K.settings,S.settings);applyPrefs();renderChrome();renderStats();renderList()}
+
+/* ---------- redeem ---------- */
+function openRedeem(){
+  openSheet(sheetHead('Redeem upgrade code')
+    +'<p style="font-size:.85rem;color:var(--text2);line-height:1.6;margin-bottom:14px">Got a web upgrade code with your subscription? Enter it below to unlock this browser.</p>'
+    +'<div class="frow"><input id="rc" placeholder="e.g. CSTP-XXXX-XXXX" autocomplete="off"></div>'
+    +'<button class="save-btn" id="rcGo">Redeem</button>');
+  $('#rcGo').onclick=function(){
+    var code=$('#rc').value.trim();if(!code)return;
+    if(!(window.crypto&&crypto.subtle)){toast('Not supported in this browser');return}
+    crypto.subtle.digest('SHA-256',new TextEncoder().encode(code)).then(function(buf){
+      var hex=Array.prototype.map.call(new Uint8Array(buf),function(b){return b.toString(16).padStart(2,'0')}).join('');
+      var tier=null;
+      if(CONFIG.UPGRADE_CODE_HASHES.advanced.indexOf(hex)>-1)tier='advanced';
+      else if(CONFIG.UPGRADE_CODE_HASHES.premium.indexOf(hex)>-1)tier='premium';
+      if(tier){S.settings.subscriptionTier=tier;if(tier==='advanced')S.settings.commissionTrackerEnabled=true;S.meta.tierSource='code';save(K.meta,S.meta);persistSettings();closeSheet();toast(TIERS[tier].name+' unlocked 🎉')}
+      else toast('Code not recognized');
+    });
+  };
+}
+
+/* ---------- export / import ---------- */
+function exportData(){
+  var blob=new Blob([JSON.stringify({app:'CarSales Tracker Pro Web',version:'2.9',exportedAt:new Date().toISOString(),entries:S.entries,goals:S.goals,settings:S.settings},null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='carsales-tracker-export-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();
+  toast('Data exported');
+}
+function importData(ev){
+  var f=ev.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var d=JSON.parse(r.result);
+      var entries=Array.isArray(d)?d:d.entries;
+      if(!Array.isArray(entries))throw new Error('bad');
+      openConfirm('Import '+entries.length+' deals?','This replaces the data currently in this browser.',function(){
+        S.entries=entries;if(d.goals)S.goals=d.goals;
+        save(K.entries,S.entries);save(K.goals,S.goals);renderAll();toast('Imported '+entries.length+' deals');
+      });
+    }catch(e){toast('Invalid file')}
+  };
+  r.readAsText(f);ev.target.value='';
+}
+
+/* ---------- header / chrome ---------- */
+function renderChrome(){
+  var t=TIERS[S.settings.subscriptionTier];
+  var chip=$('#tierChip');
+  chip.textContent=t.name.toUpperCase();chip.style.background=t.hex;
+  chip.onclick=function(){openPaywall()};
+}
+$('#settingsBtn').onclick=openSettings;
+$('#fab').onclick=function(){openForm(null)};
+$('#mPrev').onclick=function(){S.month--;if(S.month<0){S.month=11;S.year--}S.openId=null;renderMonth();renderStats();renderList()};
+$('#mNext').onclick=function(){S.month++;if(S.month>11){S.month=0;S.year++}S.openId=null;renderMonth();renderStats();renderList()};
+$('#mCur').onclick=function(){var d=new Date();S.month=d.getMonth();S.year=d.getFullYear();renderMonth();renderStats();renderList()};
+$('#search').addEventListener('input',function(){S.query=this.value;renderList()});
+$$('.pill-btn').forEach(function(b){b.addEventListener('click',function(){
+  S.filter=b.dataset.f;$$('.pill-btn').forEach(function(x){x.classList.toggle('on',x===b)});renderList();
+})});
+
+/* ---------- iOS strip ---------- */
+(function(){
+  var isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent);
+  if(isIOS&&!S.meta.iosStripDismissed)$('#iosStrip').classList.add('show');
+  $('#iosStripX').onclick=function(){$('#iosStrip').classList.remove('show');S.meta.iosStripDismissed=true;save(K.meta,S.meta)};
+})();
+
+/* ---------- upgrade nudge (mirrors the app's every-5-focuses popup) ---------- */
+S.meta.sessions=(S.meta.sessions||0)+1;save(K.meta,S.meta);
+if(S.settings.subscriptionTier==='pro'&&S.meta.sessions>1&&S.meta.sessions%CONFIG.NUDGE_EVERY===0&&S.meta.nudgedAt!==S.meta.sessions){
+  S.meta.nudgedAt=S.meta.sessions;save(K.meta,S.meta);
+  setTimeout(function(){openPaywall('Unlock more power — remove ads, go unlimited, and track every commission.')},1200);
+}
+
+/* ---------- RevenueCat entitlement sync ----------
+   The module script dispatches 'rc-entitlement' on load and after a purchase,
+   with the highest active web tier (or null). Entitlements are authoritative
+   for tiers we granted via RevenueCat; redeem-code grants are left untouched. */
+addEventListener('rc-entitlement',function(ev){
+  var tier=ev.detail&&ev.detail.tier;
+  if(tier&&(TIERS[tier]||{}).rank>rank()){applyPurchasedTier(tier);toast(TIERS[tier].name+' active')}
+  else if(!tier&&S.meta.tierSource==='rc'&&rank()>0){
+    S.settings.subscriptionTier='pro';S.settings.commissionTrackerEnabled=false;
+    S.meta.tierSource=null;save(K.meta,S.meta);persistSettings();
+  }
+});
+
+/* ---------- boot ---------- */
+function renderAll(){applyPrefs();renderChrome();renderMonth();renderStats();renderList()}
+renderAll();
+})();
+</script>
+<script type="module">
+/* ============================================================
+   RevenueCat Web Billing — checkout + entitlement sync.
+   Loaded as a module (runs after the main script). Exposes
+   window.rcBilling for the paywall, and fires 'rc-entitlement'
+   so the app can unlock/downgrade tiers automatically.
+   ============================================================ */
+import { Purchases } from "https://esm.sh/@revenuecat/purchases-js@1.42.4";
+
+var KEY='rcb_TLBMwRyxlnDXdhuhsztqUlHkiGRK';
+var OFFERING='web';
+var ENT_TIER={carsales_advanced:'advanced',carsales_premium:'premium'};
+var RANK={pro:0,premium:1,advanced:2};
+
+/* Highest web tier among active entitlements, or null. */
+function tierFromInfo(info){
+  var active=(info&&info.entitlements&&info.entitlements.active)||{};
+  var best=null,bestRank=-1;
+  Object.keys(active).forEach(function(id){
+    var t=ENT_TIER[id];if(t&&RANK[t]>bestRank){best=t;bestRank=RANK[t]}
+  });
+  return best;
+}
+function announce(info){
+  try{dispatchEvent(new CustomEvent('rc-entitlement',{detail:{tier:tierFromInfo(info)}}))}catch(e){}
+}
+
+/* Stable per-browser RevenueCat user id, so entitlements persist across visits. */
+var uid;
+try{uid=localStorage.getItem('cstp_rc_uid')}catch(e){}
+if(!uid){uid=Purchases.generateRevenueCatAnonymousAppUserId();try{localStorage.setItem('cstp_rc_uid',uid)}catch(e){}}
+
+var resolveReady;
+var rc={
+  configured:false,
+  ready:new Promise(function(r){resolveReady=r}),
+  /* Open checkout for a web product id; resolve to the unlocked tier (or null). */
+  purchase:function(productId){
+    return Purchases.getSharedInstance().getOfferings().then(function(offerings){
+      var offering=(offerings.all&&offerings.all[OFFERING])||offerings.current;
+      if(!offering)throw new Error('offering-missing');
+      var pkg=offering.availablePackages.filter(function(p){
+        var prod=p.webBillingProduct||p.rcBillingProduct||{};
+        return prod.identifier===productId;
+      })[0];
+      if(!pkg)throw new Error('package-missing');
+      return Purchases.getSharedInstance().purchase({rcPackage:pkg});
+    }).then(function(result){
+      var info=result&&result.customerInfo;
+      announce(info);
+      return tierFromInfo(info);
+    });
+  }
+};
+window.rcBilling=rc;
+
+try{
+  Purchases.configure({apiKey:KEY,appUserId:uid});
+  rc.configured=true;
+  resolveReady();
+  /* Sync entitlements on load (handles renewals & cancellations across sessions). */
+  Purchases.getSharedInstance().getCustomerInfo().then(announce).catch(function(){});
+}catch(e){
+  /* If configure fails, leave window.rcBilling but unresolved-safe: the paywall
+     falls back to the App Store. Resolve ready so awaiting buttons don't hang. */
+  rc.configured=false;resolveReady();
+}
+</script>
+</body>
+</html>

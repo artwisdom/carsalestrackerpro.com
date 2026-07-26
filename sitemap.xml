@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://carsalestrackerpro.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://carsalestrackerpro.com/tools/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/</loc><lastmod>2026-06-14</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://carsalestrackerpro.com/blog/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://carsalestrackerpro.com/</loc><lastmod>2026-07-26</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://carsalestrackerpro.com/tracker/</loc><lastmod>2026-07-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://carsalestrackerpro.com/tools/</loc><lastmod>2026-07-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/</loc><lastmod>2026-07-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://carsalestrackerpro.com/tools/pay-plan-comparison-calculator/</loc><lastmod>2026-07-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://carsalestrackerpro.com/blog/</loc><lastmod>2026-07-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://carsalestrackerpro.com/blog/how-car-salesman-commission-works/</loc><lastmod>2026-06-14</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://carsalestrackerpro.com/blog/what-is-a-mini-deal/</loc><lastmod>2026-06-14</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://carsalestrackerpro.com/blog/how-much-do-car-salesmen-make/</loc><lastmod>2026-06-14</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://carsalestrackerpro.com/blog/how-much-do-car-salesmen-make/</loc><lastmod>2026-07-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://carsalestrackerpro.com/blog/how-to-sell-more-cars/</loc><lastmod>2026-06-14</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://carsalestrackerpro.com/blog/first-30-days-in-car-sales/</loc><lastmod>2026-06-14</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://carsalestrackerpro.com/blog/day-in-the-life-car-salesman/</loc><lastmod>2026-06-14</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://carsalestrackerpro.com/blog/car-salesman-pay-plan-explained/</loc><lastmod>2026-06-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://carsalestrackerpro.com/blog/how-to-follow-up-with-car-leads/</loc><lastmod>2026-06-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://carsalestrackerpro.com/about/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://carsalestrackerpro.com/contact/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://carsalestrackerpro.com/blog/how-to-read-your-commission-statement/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://carsalestrackerpro.com/blog/car-sales-spiffs-bonuses-pvr/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://carsalestrackerpro.com/blog/front-end-vs-back-end-gross/</loc><lastmod>2026-07-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://carsalestrackerpro.com/blog/car-sales-draw-explained/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://carsalestrackerpro.com/blog/average-commission-per-car/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://carsalestrackerpro.com/about/</loc><lastmod>2026-07-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://carsalestrackerpro.com/contact/</loc><lastmod>2026-07-26</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://carsalestrackerpro.com/authors/michael-dube/</loc><lastmod>2026-07-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://carsalestrackerpro.com/editorial-policy/</loc><lastmod>2026-07-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://carsalestrackerpro.com/privacy/</loc><lastmod>2026-07-05</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
   <url><loc>https://carsalestrackerpro.com/terms/</loc><lastmod>2026-07-05</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
   <url><loc>https://carsalestrackerpro.com/disclaimer/</loc><lastmod>2026-07-05</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://carsalestrackerpro.com/blog/how-to-read-your-commission-statement/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://carsalestrackerpro.com/blog/car-sales-spiffs-bonuses-pvr/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://carsalestrackerpro.com/blog/front-end-vs-back-end-gross/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://carsalestrackerpro.com/blog/car-sales-draw-explained/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://carsalestrackerpro.com/blog/average-commission-per-car/</loc><lastmod>2026-07-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
