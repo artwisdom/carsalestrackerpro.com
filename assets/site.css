@@ -132,6 +132,18 @@ tr:last-child td{border-bottom:none}
 .calc-break div{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
 .calc-break b{display:block;font-size:1.15rem;color:var(--text);font-weight:700}
 .calc-break span{font-size:.72rem;color:var(--text3)}
+.tool-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:16px}
+.tool-action{appearance:none;border:1px solid var(--border);border-radius:10px;background:var(--surface2);color:var(--text);font:inherit;font-size:.84rem;font-weight:700;padding:9px 13px;cursor:pointer}
+.tool-action:hover{border-color:var(--primary);color:var(--primary)}
+.tool-action.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.tool-action.primary:hover{color:#fff;filter:brightness(1.05)}
+.tool-status{min-height:1.35em;color:var(--text3);font-size:.78rem}
+.article-share{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:-10px 0 26px;padding:12px 13px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow)}
+.article-share>span:first-child{font-size:.82rem;font-weight:700;color:var(--text2);margin-right:auto}
+.article-share a.tool-action{display:inline-flex;align-items:center;text-decoration:none!important;line-height:1.2}
+.break-even-out{margin-top:18px;background:var(--primary-soft);border:1px solid color-mix(in srgb,var(--primary) 26%,var(--border));border-radius:13px;padding:16px 18px}
+.break-even-out b{display:block;color:var(--primary);font-size:1.6rem;line-height:1.1;margin-bottom:4px}
+.break-even-out span{display:block;color:var(--text2);font-size:.88rem}
 .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
 .toggle-row .tl b{display:block;font-size:.92rem}
 .toggle-row .tl span{font-size:.78rem;color:var(--text3)}
@@ -245,6 +257,9 @@ tr:last-child td{border-bottom:none}
 .result-card b{display:block;font-size:1.8rem;color:#fff}
 .result-card em{display:block;font-style:normal;font-size:.78rem;color:#9fb3c8}
 .winner{margin-top:14px;border-radius:11px;background:rgba(16,185,129,.16);color:#a7f3d0;padding:12px 14px;font-weight:600}
+.compare-results .tool-action{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff}
+.compare-results .tool-action:hover{border-color:#67e8f9;color:#67e8f9}
+.compare-results .tool-status{color:#9fb3c8}
 
 @media(max-width:820px){
   .home-hero-in,.home-band-in{grid-template-columns:1fr;gap:38px}

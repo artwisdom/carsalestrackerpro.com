@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v=2">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -116,6 +116,11 @@
       <div class="result-card"><span>Plan B estimated month</span><b id="bTotal">$0</b><em id="bPer">$0 per car</em></div>
     </div>
     <div class="winner" id="winner">Enter your numbers to compare the plans.</div>
+    <div class="tool-actions">
+      <button class="tool-action" id="copyComparison" type="button">Copy comparison</button>
+      <button class="tool-action" id="shareComparison" type="button">Share calculator</button>
+      <span class="tool-status" id="comparisonStatus" role="status" aria-live="polite"></span>
+    </div>
   </section>
 
   <article>
@@ -203,6 +208,26 @@
     var winner=a.total>b.total?'Plan A':'Plan B';
     $('winner').textContent=winner+' pays about '+money.format(difference)+' more per month ('+money.format(difference*12)+' per year) under these assumptions.';
   }
+  function comparisonText(includeUrl){
+    var text='Pay-plan comparison: Plan A '+$('aTotal').textContent+' per month ('+$('aPer').textContent+'); Plan B '+$('bTotal').textContent+' per month ('+$('bPer').textContent+'). '+$('winner').textContent;
+    return includeUrl?text+' Compare yours: https://carsalestrackerpro.com/tools/pay-plan-comparison-calculator/':text;
+  }
+  function copyComparison(){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(comparisonText(true)).then(function(){$('comparisonStatus').textContent='Comparison copied.'},function(){$('comparisonStatus').textContent='Copy was unavailable in this browser.'});
+    }else{
+      $('comparisonStatus').textContent='Copy was unavailable in this browser.';
+    }
+  }
+  $('copyComparison').addEventListener('click',copyComparison);
+  $('shareComparison').addEventListener('click',function(){
+    var url='https://carsalestrackerpro.com/tools/pay-plan-comparison-calculator/';
+    if(navigator.share){
+      navigator.share({title:'Car Sales Pay Plan Comparison Calculator',text:comparisonText(false),url:url}).then(function(){$('comparisonStatus').textContent='Calculator shared.'}).catch(function(err){if(err&&err.name!=='AbortError'){copyComparison()}});
+    }else{
+      copyComparison();
+    }
+  });
   ids.forEach(function(id){$(id).addEventListener('input',calculate)});
   calculate();
 })();

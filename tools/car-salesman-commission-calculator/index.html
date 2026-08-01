@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v=2">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Car Salesman Commission Calculator","url":"https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/","applicationCategory":"FinanceApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Estimate a car salesperson's monthly commission from units sold, front and back gross, separate pay-plan rates, minis, pack, and non-recoverable base pay.","author":{"@type":"Person","name":"Michael Dube","url":"https://carsalestrackerpro.com/authors/michael-dube/"},"publisher":{"@type":"Organization","name":"CarSales Tracker Pro","url":"https://carsalestrackerpro.com"}}
 </script>
@@ -120,6 +120,11 @@
       <div><b id="outGross">$21,600</b><span>total gross</span></div>
       <div><b id="outYear">$64,800</b><span>12× modeled month</span></div>
     </div>
+    <div class="tool-actions">
+      <button class="tool-action primary" id="copyEstimate" type="button">Copy estimate</button>
+      <button class="tool-action" id="shareCalculator" type="button">Share calculator</button>
+      <span class="tool-status" id="shareStatus" role="status" aria-live="polite"></span>
+    </div>
   </section>
 
   <div class="cta-box">
@@ -212,6 +217,27 @@
   $('miniSw').addEventListener('click',function(){
     miniOn=!miniOn;this.classList.toggle('on',miniOn);this.setAttribute('aria-checked',miniOn);
     $('miniFields').classList.toggle('show',miniOn);calc();
+  });
+  function estimateText(includeUrl){
+    var units=Math.floor(num('units'));
+    var text='For '+units+' cars, my estimated monthly car-sales commission is '+$('outTotal').textContent+' ('+$('outPer').textContent+' per car).';
+    return includeUrl?text+' Estimate yours: https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/':text;
+  }
+  function copyEstimate(){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(estimateText(true)).then(function(){$('shareStatus').textContent='Estimate copied.'},function(){$('shareStatus').textContent='Copy was unavailable in this browser.'});
+    }else{
+      $('shareStatus').textContent='Copy was unavailable in this browser.';
+    }
+  }
+  $('copyEstimate').addEventListener('click',copyEstimate);
+  $('shareCalculator').addEventListener('click',function(){
+    var url='https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/';
+    if(navigator.share){
+      navigator.share({title:'Car Salesman Commission Calculator',text:estimateText(false),url:url}).then(function(){$('shareStatus').textContent='Calculator shared.'}).catch(function(err){if(err&&err.name!=='AbortError'){copyEstimate()}});
+    }else{
+      copyEstimate();
+    }
   });
   calc();
 })();
