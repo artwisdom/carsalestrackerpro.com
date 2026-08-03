@@ -10,18 +10,37 @@ SEO is a 3–6 month compounding game. The same posts double as **social fuel**
 
 ---
 
-## Live now (2026-06-14)
+## Live now (updated 2026-08-02)
 
-**Hub tool**
+**Hub tools**
 - `/tools/car-salesman-commission-calculator/` — interactive, ranks + converts
+- `/tools/pay-plan-comparison-calculator/`
 
-**Blog (8 posts, 3 pillars)**
-- Money: `car-salesman-pay-plan-explained` (1st auto-engine post, 2026-06-18), `how-car-salesman-commission-works`, `what-is-a-mini-deal`, `how-much-do-car-salesmen-make`
-- Skills/Career: `how-to-follow-up-with-car-leads` (2nd auto-engine post, 2026-06-18), `how-to-sell-more-cars`, `first-30-days-in-car-sales`
+**Blog (14 posts, 3 pillars)** — ✅ = indexed by Google as of 2026-08-02
+- Money: `how-car-salesman-commission-works`, `what-is-a-mini-deal`,
+  `how-much-do-car-salesmen-make`, `car-salesman-pay-plan-explained`,
+  ✅`front-end-vs-back-end-gross`, ✅`average-commission-per-car`,
+  ✅`car-sales-draw-explained`, ✅`how-to-read-your-commission-statement`,
+  ✅`car-sales-spiffs-bonuses-pvr`
+- Skills/Career: `how-to-follow-up-with-car-leads`, `how-to-sell-more-cars`,
+  `first-30-days-in-car-sales`, `i-want-to-think-about-it-objection`
 - Dealership life: `day-in-the-life-car-salesman`
 
-**Plumbing**: `/blog/` index, `/tools/` index, `sitemap.xml`, `robots.txt`,
-shared `/assets/site.css`, Article/FAQ/Breadcrumb schema on every page.
+**Plumbing**: `/blog/` index, `/tools/` index, `sitemap.xml` (26 URLs, status
+Success), `robots.txt`, shared `/assets/site.css`, Article/Breadcrumb schema on
+every page.
+
+### ⚠️ Indexing status (read before adding posts)
+
+As of 2026-08-02: **9 URLs indexed, 13 "Discovered – currently not indexed."**
+Every un-indexed blog post is from the original June batch; every July post is
+indexed and earning impressions. Google is choosing not to index the older set.
+
+Practical consequence for the engine: **volume is not the constraint right
+now — indexation is.** Prefer deepening/consolidating existing posts and
+strengthening internal links to un-indexed URLs over shipping a brand-new post
+into a queue Google is already declining to crawl. Re-check this section each
+month; if indexed count is still flat, pause net-new publishing.
 
 ---
 
@@ -48,34 +67,74 @@ Rules of thumb for each new post:
 6. Reciprocate: add a link **back** from the relevant BenchCalcs page to the
    commission calculator when convenient (two of our own topical sites
    reinforcing each other).
+7. **Point at least one "Keep reading" card at an un-indexed post.** Crawl
+   paths only help if they start from a page Google actually visits. Audit
+   2026-08-02 found the entire skills/career cluster
+   (`how-to-sell-more-cars`, `first-30-days-in-car-sales`,
+   `day-in-the-life-car-salesman`, `how-to-follow-up-with-car-leads`,
+   `i-want-to-think-about-it-objection`) was reachable only from other
+   un-indexed pages — a closed loop. Fixed by adding a card from each indexed
+   money post. Don't let it re-form.
 
 To add a post: copy any existing `/blog/<slug>/index.html`, swap the title,
 description, canonical, schema, and body. No build step.
 
 ---
 
-## 12-topic backlog (ordered by leverage)
+## Backlog — re-prioritized 2026-08-02 from Search Console
 
-**Money (highest intent — best product fit)**
-1. ✅ DONE 2026-06-18 — Car salesman pay plan explained (`car-salesman-pay-plan-explained`)
-2. How to read your car sales pay plan / commission statement → calc
-3. Spiffs, bonuses & PVR: the extras that pad your check
-4. Front-end vs back-end gross: what counts toward your commission → calc
-5. Car sales draw explained (recoverable vs non-recoverable)
+Ordering is now driven by real GSC data (3 months to 2026-07-31: 964
+impressions, 7 clicks, avg position 21). Items at the top are queries the site
+**already earns impressions for but has no dedicated page**.
 
-**Skills / career**
-6. ✅ DONE 2026-06-18 — How to follow up with car leads (`how-to-follow-up-with-car-leads`)
-7. Overcoming "I want to think about it" (and 4 other objections)
-8. How to hit 20 cars a month (volume systems)
-9. Best CRM/apps for car salespeople (we're on the list) → app
-10. Spreadsheet vs app: tracking your car deals → app
+**Tier 1 — proven demand, no page yet**
 
-**Dealership life / culture**
-11. Is car sales a good career in 2026? (honest pros & cons)
-12. Surviving month-end in car sales (the push, the board, the bonus)
+1. **Tracking a car deal / "commission system" for salespeople**
+   Queries: `track sales` (10 impr), `dealership commission system` (5),
+   `private sale tracking` (3). ~18 impressions of tool-intent traffic landing
+   on nothing dedicated. This is also the closest query cluster to the paid
+   product. → tracker + calculator.
+2. **Chargebacks: commission that can be taken back**
+   Query: `carsales what commissions can be taken back` (3 impr). Partly
+   covered by the new §7 in `how-car-salesman-commission-works` (added
+   2026-08-02) — promote to a standalone post only if that section starts
+   earning impressions. → calc.
+3. **How many cars does the average salesperson sell per month?**
+   Query: `how many cars does the average salesman sell per month` (3 impr).
+   Volume benchmark; pairs naturally with `average-commission-per-car`, which
+   is the site's #2 page by impressions. → calc + tracker.
 
-Each maps cleanly to a search query car salespeople actually type, and each
-funnels to the calculator and the tracker.
+**Tier 2 — from the original backlog, still unwritten**
+
+4. How to hit 20 cars a month (volume systems) → tracker
+5. Spreadsheet vs app: tracking your car deals → app
+6. Best CRM/apps for car salespeople (we're on the list) → app
+7. Surviving month-end in car sales (the push, the board, the bonus)
+8. Is car sales a good career in 2026? (honest pros & cons)
+
+**Done** — pay plan (06-18), follow-up (06-18), commission statement,
+spiffs/PVR/bonuses, front vs back-end gross, draw explained, "I want to think
+about it" objection.
+
+### CTR opportunities (fix before writing anything new)
+
+Two indexed pages carry 70% of all impressions and convert almost none of it —
+retitling is cheaper than a new post:
+
+| Page | Impr | Clicks | CTR |
+|---|---|---|---|
+| `front-end-vs-back-end-gross` | 398 | 2 | 0.5% |
+| `average-commission-per-car` | 278 | 0 | 0% |
+| `car-sales-draw-explained` | 126 | 0 | 0% |
+
+Avg position is 21 (page 2–3), so some of this is rank, not title. But the
+title/meta pair is the free lever.
+
+### Query noise to ignore
+
+`how much does front end work cost` (3 impr) is auto-*repair* intent
+(suspension work), not car-sales front-end gross. Don't write for it — it will
+pull the wrong audience into a commission page.
 
 ---
 
