@@ -736,7 +736,7 @@ function tierCard(id,feats,opts){
     +'<ul>'+feats.map(function(f){return '<li'+(f[1]?'':' class="no"')+'>'+f[0]+'</li>'}).join('')+'</ul>'+cta+'</div>';
 }
 function renderTiers(){
-  return tierCard('pro',[['Deal tracking ('+CONFIG.FREE_DEAL_LIMIT+'/month)',1],['Monthly statistics',1],['Delivery checklist',1],['Dark mode',1],['Ad-free experience',0],['Unlimited deals',0]])
+  return tierCard('pro',[['Deal tracking ('+CONFIG.FREE_DEAL_LIMIT+' per month)',1],['Monthly statistics',1],['Delivery checklist',1],['Dark mode',1],['Ad-free experience',0],['Unlimited deals',0]])
     +tierCard('premium',[['Everything in Pro',1],['Unlimited deals',1],['Ad-free experience',1],['Commission tracker',0]])
     +tierCard('advanced',[['Everything in Premium',1],['Commission tracker',1],['Mini commission rules',1],['Custom font size',1],['Card density options',1]],{hot:true});
 }
