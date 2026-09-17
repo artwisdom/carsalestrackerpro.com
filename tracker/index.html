@@ -20,6 +20,9 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"CarSales Tracker Pro","operatingSystem":"iOS, Web","applicationCategory":"BusinessApplication","url":"https://carsalestrackerpro.com/tracker/","downloadUrl":"https://apps.apple.com/us/app/carsales-tracker-pro/id6756135308","aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","ratingCount":"10"},"offers":[{"@type":"Offer","name":"Pro","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"Premium Monthly","price":"1.99","priceCurrency":"USD"},{"@type":"Offer","name":"Premium Yearly","price":"19.99","priceCurrency":"USD"},{"@type":"Offer","name":"Advanced Monthly","price":"4.99","priceCurrency":"USD"},{"@type":"Offer","name":"Advanced Yearly","price":"49.99","priceCurrency":"USD"}],"author":{"@type":"Person","name":"Michael Dube","url":"https://carsalestrackerpro.com/authors/michael-dube/"}}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need an account to use the web tracker?","acceptedAnswer":{"@type":"Answer","text":"No. The free CarSales Tracker Pro web tracker works without an account or login."}},{"@type":"Question","name":"Where does the web tracker store my deals?","acceptedAnswer":{"@type":"Answer","text":"Deal data is stored locally in your browser rather than in a CarSales Tracker Pro cloud database. Export a JSON backup before clearing browser data or changing devices."}},{"@type":"Question","name":"Can the tracker calculate my exact commission check?","acceptedAnswer":{"@type":"Answer","text":"The tracker estimates commission from the gross, rate, pack, mini, and other rules you enter. Your written dealership pay plan and official payroll statement determine the actual amount."}}]}
+</script>
 <meta name="google-adsense-account" content="ca-pub-9318320959789814">
 <link rel="icon" type="image/png" href="/assets/icon.png">
 <link rel="apple-touch-icon" href="/assets/icon.png">
@@ -84,6 +87,22 @@ input:focus,select:focus,textarea:focus{border-color:var(--primary)}
 
 /* ---------- layout ---------- */
 .wrap{max-width:760px;margin:0 auto;padding:16px 16px 110px}
+.tracker-info{margin:54px 0 0;padding:30px 0 0;border-top:1px solid var(--border)}
+.tracker-info h2{font-size:1.55rem;line-height:1.2;margin-bottom:10px}
+.tracker-info>p{color:var(--text2);line-height:1.65;max-width:660px}
+.tracker-info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.tracker-info-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.tracker-info-card b{display:block;font-size:.94rem;margin-bottom:5px}
+.tracker-info-card p{font-size:.8rem;color:var(--text2);line-height:1.5}
+.tracker-steps{margin:18px 0 0;padding-left:20px;color:var(--text2);line-height:1.65}
+.tracker-steps strong{color:var(--text)}
+.tracker-faq{margin-top:26px}
+.tracker-faq h2{font-size:1.25rem}
+.tracker-faq details{background:var(--surface);border:1px solid var(--border);border-radius:11px;margin-top:8px;padding:12px 14px}
+.tracker-faq summary{cursor:pointer;font-weight:650}
+.tracker-faq p{font-size:.84rem;color:var(--text2);line-height:1.55;margin-top:8px}
+.tracker-info a{color:var(--primary);font-weight:650}
+@media(max-width:620px){.tracker-info-grid{grid-template-columns:1fr}.tracker-info>p{padding-right:72px}}
 
 /* ---------- month nav ---------- */
 .mnav{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:14px}
@@ -155,8 +174,9 @@ html.cs-spacious .deal{padding:19px 18px}
 .empty p{font-size:.92rem;max-width:280px;margin:0 auto;line-height:1.5}
 
 /* ---------- FAB ---------- */
-.fab{position:fixed;bottom:26px;right:max(18px,calc(50vw - 362px));width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,#0891B2,#0284C7);color:#fff;font-size:1.8rem;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(8,145,178,.45);transition:transform .2s;z-index:40}
+.fab{position:fixed;bottom:26px;right:max(18px,calc(50vw - 362px));width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,#0891B2,#0284C7);color:#fff;font-size:1.8rem;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(8,145,178,.45);transition:transform .2s,opacity .2s;z-index:40}
 .fab:hover{transform:scale(1.06)}
+.fab.reading{opacity:0;pointer-events:none;transform:translateY(12px)}
 
 /* ---------- modal system ---------- */
 .ovl{position:fixed;inset:0;background:rgba(2,8,23,.55);backdrop-filter:blur(3px);z-index:100;display:none;align-items:flex-end;justify-content:center}
@@ -294,6 +314,29 @@ html.dark .store-badge{background:#fff;color:#000}
   </div>
 
   <div class="list" id="list"></div>
+
+  <section class="tracker-info" aria-labelledby="trackerInfoTitle">
+    <h2 id="trackerInfoTitle">A private car sales deal tracker that works in your browser</h2>
+    <p>CarSales Tracker Pro gives automotive salespeople an independent record of every active deal, delivery, follow-up, gross figure, and commission estimate. No account is required for the free web version, and your customer and deal data stays in this browser.</p>
+    <div class="tracker-info-grid">
+      <div class="tracker-info-card"><b>Track the whole deal</b><p>Keep the customer, vehicle, stock number, deal status, paperwork, notes, and delivery date together instead of rebuilding the story from memory.</p></div>
+      <div class="tracker-info-card"><b>Watch your commission</b><p>Record gross and the rules from your pay plan so you can compare your own estimate with the statement that arrives on payday.</p></div>
+      <div class="tracker-info-card"><b>Keep control of your data</b><p>The web tracker stores entries locally. Use Export data in Settings to create a JSON backup before clearing browser storage or moving devices.</p></div>
+    </div>
+    <h2>How to use the tracker</h2>
+    <ol class="tracker-steps">
+      <li><strong>Add each up or deal while the details are fresh.</strong> A pending deal can be updated as paperwork, insurance, funding, and delivery move forward.</li>
+      <li><strong>Enter the real gross and commission details.</strong> If you need to model the math first, use the free <a href="/tools/car-salesman-commission-calculator/">car sales commission calculator</a>.</li>
+      <li><strong>Review the month before payroll closes.</strong> Compare your delivered units and expected pay with the dealership's records, then use the <a href="/blog/how-to-read-your-commission-statement/">commission-statement checklist</a> when the statement arrives.</li>
+      <li><strong>Export a backup regularly.</strong> Local storage is private and convenient, but it is not a cloud backup.</li>
+    </ol>
+    <div class="tracker-faq">
+      <h2>Web tracker questions</h2>
+      <details><summary>Do I need an account?</summary><p>No. You can use the free tracker without registering or signing in.</p></details>
+      <details><summary>Where are my deals stored?</summary><p>They are stored locally in this browser, not in a CarSales Tracker Pro cloud database. Export a JSON backup before clearing browser data or changing devices.</p></details>
+      <details><summary>Will the estimate exactly match payroll?</summary><p>Only if every figure and rule you enter matches the dealership's accounting. Treat it as a reconciliation estimate; your written pay plan and official statement control the actual amount.</p></details>
+    </div>
+  </section>
 
 </main>
 
@@ -720,14 +763,14 @@ var billCycle='yearly';
 function tierCard(id,feats,opts){
   var t=TIERS[id],cur=S.settings.subscriptionTier===id;
   var p=t.price[billCycle];
-  var per=billCycle==='monthly'?'/mo':'/yr';
+  var per=billCycle==='monthly'?' per month':' per year';
   var savings=billCycle==='yearly'&&id!=='pro'?(t.price.monthly*12-t.price.yearly):0;
   var cta;
   if(cur)cta='<button class="tier-cta cur">Your current plan</button>';
   else if(id==='pro')cta='<button class="tier-cta cur">Included free</button>';
   else{
     cta='<button class="tier-cta'+(id==='advanced'?' adv':'')+'" data-sub="'+id+'">Subscribe</button>'
-      +'<a class="tier-ios" href="'+CONFIG.APP_STORE_URL+'" target="_blank" rel="noopener">Also on <b>iOS</b> — subscriptions sync across your devices</a>';
+      +'<a class="tier-ios" href="'+CONFIG.APP_STORE_URL+'" target="_blank" rel="noopener">Also on <b>iOS</b> — native reminders and mobile workflow</a>';
   }
   return '<div class="tier'+(opts&&opts.hot?' hot':'')+'">'+(opts&&opts.hot?'<span class="ribbon">MOST POPULAR</span>':'')
     +'<div class="tier-head"><span class="tier-dot" style="background:'+t.hex+'"></span><h3>'+t.name+'</h3>'
@@ -736,7 +779,7 @@ function tierCard(id,feats,opts){
     +'<ul>'+feats.map(function(f){return '<li'+(f[1]?'':' class="no"')+'>'+f[0]+'</li>'}).join('')+'</ul>'+cta+'</div>';
 }
 function renderTiers(){
-  return tierCard('pro',[['Deal tracking ('+CONFIG.FREE_DEAL_LIMIT+'/month)',1],['Monthly statistics',1],['Delivery checklist',1],['Dark mode',1],['Ad-free experience',0],['Unlimited deals',0]])
+  return tierCard('pro',[['Deal tracking ('+CONFIG.FREE_DEAL_LIMIT+' per month)',1],['Monthly statistics',1],['Delivery checklist',1],['Dark mode',1],['Ad-free experience',0],['Unlimited deals',0]])
     +tierCard('premium',[['Everything in Pro',1],['Unlimited deals',1],['Ad-free experience',1],['Commission tracker',0]])
     +tierCard('advanced',[['Everything in Premium',1],['Commission tracker',1],['Mini commission rules',1],['Custom font size',1],['Card density options',1]],{hot:true});
 }
@@ -897,6 +940,11 @@ function renderChrome(){
 }
 $('#settingsBtn').onclick=openSettings;
 $('#fab').onclick=function(){openForm(null)};
+if('IntersectionObserver' in window){
+  new IntersectionObserver(function(entries){
+    $('#fab').classList.toggle('reading',entries[0].isIntersecting);
+  },{threshold:.25}).observe(document.querySelector('.tracker-info'));
+}
 $('#mPrev').onclick=function(){S.month--;if(S.month<0){S.month=11;S.year--}S.openId=null;renderMonth();renderStats();renderList()};
 $('#mNext').onclick=function(){S.month++;if(S.month>11){S.month=0;S.year++}S.openId=null;renderMonth();renderStats();renderList()};
 $('#mCur').onclick=function(){var d=new Date();S.month=d.getMonth();S.year=d.getFullYear();renderMonth();renderStats();renderList()};
