@@ -10,7 +10,7 @@ SEO is a 3–6 month compounding game. The same posts double as **social fuel**
 
 ---
 
-## Live now (reviewed 2026-09-16)
+## Live now (reviewed 2026-10-04)
 
 **Hub tools**
 - `/tools/car-salesman-commission-calculator/` — interactive, ranks + converts
@@ -35,15 +35,36 @@ publisher profile, editorial policy, privacy, terms, contact, and disclaimer.
 
 ### Current search baseline
 
-Search Console, last three months through 2026-09-14:
+Search Console, last three months from 2026-06-30 through 2026-09-29:
 
-- **41 clicks / 7,470 impressions / 0.5% CTR / average position 11.4**
-- Top pages: `front-end-vs-back-end-gross` (2,560 impressions), commission
-  calculator (2,025), `average-commission-per-car` (1,566), and
-  `car-sales-draw-explained` (755)
-- Coverage report last updated 2026-09-13: 10 indexed, 17 discovered but not
-  indexed, and 3 malformed 404 discoveries. Some URLs already show impressions
-  even while the slower coverage report still groups them as not indexed.
+- **66 clicks / 11,000 impressions / 0.6% CTR / average position 10.2**
+- Top pages: `front-end-vs-back-end-gross` (19 clicks / 3,610 impressions),
+  commission calculator (18 / 3,382), homepage (13 / 476),
+  `car-sales-draw-explained` (6 / 1,170), and
+  `average-commission-per-car` (4 / 2,151).
+- The sitemap was read on 2026-10-01 with Success and all 29 URLs discovered.
+- The slower coverage report was last updated 2026-09-20: 10 indexed,
+  19 discovered but not indexed, and 3 old malformed 404 discoveries. That
+  report is not fresh enough to judge the 2026-09-16 release; 16 pages already
+  show search impressions.
+
+### Monetization checkpoint
+
+AdSense checked 2026-10-04:
+
+- Site status remains **Needs attention — Low value content**, last reviewed
+  2026-09-07, before the 2026-09-16 crawl/content release.
+- Policy Center reports **No current issues** and the payment profile is
+  complete; the site review button is available.
+- AdSense reports ads.txt as Not found, but the canonical file returns HTTP 200
+  with the correct publisher line to normal, Googlebot, and AdsBot user agents
+  across apex/www and HTTP/HTTPS. Google documents that low-request sites can
+  take up to a month to reflect ads.txt changes.
+- The July resource-hub redesign had accidentally removed the AdSense loader
+  and free-tier ad mounts. They were restored on 2026-10-04; Premium and
+  Advanced remain ad-free.
+
+`ADSENSE_REVIEW_STATUS: READY_TO_RESUBMIT`
 
 **Operating decision:** do not increase publishing volume yet. Deepen pages
 already earning impressions, improve crawl paths into the older skills/career
@@ -111,8 +132,9 @@ Console shows a query opportunity strong enough to justify a dedicated page.
 
 ### Current optimization targets
 
-- `average-commission-per-car`: query alignment updated 2026-09-16 after 1,566
-  impressions, 1 click, and average position 19.3.
+- `average-commission-per-car`: query alignment updated 2026-09-16; it improved
+  from 1 click / 1,566 impressions to 4 clicks / 2,151 impressions by the
+  2026-10-04 checkpoint.
 - `front-end-vs-back-end-gross`: protect its rankings and use it to pass crawl
   authority into the objection/skills cluster.
 - `/tracker/`: expanded with static, useful documentation on 2026-09-16 because

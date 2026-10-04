@@ -24,6 +24,7 @@
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need an account to use the web tracker?","acceptedAnswer":{"@type":"Answer","text":"No. The free CarSales Tracker Pro web tracker works without an account or login."}},{"@type":"Question","name":"Where does the web tracker store my deals?","acceptedAnswer":{"@type":"Answer","text":"Deal data is stored locally in your browser rather than in a CarSales Tracker Pro cloud database. Export a JSON backup before clearing browser data or changing devices."}},{"@type":"Question","name":"Can the tracker calculate my exact commission check?","acceptedAnswer":{"@type":"Answer","text":"The tracker estimates commission from the gross, rate, pack, mini, and other rules you enter. Your written dealership pay plan and official payroll statement determine the actual amount."}}]}
 </script>
 <meta name="google-adsense-account" content="ca-pub-9318320959789814">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9318320959789814" crossorigin="anonymous"></script>
 <link rel="icon" type="image/png" href="/assets/icon.png">
 <link rel="apple-touch-icon" href="/assets/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,6 +104,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--primary)}
 .tracker-faq p{font-size:.84rem;color:var(--text2);line-height:1.55;margin-top:8px}
 .tracker-info a{color:var(--primary);font-weight:650}
 @media(max-width:620px){.tracker-info-grid{grid-template-columns:1fr}.tracker-info>p{padding-right:72px}}
+
+/* ---------- ads (free tier only) ---------- */
+.ad-box{display:none;margin:0 0 12px;text-align:center}
+.ad-box.on{display:block}
+.ad-box .ad-tag{display:block;margin-bottom:3px;color:var(--text2);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.ad-box ins{display:block;min-height:90px;background:var(--surface2);border-radius:10px}
 
 /* ---------- month nav ---------- */
 .mnav{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:14px}
@@ -301,6 +308,8 @@ html.dark .store-badge{background:#fff;color:#000}
   <div class="stats" id="statsRow"></div>
   <div id="commissionRow"></div>
 
+  <div class="ad-box" id="adTop" aria-label="Advertisement"><span class="ad-tag">Advertisement</span></div>
+
   <div class="toolbar">
     <div class="search-wrap">
       <svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -314,6 +323,8 @@ html.dark .store-badge{background:#fff;color:#000}
   </div>
 
   <div class="list" id="list"></div>
+
+  <div class="ad-box" id="adBottom" aria-label="Advertisement"><span class="ad-tag">Advertisement</span></div>
 
   <section class="tracker-info" aria-labelledby="trackerInfoTitle">
     <h2 id="trackerInfoTitle">A private car sales deal tracker that works in your browser</h2>
@@ -371,6 +382,10 @@ html.dark .store-badge{background:#fff;color:#000}
 /* ============================================================
    CONFIG — Michael: fill these in as you set things up.
 
+   ADSENSE
+   The loader is static in <head>. These two display units render only for
+   free-tier users; Premium and Advanced remain ad-free.
+
    PAYMENTS — RevenueCat Web Billing (Stripe-backed)
    Subscribe buttons open real card checkout via the module script
    at the bottom of <body>. Web purchases unlock the same tier the
@@ -384,6 +399,8 @@ html.dark .store-badge{background:#fff;color:#000}
    ============================================================ */
 var CONFIG={
   APP_STORE_URL:'https://apps.apple.com/us/app/carsales-tracker-pro/id6756135308',
+  ADSENSE_CLIENT:'ca-pub-9318320959789814',
+  AD_SLOTS:{top:'8359165880',bottom:'4036777491'},
   /* RevenueCat Web Billing (Stripe-backed). Public SDK key — safe in front-end.
      Checkout + entitlement sync handled by the module script at the bottom. */
   RC_PUBLIC_KEY:'rcb_TLBMwRyxlnDXdhuhsztqUlHkiGRK',
@@ -886,7 +903,7 @@ function openSettings(){
     localStorage.removeItem(K.entries);localStorage.removeItem(K.goals);localStorage.removeItem(K.settings);location.reload();
   })};
 }
-function persistSettings(){save(K.settings,S.settings);applyPrefs();renderChrome();renderStats();renderList()}
+function persistSettings(){save(K.settings,S.settings);applyPrefs();renderChrome();renderStats();renderList();initAds()}
 
 /* ---------- redeem ---------- */
 function openRedeem(){
@@ -929,6 +946,29 @@ function importData(ev){
     }catch(e){toast('Invalid file')}
   };
   r.readAsText(f);ev.target.value='';
+}
+
+/* ---------- ads (free tier only) ---------- */
+function initAds(){
+  var top=$('#adTop'),bot=$('#adBottom');
+  if(hasAdFree()||(!CONFIG.AD_SLOTS.top&&!CONFIG.AD_SLOTS.bottom)){
+    top.classList.remove('on');bot.classList.remove('on');return;
+  }
+  [[top,CONFIG.AD_SLOTS.top],[bot,CONFIG.AD_SLOTS.bottom]].forEach(function(pair){
+    var box=pair[0],slot=pair[1];
+    if(!slot)return;
+    box.classList.add('on');
+    if(box.querySelector('ins'))return;
+    var ins=document.createElement('ins');
+    ins.className='adsbygoogle';ins.style.display='block';
+    ins.setAttribute('data-ad-client',CONFIG.ADSENSE_CLIENT);
+    ins.setAttribute('data-ad-slot',slot);
+    ins.setAttribute('data-ad-format','horizontal');
+    ins.setAttribute('data-full-width-responsive','true');
+    box.appendChild(ins);
+    try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}
+    setTimeout(function(){if(!ins.querySelector('iframe'))box.classList.remove('on')},4000);
+  });
 }
 
 /* ---------- header / chrome ---------- */
@@ -981,7 +1021,7 @@ addEventListener('rc-entitlement',function(ev){
 });
 
 /* ---------- boot ---------- */
-function renderAll(){applyPrefs();renderChrome();renderMonth();renderStats();renderList()}
+function renderAll(){applyPrefs();renderChrome();renderMonth();renderStats();renderList();initAds()}
 renderAll();
 })();
 </script>
