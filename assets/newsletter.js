@@ -54,6 +54,11 @@
       head: 'The 5-minute morning brief for people who sell cars',
       body: 'Market numbers that change today’s conversations, one tactic worth stealing, and the F&I and compliance moves that separate the floor from the desk. Every weekday, before the doors open.'
     },
+    landing: {
+      kicker: 'Subscribe free',
+      head: 'Get tomorrow morning\u2019s brief',
+      body: 'Five minutes, every weekday, before the doors open. Free \u2014 and one click to unsubscribe from any issue.'
+    },
     tracker: {
       kicker: 'Free daily brief',
       head: 'Track your deals here. Track the market in your inbox.',
@@ -62,6 +67,12 @@
   };
 
   function placement(){
+    // A page can reserve an exact spot: <div data-dod-mount="landing"></div>
+    var mount = document.querySelector('[data-dod-mount]');
+    if(mount){
+      var k = mount.getAttribute('data-dod-mount');
+      return {kind: COPY[k] ? k : 'guide', anchor: mount, where: 'afterbegin'};
+    }
     var path = location.pathname;
     if(/^\/tools\/[^/]+/.test(path)){
       var results = document.querySelector('.compare-results') || document.querySelector('section.calc');
