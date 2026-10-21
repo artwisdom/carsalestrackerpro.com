@@ -33,7 +33,7 @@ from brief_card import render_card  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 BRIEF = ROOT / "brief"
 SITE = "https://carsalestrackerpro.com"
-FEED_URL = "https://buttondown.com/dube/rss"
+FEED_URL = "https://buttondown.com/dealeropsdaily/rss"
 NEW_URLS_FILE = ROOT / ".brief-new-urls"
 INDEXNOW_KEY = "f94f86596256e1597287ad38cee3f9cf"  # public by design; served at /<key>.txt
 
