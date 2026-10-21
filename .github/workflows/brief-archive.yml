@@ -1,0 +1,59 @@
+name: Daily brief archive
+
+# Republishes each Dealer Ops Daily issue from the newsletter's public RSS feed as a
+# page on this site (brief/<date>/) with its shareable huddle card. Reads only a
+# public feed, so it needs no credentials beyond the repo's own token.
+on:
+  schedule:
+    - cron: "23 11 * * *"   # just after the 11:00 UTC send
+    - cron: "41 16 * * *"   # second pass: GitHub often starts scheduled jobs hours late
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: brief-archive
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pillow==11.3.0
+
+      - name: Build archive from the newsletter feed
+        run: python scripts/build_brief.py
+
+      - name: Commit and push
+        id: commit
+        run: |
+          git config user.name "dealer-ops-daily-bot"
+          git config user.email "bot@dealeropsdaily.com"
+          git add brief sitemap.xml
+          if git diff --cached --quiet; then
+            echo "Nothing new"
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "brief: archive $(date -u +%Y-%m-%d)"
+            git push
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Request a Pages build
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || echo "Pages build request failed; the push usually triggers one anyway"
+
+      - name: Tell search engines about new pages (IndexNow)
+        if: steps.commit.outputs.pushed == 'true'
+        run: |
+          sleep 120  # let Pages publish before Bing and friends come looking
+          python scripts/build_brief.py --ping .brief-new-urls || echo "IndexNow ping failed (non-fatal)"

@@ -7,7 +7,7 @@
   'use strict';
 
   var BUTTONDOWN_USER = 'dube';
-  var ARCHIVE_URL = 'https://buttondown.com/' + BUTTONDOWN_USER + '/archive/';
+  var ARCHIVE_URL = 'https://carsalestrackerpro.com/brief/';
 
   function ready(fn){
     if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fn)}else{fn()}
@@ -58,6 +58,11 @@
       kicker: 'Subscribe free',
       head: 'Get tomorrow morning\u2019s brief',
       body: 'Five minutes, every weekday, before the doors open. Free \u2014 and one click to unsubscribe from any issue.'
+    },
+    issue: {
+      kicker: 'Free daily brief',
+      head: 'Get the next one in your inbox',
+      body: 'Five minutes, every weekday, before the doors open: the market numbers that change today\u2019s conversations, one tactic worth stealing, and a huddle starter for the morning meeting.'
     },
     tracker: {
       kicker: 'Free daily brief',
