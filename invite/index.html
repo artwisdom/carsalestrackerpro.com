@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* ===== Owner settings — the only lines to edit. Keep /es/invite/ in sync. =====
+   OFFER_CODE      Custom offer code on Advanced Monthly in App Store Connect
+                   (letters and numbers only). Never deactivate a code once shared.
+   PROVIDER_TOKEN  "pt" from App Store Connect > Analytics > Acquisition > Campaigns.
+                   While it is still the placeholder, the App Store link is sent
+                   without campaign parameters so it never breaks.
+   CAMPAIGN        "ct" campaign name for the App Store link (30 characters max). */
+var OFFER_CODE = 'COWORKER';
+var PROVIDER_TOKEN = 'PROVIDER_TOKEN';
+var CAMPAIGN = 'invite';
+var APP_ID = '6756135308';
+
+/* Spanish-first browsers go to the Spanish page, keeping the query string.
+   ?lang=en (the link back from /es/invite/) opts out. */
+(function(){
+  try{
+    var q=location.search||'';
+    var first=((navigator.languages&&navigator.languages[0])||navigator.language||'').toLowerCase();
+    if(first.indexOf('es')===0&&!/[?&]lang=en(&|$)/.test(q)){location.replace('/es/invite/'+q+location.hash)}
+  }catch(e){}
+})();
+
+/* iPadOS reports itself as a Mac, so a touch screen marks it as iOS. */
+(function(){
+  var ua=navigator.userAgent||'';
+  var ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
+  document.documentElement.setAttribute('data-platform',ios?'ios':(/Android/i.test(ua)?'android':'desktop'));
+})();
+</script>
+<title>A Coworker Sent You a Free Month | CarSales Tracker Pro</title>
+<meta name="description" content="A coworker invited you to CarSales Tracker Pro. Redeem a free month of Advanced, the commission tracker for car salespeople, or start with the free app.">
+<meta name="robots" content="noindex">
+<link rel="alternate" hreflang="en" href="https://carsalestrackerpro.com/invite/">
+<link rel="alternate" hreflang="es" href="https://carsalestrackerpro.com/es/invite/">
+<meta name="theme-color" content="#0891B2">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A coworker sent you a free month of CarSales Tracker Pro">
+<meta property="og:description" content="Log a car in seconds and see what your month will actually pay. Free month of Advanced, from a coworker.">
+<meta property="og:url" content="https://carsalestrackerpro.com/invite/">
+<meta property="og:image" content="https://carsalestrackerpro.com/assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://carsalestrackerpro.com/assets/og-card.png">
+<link rel="icon" type="image/png" href="/assets/icon.png">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<link rel="stylesheet" href="/assets/site.css?v=2">
+<style>
+/* The site's font, served from this site so the page makes no third-party requests. */
+@font-face{font-family:'Outfit';src:url('/assets/fonts/Outfit-Variable.ttf') format('truetype');font-weight:100 900;font-display:swap}
+.only-android,.only-desktop{display:none}
+html[data-platform="android"] .only-ios,html[data-platform="desktop"] .only-ios{display:none}
+html[data-platform="android"] .only-android,html[data-platform="desktop"] .only-desktop{display:block}
+.invite-hero{display:flex;gap:18px;align-items:center;margin-bottom:6px}
+.invite-hero img{width:72px;height:72px;border-radius:17px;box-shadow:var(--shadow);flex:none}
+.invite-panel{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:22px;margin:0 0 26px}
+.invite-panel h2{font-size:1.25rem;line-height:1.3;margin:0 0 8px}
+.invite-panel p{color:var(--text2);margin:0 0 14px}
+.invite-actions{display:grid;gap:10px;margin:4px 0 8px}
+.invite-actions .home-btn{width:100%;font-size:1rem;min-height:52px;text-align:center}
+.invite-note{font-size:.84rem;color:var(--text3);margin:-2px 0 14px!important}
+.code-pill{display:inline-block;font-weight:700;letter-spacing:.06em;background:var(--primary-soft);color:var(--primary);padding:1px 9px;border-radius:7px;font-variant-numeric:tabular-nums}
+.steps{margin:0 0 4px 20px;color:var(--text2)}
+.steps li{margin:0 0 8px}
+.fine{font-size:.86rem;color:var(--text3)}
+.fine p{margin:0 0 10px}
+.invite-h2{font-size:1.4rem;line-height:1.25;letter-spacing:-.01em;margin:8px 0 12px}
+.lang-switch{font-size:.86rem;font-weight:600;color:var(--text2);padding:7px 11px;border-radius:9px}
+@media(min-width:620px){.invite-actions{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-hdr"><div class="site-hdr-in">
+  <a class="site-logo" href="/"><img src="/assets/icon.png" alt="" width="180" height="180">CarSales Tracker Pro</a>
+  <nav class="site-nav" aria-label="Language"><a class="lang-switch" href="/es/invite/" hreflang="es" lang="es" data-keep-query>Español</a></nav>
+</div></header>
+
+<main class="wrap" id="main">
+  <div class="post-head">
+    <p class="eyebrow">Invited by a coworker</p>
+    <div class="invite-hero">
+      <img src="/assets/icon.png" alt="CarSales Tracker Pro app icon" width="180" height="180">
+      <h1 class="page-title">A coworker sent you a free month of Advanced.</h1>
+    </div>
+    <p class="lede">CarSales Tracker Pro is the deal and commission tracker built for the sales floor. Log a car in seconds, keep deliveries from slipping, and see what your month will actually pay before the check shows up.</p>
+  </div>
+
+  <!-- iPhone and iPad (also the no-JavaScript default) -->
+  <section class="invite-panel only-ios" aria-label="Get the app">
+    <div class="invite-actions">
+      <a class="home-btn primary" data-link="redeem" href="https://apps.apple.com/redeem?ctx=offercodes&amp;id=6756135308">Get a free month of Advanced</a>
+      <a class="home-btn secondary" data-link="store" href="https://apps.apple.com/app/id6756135308">Just get the free app</a>
+    </div>
+    <p class="invite-note">The free app tracks up to 5 deals a month, with ads. No account needed.</p>
+    <h2>How the free month works</h2>
+    <ol class="steps">
+      <li>Tap <strong>Get a free month of Advanced</strong>. The App Store opens with the code <span class="code-pill" data-code>COWORKER</span> filled in.</li>
+      <li>Tap <strong>Redeem</strong>. Apple shows the offer and the price after the free month before you confirm. If you don't have the app yet, it installs.</li>
+      <li>Open CarSales Tracker Pro. Your free month of Advanced is ready to use.</li>
+    </ol>
+    <p class="invite-note">Code didn't fill in? In the App Store, tap your profile picture, then <strong>Redeem Gift Card or Code</strong>, and enter <span class="code-pill" data-code>COWORKER</span>. Or open the app and tap <strong>Have a code?</strong> in Settings.</p>
+  </section>
+
+  <!-- Android -->
+  <section class="invite-panel only-android" aria-label="On Android">
+    <h2>On Android? Start with the free web tracker.</h2>
+    <p>The app and the free month are for iPhone and iPad, because the free month is an App Store offer. The web tracker works in any browser, needs no account, and keeps your deals in your browser.</p>
+    <div class="invite-actions">
+      <a class="home-btn primary" href="/tracker/">Open the free web tracker</a>
+    </div>
+    <p class="invite-note">Have an iPhone too? Open this link on it to claim the free month with code <span class="code-pill" data-code>COWORKER</span>.</p>
+  </section>
+
+  <!-- Desktop -->
+  <section class="invite-panel only-desktop" aria-label="On a computer">
+    <h2>Open this link on your iPhone to claim the free month.</h2>
+    <p>The free month is an App Store offer, so you redeem it on an iPhone or iPad. Send this page to your phone, or in the App Store on your phone tap your profile picture, then <strong>Redeem Gift Card or Code</strong>, and enter <span class="code-pill" data-code>COWORKER</span>.</p>
+    <div class="invite-actions">
+      <a class="home-btn secondary" data-link="store" href="https://apps.apple.com/app/id6756135308">View the app on the App Store</a>
+      <a class="home-btn secondary" href="/tracker/">Use the free web tracker here</a>
+    </div>
+  </section>
+
+  <h2 class="invite-h2">What you get with Advanced</h2>
+  <div class="cards">
+    <div class="card"><span class="k">Commission</span><h3>See what every deal pays</h3><p>Enter the gross and the app works out your commission, including minis, plus your month-to-date total.</p></div>
+    <div class="card"><span class="k">Extras</span><h3>Spiffs and split deals</h3><p>Track bonus money and half deals, so your number lines up with your commission statement.</p></div>
+    <div class="card"><span class="k">No limits</span><h3>Unlimited deals, no ads</h3><p>Log every car, every month, without the free plan's 5-deal limit or banner ads.</p></div>
+  </div>
+
+  <div class="editor-note fine">
+    <p><strong>The fine print.</strong> The free month comes from an Apple offer code for Advanced (monthly). When the month ends, Advanced renews at the regular App Store price for your country unless you cancel at least 24 hours before. Cancel anytime in Settings &gt; [your name] &gt; Subscriptions. The code is for people who don't already subscribe, and Apple checks eligibility when you redeem. Your coworker doesn't get a reward for inviting you.</p>
+    <p><strong>Privacy.</strong> This page doesn't use analytics, ads, or cookies. In the app, your deals stay on your phone. See the <a href="https://artwisdom.github.io/carsales-tracker-policies/privacy-policy.html">app's privacy policy</a> and this site's <a href="/privacy/">privacy policy</a>.</p>
+  </div>
+</main>
+
+<footer class="site-foot"><div class="site-foot-in">
+  <p class="tag">Your deals. Your pipeline. Your edge.</p>
+  <p class="sub">Free commission tools, practical pay-plan guides, and a private deal tracker for automotive sales professionals.</p>
+  <nav aria-label="Footer navigation"><a href="/">Commission hub</a><a href="/tracker/">Free web tracker</a><a href="/tools/">Tools</a><a href="/blog/">Guides</a><a href="/brief/">Daily brief</a><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav>
+  <p class="copy">© 2026 CarSales Tracker Pro · <a href="https://andromedakinship.com" target="_blank" rel="noopener" style="color:inherit">Andromeda Kinship</a></p>
+</div></footer>
+
+<script>
+(function(){
+  var code=String(OFFER_CODE).trim();
+  var redeem='https://apps.apple.com/redeem?ctx=offercodes&id='+APP_ID+'&code='+encodeURIComponent(code);
+  var store='https://apps.apple.com/app/apple-store/id'+APP_ID+'?mt=8';
+  if(PROVIDER_TOKEN&&PROVIDER_TOKEN!=='PROVIDER_TOKEN'){
+    store='https://apps.apple.com/app/apple-store/id'+APP_ID+'?pt='+encodeURIComponent(PROVIDER_TOKEN)+'&ct='+encodeURIComponent(CAMPAIGN)+'&mt=8';
+  }
+  var i,els;
+  els=document.querySelectorAll('[data-link="redeem"]');for(i=0;i<els.length;i++)els[i].href=redeem;
+  els=document.querySelectorAll('[data-link="store"]');for(i=0;i<els.length;i++)els[i].href=store;
+  els=document.querySelectorAll('[data-code]');for(i=0;i<els.length;i++)els[i].textContent=code;
+  /* Carry the query string to the other language, and mark the choice so the
+     Spanish page's visitors aren't redirected straight back. */
+  els=document.querySelectorAll('[data-keep-query]');
+  for(i=0;i<els.length;i++){
+    var q=location.search.replace(/([?&])lang=[^&]*&?/,'$1').replace(/[?&]$/,'');
+    els[i].href=els[i].getAttribute('href').split('?')[0]+q;
+  }
+})();
+</script>
+</body>
+</html>

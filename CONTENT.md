@@ -33,6 +33,12 @@ SEO is a 3–6 month compounding game. The same posts double as **social fuel**
 `robots.txt`, RSS, IndexNow, shared `/assets/site.css`, structured data,
 publisher profile, editorial policy, privacy, terms, contact, and disclaimer.
 
+**App invite landing (not content):** `/invite/` and `/es/invite/` receive the
+iOS app's "Invite a coworker" link. They are `noindex`, stay out of
+`sitemap.xml`, carry no analytics or ads, and are not content pages, so the
+content routine must leave them alone. The offer code and App Store provider
+token are variables at the top of each page; keep the two pages in sync.
+
 ### Current search baseline
 
 Search Console, last three months from 2026-06-30 through 2026-09-29:
