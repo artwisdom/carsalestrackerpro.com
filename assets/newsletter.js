@@ -1,8 +1,9 @@
 /* Dealer Ops Daily signup — one block per page, placed where intent is highest:
    under calculator results, at the end of each guide, mid-homepage, below the tracker.
    Self-contained (injects its own styles) so it also works on pages without site.css.
-   Submits to Buttondown's embed endpoint through a hidden iframe, so the reader stays
-   on the page. Each signup is tagged with the page type for attribution. */
+   Submits to Buttondown's embed endpoint in a visible provider-owned tab so Buttondown,
+   not this cross-origin page, reports the outcome. Each signup is tagged with the page
+   type for attribution. */
 (function(){
   'use strict';
 
@@ -26,9 +27,11 @@
     '.dod-signup button{font:inherit;font-weight:700;font-size:.95rem;padding:11px 18px;border:0;border-radius:10px;' +
       'cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--primary,#0891B2),var(--primary-d,#0284C7))}' +
     '.dod-signup button[disabled]{opacity:.6;cursor:default}' +
+    '.dod-signup .dod-submit-note{margin:10px 0 0;font-size:.84rem;font-weight:600;' +
+      'color:var(--text,#0F172A)}' +
+    '.dod-signup .dod-submit-note:empty{display:none}' +
     '.dod-signup .dod-fine{margin:10px 0 0;font-size:.78rem;color:var(--text3,#64748B)}' +
     '.dod-signup .dod-fine a{color:inherit;text-decoration:underline}' +
-    '.dod-signup .dod-done{font-weight:600;color:var(--text,#0F172A);margin:0}' +
     '.dod-signup .dod-hidden{position:absolute;width:1px;height:1px;border:0;left:-9999px}' +
     '.dod-home-wrap{max-width:1160px;margin:0 auto;padding:0 24px}' +
     '.dod-signup.dod-home{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,440px);' +
@@ -109,7 +112,6 @@
 
   function build(kind){
     var c = COPY[kind];
-    var frameName = 'dod-sub-' + kind;
     var box = el('section', {'class':'dod-signup' + (kind === 'home' ? ' dod-home' : ''),
                              'aria-labelledby':'dod-signup-title'});
     var copy = el('div', {'class':'dod-copy'});
@@ -122,7 +124,7 @@
 
     var form = el('form', {
       'action':'https://buttondown.com/api/emails/embed-subscribe/' + BUTTONDOWN_USER,
-      'method':'post', 'target':frameName
+      'method':'post', 'target':'_blank', 'rel':'noopener'
     });
     var label = el('label', {'for':'dod-email-'+kind, 'class':'dod-hidden'}, 'Email address');
     var input = el('input', {'type':'email', 'name':'email', 'id':'dod-email-'+kind,
@@ -136,32 +138,21 @@
     form.appendChild(button);
     action.appendChild(form);
 
+    var submitNote = el('p', {'class':'dod-submit-note', 'role':'status', 'aria-live':'polite'});
+    action.appendChild(submitNote);
+
     var fine = el('p', {'class':'dod-fine'});
     fine.appendChild(document.createTextNode('Free. Weekday mornings. Unsubscribe anytime. Written by AI from public industry sources and machine-checked before it sends — '));
     fine.appendChild(el('a', {'href':ARCHIVE_URL, 'target':'_blank', 'rel':'noopener'}, 'read a recent issue'));
     fine.appendChild(document.createTextNode('.'));
     action.appendChild(fine);
 
-    var frame = el('iframe', {'name':frameName, 'title':'Signup', 'class':'dod-hidden', 'tabindex':'-1', 'aria-hidden':'true'});
-    box.appendChild(frame);
-
-    // The hidden iframe's load event fires when Buttondown answers the POST (its
-    // response is cross-origin, so we can't read it). A timer covers browsers that
-    // don't fire load for the response.
-    var submitted = false, finished = false;
-    function showDone(){
-      if(finished) return;
-      finished = true;
-      var done = el('p', {'class':'dod-done', 'role':'status'},
-        'Almost there — check your inbox for a confirmation email and click the link inside.');
-      form.replaceWith(done);
-    }
-    frame.addEventListener('load', function(){ if(submitted) showDone(); });
+    // The provider response is cross-origin, so this page cannot verify acceptance.
+    // Keep the form available and let Buttondown's visible response tab report success
+    // or failure; the visitor can return here and retry either way.
     form.addEventListener('submit', function(){
-      submitted = true;
-      button.disabled = true;
-      button.textContent = 'Sending…';
-      setTimeout(showDone, 5000);
+      button.textContent = 'Open signup again';
+      submitNote.textContent = 'Finish in the Buttondown tab. If it did not open, use “Open signup again.”';
     });
     if(kind !== 'home') return box;
     // The homepage has no article container; match its 1160px section grid.
