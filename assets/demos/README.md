@@ -6,10 +6,11 @@ the four commission cards. The media source is configured in `index.html` at
 
 ## Release gate
 
-The source currently points at a local preview file. Replace it with the verified
-HTTPS production media URL before publishing. Do not commit the MP4 to GitHub.
-Run `python3 scripts/check_iphone_demo.py` before release. This deliberately fails
-until the production URL is set; `--allow-local-preview` is for preparation only.
+The production URL is configured as:
+`https://media.carsalestrackerpro.com/carsalestrackerpro-sales-earnings-20261109.mp4`.
+Domain provisioning and live playback must be verified before publishing. Do not
+commit the MP4 to GitHub. Run `python3 scripts/check_iphone_demo.py` before release.
+It rejects local or placeholder URLs; `--allow-local-preview` is for preparation only.
 
 Verify the host serves `video/mp4`, supports byte-range requests for seeking, and
 returns the unchanged approved file. Check playback again with the final URL.
