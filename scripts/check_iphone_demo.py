@@ -64,9 +64,11 @@ def main():
     commission = next(i for i, a in enumerate(sections) if a.get('id') == 'commission')
     assert sections[commission + 1].get('id') == 'iphone-demo'
     assert sections[commission + 2].get('class') == 'home-band'
-    assert page.select('a', href='#iphone-demo', **{'class': 'home-btn secondary'})
+    assert page.select('a', href='#iphone-demo', **{'class': 'home-btn text'})
+    assert page.select('a', href='/tools/pay-plan-comparison-calculator/', **{'class': 'home-btn secondary'})
     assert page.select('a', href='/tools/car-salesman-commission-calculator/', **{'class': 'home-btn primary'})
-    assert page.select('a', href='/tracker/', **{'class': 'home-btn primary'})
+    assert page.select('a', href='/tracker/', **{'class': 'home-btn secondary'})
+    assert page.select('a', href='https://apps.apple.com/us/app/carsales-tracker-pro/id6756135308', **{'class': 'home-btn primary'})
     assert 'Commission and spiffs require Advanced or Elite.' in source
     assert 'Sample data; app screenshots and recordings; sequences shortened.' in source
     assert 'not a notification arriving' in source
