@@ -1,0 +1,43 @@
+/* Scoped paid-download showcase. Shared site and free tools remain unchanged. */
+.etsy-showcase{--ink:#f1f5f9;--muted:#b6c2d4;--teal:#54d5df;color:var(--ink);background:#0b1728;border:1px solid #283b50;border-radius:20px;padding:28px;margin:40px -28px 32px;scroll-margin-top:90px}
+.etsy-showcase .section-top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+.etsy-showcase .eyebrow{font-size:10px;letter-spacing:.14em;color:var(--teal);font-weight:700;margin:0 0 14px}
+.etsy-showcase h2{font-size:clamp(27px,3vw,35px);line-height:1.13;letter-spacing:-.035em;margin:0 0 14px;color:var(--ink)}
+.etsy-showcase h2 span{color:var(--teal)}
+.etsy-showcase .intro{font-size:14px;line-height:1.6;color:var(--muted);margin:0}
+.etsy-showcase .browse{display:inline-block;color:var(--ink);font-size:12px;white-space:nowrap;padding:12px 0;border-bottom:1px solid var(--teal)}
+.etsy-showcase .browse span{color:var(--teal);margin-left:8px}
+.etsy-showcase .disclosure{display:flex;gap:12px;align-items:center;margin:24px 0 20px;padding:12px 15px;border:1px solid #29444f;background:#102a36;border-radius:10px;color:var(--muted);font-size:12px;line-height:1.6}
+.etsy-showcase .disclosure>span{font-size:22px;color:var(--teal)}
+.etsy-showcase .disclosure p{margin:0}.etsy-showcase .disclosure strong{color:#e1f4f6}
+.etsy-showcase .carousel-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;font-size:12px;color:var(--muted)}
+.etsy-showcase .controls{display:flex;gap:8px}.etsy-showcase .controls[hidden]{display:none}
+.etsy-showcase button{width:44px;height:44px;border-radius:50%;border:1px solid #42576d;color:var(--ink);background:#16283d;font-size:21px;cursor:pointer;touch-action:manipulation}
+.etsy-showcase button:hover:not(:disabled){background:#214157;border-color:var(--teal)}
+.etsy-showcase button:disabled{opacity:.35;cursor:default}
+.etsy-showcase :focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.etsy-showcase .track{display:flex;gap:16px;list-style:none;margin:0;padding:5px 4px 14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#59738c #142338}
+.etsy-showcase .etsy-card{flex:0 0 calc((100% - 16px)/2);min-width:0;margin:0;scroll-snap-align:start;border:1px solid #304155;border-radius:14px;background:#142236;overflow:hidden;display:flex;flex-direction:column}
+.etsy-showcase .art{position:relative;aspect-ratio:1.45;overflow:hidden;background:#e4e9ee;border-bottom:1px solid #304155}
+.etsy-showcase .art img{display:block;max-width:none;width:100%;height:100%;object-fit:cover;object-position:top}
+.etsy-showcase .art.script img{position:absolute;width:180%;height:auto;left:-40%;top:-75%}
+.etsy-showcase .art.log img{height:160%;object-fit:cover;object-position:top}
+.etsy-showcase .art-label{position:absolute;bottom:10px;left:12px;padding:4px 7px;background:#091423ed;color:#e3edf5;font-size:9px;letter-spacing:.07em;border-radius:4px}
+.etsy-showcase .card-body{padding:20px;flex:1;display:flex;flex-direction:column}
+.etsy-showcase .category{color:var(--teal);font-size:10px;letter-spacing:.1em;font-weight:700}
+.etsy-showcase h3{color:var(--ink);font-size:21px;line-height:1.2;margin:9px 0 12px;letter-spacing:-.02em}
+.etsy-showcase .card-body p{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 20px}
+.etsy-showcase .card-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px solid #304155;padding-top:8px;margin-top:auto}
+.etsy-showcase .card-bottom>span{font-size:11px;color:var(--muted)}
+.etsy-showcase .card-bottom a{display:inline-flex;align-items:center;gap:7px;min-height:44px;font-size:13px;color:var(--teal);font-weight:600}
+.etsy-showcase .under{display:flex;justify-content:space-between;gap:16px;font-size:11px;color:var(--muted);margin-top:10px}
+.etsy-showcase .editorial{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:22px;background:radial-gradient(circle at 95% 10%,#27718255,transparent 65%),#143441;color:#e7fbfc}
+.etsy-showcase .editorial-brand{font-size:9px;letter-spacing:.12em;color:#bad9df}
+.etsy-showcase .editorial-symbol{font:52px/1.1 system-ui,sans-serif;color:#71dce0;margin:10px 0}
+.etsy-showcase .editorial strong{font-size:23px;line-height:1.1;letter-spacing:-.025em;max-width:230px}
+.etsy-showcase .editorial-note{font-size:11px;color:#c2dce1;margin-top:14px}
+.etsy-showcase .tone-4{background:#263a54}.etsy-showcase .tone-5{background:#24483f}.etsy-showcase .tone-6{background:#3d3453}.etsy-showcase .tone-7{background:#3c4439}
+@media(min-width:1100px){.etsy-showcase{margin-left:-140px;margin-right:-140px}.etsy-showcase .etsy-card{flex-basis:calc((100% - 32px)/3)}}
+@media(max-width:800px){.etsy-showcase{margin-left:0;margin-right:0;padding:20px}.etsy-showcase .section-top{display:block}.etsy-showcase .browse{margin-top:8px}}
+@media(max-width:540px){.etsy-showcase{padding:18px;margin-left:-6px;margin-right:-6px;border-radius:16px}.etsy-showcase .desktop{display:none}.etsy-showcase .etsy-card{flex-basis:92%}.etsy-showcase .track{gap:14px}.etsy-showcase .card-body{padding:18px}.etsy-showcase .under>span:last-child{max-width:135px;text-align:right}.etsy-showcase .editorial{padding:18px}.etsy-showcase .editorial-symbol{font-size:42px;margin:7px 0}.etsy-showcase .editorial strong{font-size:21px}.etsy-showcase .editorial-note{font-size:10px;margin-top:10px}}
+@media(prefers-reduced-motion:reduce){.etsy-showcase .track{scroll-behavior:auto!important}}
