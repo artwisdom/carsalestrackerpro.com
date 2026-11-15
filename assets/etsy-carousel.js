@@ -16,7 +16,8 @@
       .filter(({rect}) => rect.left >= bounds.left - 2 && rect.right <= bounds.right + 2);
     const first = visible.length ? visible[0].index + 1 : Math.min(cards.length, Math.max(1, Math.round(track.scrollLeft / step()) + 1));
     const last = visible.length ? visible[visible.length - 1].index + 1 : first;
-    previous.disabled = track.scrollLeft <= 2;
+    // Scroll snapping can settle at the track’s padded first-card edge.
+    previous.disabled = cards[0].getBoundingClientRect().left >= bounds.left - 2;
     next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
     position.textContent = first === last ? `Product ${first} of ${cards.length}` : `Products ${first}–${last} of ${cards.length}`;
   }

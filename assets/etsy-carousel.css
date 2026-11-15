@@ -41,3 +41,6 @@
 @media(max-width:800px){.etsy-showcase{margin-left:0;margin-right:0;padding:20px}.etsy-showcase .section-top{display:block}.etsy-showcase .browse{margin-top:8px}}
 @media(max-width:540px){.etsy-showcase{padding:18px;margin-left:-6px;margin-right:-6px;border-radius:16px}.etsy-showcase .desktop{display:none}.etsy-showcase .etsy-card{flex-basis:92%}.etsy-showcase .track{gap:14px}.etsy-showcase .card-body{padding:18px}.etsy-showcase .under>span:last-child{max-width:135px;text-align:right}.etsy-showcase .editorial{padding:18px}.etsy-showcase .editorial-symbol{font-size:42px;margin:7px 0}.etsy-showcase .editorial strong{font-size:21px}.etsy-showcase .editorial-note{font-size:10px;margin-top:10px}}
 @media(prefers-reduced-motion:reduce){.etsy-showcase .track{scroll-behavior:auto!important}}
+
+/* Keep unavailable products visible without sending visitors to a dead listing. */
+.etsy-showcase .card-bottom .availability-note{color:var(--muted);font-size:12px;font-weight:600;text-align:right;line-height:1.4}
