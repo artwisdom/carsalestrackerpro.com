@@ -27,14 +27,14 @@
 <link rel="stylesheet" href="/assets/site.css?v=2">
 <link rel="stylesheet" href="/assets/commission-printable.css?v=1">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Car Salesman Commission Calculator","url":"https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/","applicationCategory":"FinanceApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Estimate a car salesperson's monthly commission from units sold, front and back gross, separate pay-plan rates, minis, pack, and non-recoverable base pay.","author":{"@type":"Person","name":"Michael Dube","url":"https://carsalestrackerpro.com/authors/michael-dube/"},"publisher":{"@type":"Organization","name":"CarSales Tracker Pro","url":"https://carsalestrackerpro.com"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Car Salesman Commission Calculator","url":"https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/","applicationCategory":"FinanceApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Estimate a car salesperson's monthly commission from units sold, front and back gross, separate pay-plan rates, minis, pack, and base pay paid on top of commission.","author":{"@type":"Person","name":"Michael Dube","url":"https://carsalestrackerpro.com/authors/michael-dube/"},"publisher":{"@type":"Organization","name":"CarSales Tracker Pro","url":"https://carsalestrackerpro.com"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"How is car salesman commission calculated?","acceptedAnswer":{"@type":"Answer","text":"A percentage-style plan generally starts with front-end gross, subtracts any pack, and applies the written front-end rate. If the result is below the plan's mini, the mini may replace it. Back-end participation, bonuses, guaranteed pay, draw recovery, and chargebacks are separate variables."}},
 {"@type":"Question","name":"What is a typical car salesman commission rate?","acceptedAnswer":{"@type":"Answer","text":"There is no universal commission rate. Use the percentage stated in your signed plan and verify whether it applies before or after pack and whether front-end and back-end gross use different rates."}},
 {"@type":"Question","name":"What is a mini deal?","acceptedAnswer":{"@type":"Answer","text":"A mini is the flat minimum commission specified by a pay plan for a deal whose percentage calculation falls below that floor. The amount and eligibility rules come from the written plan."}},
-{"@type":"Question","name":"Do car salesmen get a base salary?","acceptedAnswer":{"@type":"Answer","text":"Compensation structures vary. A non-recoverable base or guarantee is additional pay, while a recoverable draw is an advance later offset against earned commission. Do not count a recoverable draw as extra compensation in this calculator."}}
+{"@type":"Question","name":"Do car salesmen get a base salary?","acceptedAnswer":{"@type":"Answer","text":"Compensation structures vary. Enter only base pay paid on top of the modeled commission. A recoverable draw is an advance, not extra compensation. A minimum guarantee or earnings floor is not additional base pay; this calculator does not calculate its top-up."}}
 ]}
 </script>
 <script type="application/ld+json">
@@ -96,8 +96,9 @@
         <input id="pack" type="number" inputmode="numeric" min="0" value="0">
       </div>
       <div>
-        <label for="base">Non-recoverable base / guarantee <span class="q">($ / month)</span></label>
-        <input id="base" type="number" inputmode="numeric" min="0" value="0">
+        <label for="base">Additional base pay <span class="q">($ / month)</span></label>
+        <input id="base" type="number" inputmode="numeric" min="0" value="0" aria-describedby="baseHint">
+        <p class="hint" id="baseHint">Only pay added to commission. Not a draw or minimum guarantee.</p>
       </div>
 
       <div class="row-full">
@@ -164,7 +165,7 @@
       <li><strong>Pack.</strong> If the plan subtracts a fixed pack <em>before</em> calculating commission, a $2,000 front-gross deal with an $800 pack pays the percentage on $1,200.</li>
       <li><strong>Mini deals.</strong> A written plan may replace a low percentage result with a flat <strong>mini</strong>. Turn on the mini toggle and enter the threshold and amount from your own plan.</li>
       <li><strong>Back-end (F&amp;I) gross.</strong> Some plans share part of finance-and-insurance gross and others do not. This calculator uses a separate back-end rate so it does not silently apply the front-end percentage to both buckets.</li>
-      <li><strong>Base or guarantee.</strong> Add only non-recoverable pay that remains yours. A recoverable draw is an advance against later commission, not extra compensation, and should not be entered as base pay.</li>
+      <li><strong>Additional base pay.</strong> Enter only pay that your written plan adds on top of the modeled commission. Do not enter a recoverable draw or a minimum guarantee, even if the guarantee is non-recoverable. This calculator does not model guarantee top-ups. For example, a $3,000 floor against $2,000 commission gives $3,000 total, not $5,000; at $4,000 commission that floor adds nothing. A true $3,000 salary paid on top of $2,000 commission totals $5,000. Check which earnings, period, and conditions your written plan covers.</li>
     </ul>
     <p>A plan may also contain <strong>volume bonuses</strong>, PVR targets, manufacturer incentives, or store spiffs. Because their thresholds and retroactive rules differ, model them separately or use the <a href="/tools/pay-plan-comparison-calculator/">pay-plan comparison calculator</a> when comparing two complete structures.</p>
     <p>Want the full breakdown with real examples? Read <a href="/blog/how-car-salesman-commission-works/">How Car Salesman Commission Really Works</a> and <a href="/blog/what-is-a-mini-deal/">What Is a Mini Deal in Car Sales?</a></p>
@@ -183,7 +184,7 @@
       <details open><summary>How is car salesman commission calculated?</summary><div class="ans">A percentage-style plan generally starts with front-end gross, subtracts any pack, and applies the written front-end rate. If the result is below the plan's mini, the mini may replace it. Back-end participation, bonuses, guaranteed pay, draw recovery, and chargebacks are separate variables.</div></details>
       <details><summary>What is a typical car salesman commission rate?</summary><div class="ans">There is no universal rate. Use the percentage in your signed plan and verify whether it applies before or after pack and whether front-end and back-end gross use different percentages.</div></details>
       <details><summary>What is a mini deal?</summary><div class="ans">A mini is the flat minimum commission specified by a pay plan for a deal whose percentage calculation falls below that floor. The amount and eligibility rules come from the written plan.</div></details>
-      <details><summary>Do car salesmen get a base salary?</summary><div class="ans">Compensation structures vary. A non-recoverable base or guarantee is additional pay, while a recoverable draw is an advance later offset against earned commission. Do not count a recoverable draw as extra compensation in this calculator.</div></details>
+      <details><summary>Do car salesmen get a base salary?</summary><div class="ans">Compensation structures vary. Enter only base pay paid on top of the modeled commission. A recoverable draw is an advance, not extra compensation. A minimum guarantee or earnings floor is not additional base pay; this calculator does not calculate its top-up.</div></details>
       <details><summary>What is pack and why does it lower my commission?</summary><div class="ans">Pack is an amount a dealership may subtract from a deal's gross before applying your commission rate. If a plan uses a $600 pack, a deal showing $1,000 front gross has $400 of commissionable front gross before the percentage. The actual amount and purpose should be stated or explained in your written plan.</div></details>
       <details><summary>Do car salesmen get paid on the back-end and F&amp;I products?</summary><div class="ans">It depends on the written plan. Back-end gross can include financing reserve and eligible F&amp;I products. Enter zero when your plan does not share it; otherwise enter the separate back-end percentage rather than assuming it matches the front-end rate.</div></details>
       <details><summary>What is a draw against commission?</summary><div class="ans">A draw is an advance against your future commissions — money paid to smooth out slow weeks. There are two kinds, and the difference matters. A recoverable draw is repaid out of your commissions, so if you draw $1,500 and earn $2,000, you net $500 on top of what you already took. A non-recoverable draw is a guaranteed floor you keep regardless of what you earn that period. Read your pay plan carefully to see which one you're on, since a recoverable draw during a string of slow months can dig a hole you have to sell your way out of.</div></details>
