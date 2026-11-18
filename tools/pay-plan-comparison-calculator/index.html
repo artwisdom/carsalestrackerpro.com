@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Car Sales Pay Plan Comparison Calculator | Free Tool</title>
-<meta name="description" content="Compare two car-sales pay plans side by side. Model rate, pack, minis, back-end share, base or draw, and bonuses to see the monthly difference.">
+<meta name="description" content="Compare two car-sales pay plans side by side. Model rate, pack, minis, back-end share, additive base, and bonuses to see the monthly difference.">
 <link rel="canonical" href="https://carsalestrackerpro.com/tools/pay-plan-comparison-calculator/">
 <link rel="alternate" type="application/rss+xml" title="CarSales Tracker Pro Guides" href="https://carsalestrackerpro.com/feed.xml">
 <meta name="theme-color" content="#0891B2">
@@ -42,7 +42,7 @@
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
   {"@type":"Question","name":"Why can a lower commission rate pay more?","acceptedAnswer":{"@type":"Answer","text":"Because pack, minis, back-end participation, base pay, and bonuses can outweigh the headline rate. A 25% plan with a low pack can pay more than a 30% plan with a high pack."}},
   {"@type":"Question","name":"How does this calculator treat mini deals?","acceptedAnswer":{"@type":"Answer","text":"For the number of low-gross units you enter, the tool calculates the front-end percentage after pack and uses the larger of that amount or the plan's mini. Back-end participation is then added separately."}},
-  {"@type":"Question","name":"Should I enter a recoverable draw as base pay?","acceptedAnswer":{"@type":"Answer","text":"Usually no. A recoverable draw is an advance against commission, not extra compensation. Enter only a non-recoverable monthly base or guarantee that remains yours in addition to the modeled commission."}},
+  {"@type":"Question","name":"Should I enter a recoverable draw as base pay?","acceptedAnswer":{"@type":"Answer","text":"No. A recoverable draw is an advance against commission, not extra compensation. Enter only base pay paid in addition to the modeled commission. A minimum guarantee or earnings floor is not extra base pay; this tool does not calculate its top-up."}},
   {"@type":"Question","name":"Does the result replace my written pay plan?","acceptedAnswer":{"@type":"Answer","text":"No. The comparison is an estimate based on the values you enter. Your signed plan and the dealership's official accounting determine actual compensation."}}
 ]}
 </script>
@@ -68,7 +68,7 @@
     <div class="post-meta"><span class="pill">Free tool</span><span>Updated July 2026</span></div>
     <h1>Car Sales Pay Plan Comparison Calculator</h1>
   </div>
-  <p class="lede">A bigger percentage does not automatically mean a better pay plan. Compare two complete structures—rate, pack, minis, back-end share, base or guarantee, and monthly bonuses—using the volume and gross you realistically expect.</p>
+  <p class="lede">A bigger percentage does not automatically mean a better pay plan. Compare rate, pack, minis, back-end share, additive base pay, and monthly bonuses using the volume and gross you realistically expect. Minimum-guarantee top-ups are not calculated by this tool.</p>
   <div class="byline">
     <img src="/assets/icon.png" alt="" width="180" height="180">
     <div><strong><a href="/authors/michael-dube/">Published by Michael Dube</a></strong><span>Creator of CarSales Tracker Pro · formula and assumptions documented below</span></div>
@@ -95,7 +95,7 @@
         <div><label for="aPack">Pack per car ($)</label><input id="aPack" type="number" inputmode="decimal" min="0" value="1000"></div>
         <div><label for="aBackRate">Back-end share (%)</label><input id="aBackRate" type="number" inputmode="decimal" min="0" value="0"></div>
         <div><label for="aMini">Mini amount ($)</label><input id="aMini" type="number" inputmode="decimal" min="0" value="150"></div>
-        <div><label for="aBase">Non-recoverable base ($)</label><input id="aBase" type="number" inputmode="decimal" min="0" value="0"></div>
+        <div><label for="aBase">Additional base pay ($)</label><input id="aBase" type="number" inputmode="decimal" min="0" value="0" aria-describedby="aBaseHint"><p class="hint" id="aBaseHint">Only pay added to commission. Not a draw or minimum guarantee.</p></div>
         <div><label for="aBonus">Monthly bonus ($)</label><input id="aBonus" type="number" inputmode="decimal" min="0" value="500"></div>
       </div>
     </section>
@@ -108,7 +108,7 @@
         <div><label for="bPack">Pack per car ($)</label><input id="bPack" type="number" inputmode="decimal" min="0" value="400"></div>
         <div><label for="bBackRate">Back-end share (%)</label><input id="bBackRate" type="number" inputmode="decimal" min="0" value="5"></div>
         <div><label for="bMini">Mini amount ($)</label><input id="bMini" type="number" inputmode="decimal" min="0" value="125"></div>
-        <div><label for="bBase">Non-recoverable base ($)</label><input id="bBase" type="number" inputmode="decimal" min="0" value="0"></div>
+        <div><label for="bBase">Additional base pay ($)</label><input id="bBase" type="number" inputmode="decimal" min="0" value="0" aria-describedby="bBaseHint"><p class="hint" id="bBaseHint">Only pay added to commission. Not a draw or minimum guarantee.</p></div>
         <div><label for="bBonus">Monthly bonus ($)</label><input id="bBonus" type="number" inputmode="decimal" min="0" value="0"></div>
       </div>
     </section>
@@ -132,10 +132,11 @@
   <article>
     <h2>How the pay-plan comparison works</h2>
     <p>The calculator splits your expected month into regular-gross deals and low-gross deals. For regular deals, it subtracts each plan's pack from the average front gross, floors the result at zero, and applies that plan's front-end percentage. For low-gross deals, it runs the same calculation and then uses whichever is larger: the percentage result or the plan's mini. Back-end participation is calculated separately on every unit.</p>
-    <p>Finally, the tool adds a non-recoverable base or guarantee and any monthly bonus you reasonably expect to earn. It does not assume that a bonus will fire just because the plan contains one. If you only hit a volume tier occasionally, compare the plans once with the bonus and once without it.</p>
+    <p>Finally, the tool adds only base pay that is paid on top of the modeled commission, plus any monthly bonus you reasonably expect to earn. It does not assume that a bonus will fire just because the plan contains one. If you only hit a volume tier occasionally, compare the plans once with the bonus and once without it.</p>
 
     <h2>Do not enter a recoverable draw as extra pay</h2>
-    <p>A recoverable draw smooths the timing of your check, but it does not increase total compensation. If a store advances $1,500 and later subtracts that $1,500 from earned commission, adding it as base pay would count the same money twice. Only enter an amount in the base field when the plan describes a non-recoverable salary, guarantee, or floor that remains yours under the scenario you are modeling.</p>
+    <p>A recoverable draw smooths the timing of your check, but it does not increase total compensation. If a store advances $1,500 and later subtracts that $1,500 from earned commission, adding it as base pay would count the same money twice. Only enter base pay that your written plan pays in addition to the modeled commission. Do not enter a minimum guarantee or earnings floor as additional base pay, even if it is non-recoverable.</p>
+    <p>A top-up guarantee works differently from additional salary. If your plan guarantees $3,000 against the same commission earnings, $2,000 in commission would be topped up to $3,000 total, not $5,000. If commission reaches $4,000, that same floor adds nothing. A true $3,000 salary paid on top of $2,000 commission would total $5,000. This calculator does not model guarantee top-ups. Check the written plan separately for which earnings the floor covers, its time period, and any conditions before comparing final pay.</p>
     <p>If you are unsure which kind of draw is in front of you, read <a href="/blog/car-sales-draw-explained/">recoverable versus non-recoverable draw</a> before comparing the plans.</p>
 
     <h2>Why the lower rate can win</h2>
@@ -159,7 +160,7 @@
     <div class="faq">
       <details open><summary>Why can a lower commission rate pay more?</summary><div class="ans">Because pack, minis, back-end participation, base pay, and bonuses can outweigh the headline rate. A 25% plan with a low pack can pay more than a 30% plan with a high pack.</div></details>
       <details><summary>How does this calculator treat mini deals?</summary><div class="ans">For the low-gross units you enter, it calculates front-end percentage after pack and uses the larger of that amount or the plan's mini. Back-end participation is added separately.</div></details>
-      <details><summary>Should I enter a recoverable draw as base pay?</summary><div class="ans">Usually no. A recoverable draw is an advance against commission, not extra compensation. Enter only a non-recoverable monthly base or guarantee that remains yours in addition to the modeled commission.</div></details>
+      <details><summary>Should I enter a recoverable draw as base pay?</summary><div class="ans">No. A recoverable draw is an advance against commission, not extra compensation. Enter only base pay paid in addition to the modeled commission. A minimum guarantee or earnings floor is not extra base pay; this tool does not calculate its top-up.</div></details>
       <details><summary>Does the result replace my written pay plan?</summary><div class="ans">No. The comparison is an estimate based on the values you enter. Your signed plan and the dealership's official accounting determine actual compensation.</div></details>
     </div>
 
