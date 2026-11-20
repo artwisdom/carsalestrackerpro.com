@@ -54,6 +54,14 @@
 ]}
 </script>
 <script src="/assets/newsletter.js?v=1" defer></script>
+<style>
+#volumeScenarios summary{cursor:pointer}
+.scenario-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.scenario-grid fieldset{min-width:0}
+.scenario-grid label{display:block;margin-top:9px}
+.scenario-grid input{width:100%;box-sizing:border-box}
+@media(max-width:640px){.scenario-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -128,7 +136,21 @@
       <span class="tool-status" id="comparisonStatus" role="status" aria-live="polite"></span>
     </div>
   </section>
-
+  <details class="calc" id="volumeScenarios">
+    <summary><strong>Compare a slow, expected, and busy month</strong></summary>
+    <p>All three months use the same plan terms and average gross above. The expected month mirrors the main comparison. Blank low-gross counts and bonuses are zero. Enter only bonuses earned in that month. Differences under $1 are treated as a tie, as in the main calculator. Copy and share use the expected month only. This does not model draws or guarantees.</p>
+    <p id="expectedResult" role="status"></p>
+    <div class="scenario-grid">
+      <fieldset class="plan-card"><legend>Slow month</legend><label for="slowUnits">Total units</label><input id="slowUnits" type="number" min="0" step="1" inputmode="numeric">
+<label for="slowMinis">Low-gross units (optional)</label><input id="slowMinis" type="number" min="0" step="1" inputmode="numeric">
+<label for="slowA">Plan A earned bonus ($, optional)</label><input id="slowA" type="number" min="0" step="0.01" inputmode="decimal">
+<label for="slowB">Plan B earned bonus ($, optional)</label><input id="slowB" type="number" min="0" step="0.01" inputmode="decimal"><p id="slowResult" role="status"></p></fieldset>
+      <fieldset class="plan-card"><legend>Busy month</legend><label for="busyUnits">Total units</label><input id="busyUnits" type="number" min="0" step="1" inputmode="numeric">
+<label for="busyMinis">Low-gross units (optional)</label><input id="busyMinis" type="number" min="0" step="1" inputmode="numeric">
+<label for="busyA">Plan A earned bonus ($, optional)</label><input id="busyA" type="number" min="0" step="0.01" inputmode="decimal">
+<label for="busyB">Plan B earned bonus ($, optional)</label><input id="busyB" type="number" min="0" step="0.01" inputmode="decimal"><p id="busyResult" role="status"></p></fieldset>
+    </div>
+  </details>
   <article>
     <h2>How the pay-plan comparison works</h2>
     <p>The calculator splits your expected month into regular-gross deals and low-gross deals. For regular deals, it subtracts each plan's pack from the average front gross, floors the result at zero, and applies that plan's front-end percentage. For low-gross deals, it runs the same calculation and then uses whichever is larger: the percentage result or the plan's mini. Back-end participation is calculated separately on every unit.</p>
@@ -187,7 +209,7 @@
   var $=function(id){return document.getElementById(id)};
   var money=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
   function num(id){var value=parseFloat($(id).value);return Number.isFinite(value)&&value>0?value:0}
-  function plan(prefix,units,miniUnits,regularUnits,frontGross,miniGross,backGross){
+  function plan(prefix,units,miniUnits,regularUnits,frontGross,miniGross,backGross,bonus){
     var rate=num(prefix+'Rate')/100;
     var pack=num(prefix+'Pack');
     var backRate=num(prefix+'BackRate')/100;
@@ -195,8 +217,35 @@
     var regularFront=Math.max(0,frontGross-pack)*rate;
     var lowFront=Math.max(miniAmount,Math.max(0,miniGross-pack)*rate);
     var backPay=backGross*backRate;
-    var total=regularUnits*(regularFront+backPay)+miniUnits*(lowFront+backPay)+num(prefix+'Base')+num(prefix+'Bonus');
+    var total=regularUnits*(regularFront+backPay)+miniUnits*(lowFront+backPay)+num(prefix+'Base')+(bonus===undefined?num(prefix+'Bonus'):bonus);
     return {total:total,per:units?total/units:0};
+  }
+  var scenarioMoney=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:0,maximumFractionDigits:2});
+  function scenarioSummary(label,units,a,b){
+    var text=label+': Plan A '+scenarioMoney.format(a.total)+'; Plan B '+scenarioMoney.format(b.total)+'.';
+    var difference=Math.abs(a.total-b.total);
+    if(!units)return text+(difference>=1?' Monthly gap: '+scenarioMoney.format(difference)+'.':'')+' No per-car comparison at zero units.';
+    if(difference<1)return text+' Effectively tied.';
+    return text+' '+(a.total>b.total?'Plan A':'Plan B')+' leads by '+scenarioMoney.format(difference)+'.';
+  }
+  function readScenario(id,whole,required){
+    var input=$(id);
+    if(input.validity.badInput)return null;
+    if(input.value==='')return required?null:0;
+    var value=Number(input.value);
+    return Number.isFinite(value)&&value>=0&&(!whole||Number.isSafeInteger(value))&&(whole||!input.validity.stepMismatch)?value:null;
+  }
+  function updateScenario(prefix,label,frontGross,miniGross,backGross){
+    var units=readScenario(prefix+'Units',true,true), minis=readScenario(prefix+'Minis',true,false);
+    var aBonus=readScenario(prefix+'A',false,false), bBonus=readScenario(prefix+'B',false,false);
+    var out=$(prefix+'Result');
+    if($(prefix+'Units').value===''&&!$(prefix+'Units').validity.badInput){out.textContent='Enter units to compare this month.';return}
+    if(units===null||minis===null||minis>units||aBonus===null||bBonus===null){
+      out.textContent='Use whole, nonnegative unit counts, low-gross units no higher than total units, and nonnegative bonuses in dollars and cents.';return;
+    }
+    var a=plan('a',units,minis,units-minis,frontGross,miniGross,backGross,aBonus);
+    var b=plan('b',units,minis,units-minis,frontGross,miniGross,backGross,bBonus);
+    out.textContent=scenarioSummary(label,units,a,b);
   }
   function calculate(){
     var units=Math.floor(num('units'));
@@ -209,6 +258,9 @@
     $('aPer').textContent=money.format(a.per)+' per car';
     $('bTotal').textContent=money.format(b.total);
     $('bPer').textContent=money.format(b.per)+' per car';
+    $('expectedResult').textContent=scenarioSummary('Expected month',units,a,b);
+    updateScenario('slow','Slow month',frontGross,miniGross,backGross);
+    updateScenario('busy','Busy month',frontGross,miniGross,backGross);
     var difference=Math.abs(a.total-b.total);
     if(!units){$('winner').textContent='Enter at least one expected unit to compare the plans.';return}
     if(difference<1){$('winner').textContent='The plans are effectively tied under these assumptions.';return}
@@ -235,7 +287,7 @@
       copyComparison();
     }
   });
-  ids.forEach(function(id){$(id).addEventListener('input',calculate)});
+  ids.concat(['slowUnits','slowMinis','slowA','slowB','busyUnits','busyMinis','busyA','busyB']).forEach(function(id){$(id).addEventListener('input',calculate)});
   calculate();
 })();
 </script>
