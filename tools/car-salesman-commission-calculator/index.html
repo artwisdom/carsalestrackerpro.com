@@ -242,25 +242,30 @@
     miniOn=!miniOn;this.classList.toggle('on',miniOn);this.setAttribute('aria-checked',miniOn);
     $('miniFields').classList.toggle('show',miniOn);calc();
   });
-  function estimateText(includeUrl){
+  var calculatorUrl='https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/';
+  function estimateText(){
     var units=Math.floor(num('units'));
-    var text='For '+units+' cars, my estimated monthly car-sales commission is '+$('outTotal').textContent+' ('+$('outPer').textContent+' per car).';
-    return includeUrl?text+' Estimate yours: https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/':text;
+    return 'For '+units+' cars, my estimated monthly car-sales commission is '+$('outTotal').textContent+' ('+$('outPer').textContent+' per car). Estimate yours: '+calculatorUrl;
   }
-  function copyEstimate(){
+  function copyText(text,successMessage,failureMessage){
     if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(estimateText(true)).then(function(){$('shareStatus').textContent='Estimate copied.'},function(){$('shareStatus').textContent='Copy was unavailable in this browser.'});
+      navigator.clipboard.writeText(text).then(function(){$('shareStatus').textContent=successMessage},function(){$('shareStatus').textContent=failureMessage});
     }else{
-      $('shareStatus').textContent='Copy was unavailable in this browser.';
+      $('shareStatus').textContent=failureMessage;
     }
   }
-  $('copyEstimate').addEventListener('click',copyEstimate);
+  $('copyEstimate').addEventListener('click',function(){
+    copyText(estimateText(),'Estimate copied.','Copy was unavailable in this browser.');
+  });
   $('shareCalculator').addEventListener('click',function(){
-    var url='https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/';
+    $('shareStatus').textContent='';
+    function copyLink(){
+      copyText(calculatorUrl,'Calculator link copied.','Copy the calculator link from the address bar.');
+    }
     if(navigator.share){
-      navigator.share({title:'Car Salesman Commission Calculator',text:estimateText(false),url:url}).then(function(){$('shareStatus').textContent='Calculator shared.'}).catch(function(err){if(err&&err.name!=='AbortError'){copyEstimate()}});
+      navigator.share({title:'Car Salesman Commission Calculator',url:calculatorUrl}).then(function(){$('shareStatus').textContent='Calculator shared.'}).catch(function(err){if(!err||err.name!=='AbortError'){copyLink()}});
     }else{
-      copyEstimate();
+      copyLink();
     }
   });
   calc();

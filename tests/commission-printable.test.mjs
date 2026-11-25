@@ -28,11 +28,11 @@ test('paid link is accessible, opens safely, and transmits no calculator data', 
   assert.doesNotMatch(inline[0], /fetch\(|XMLHttpRequest|sendBeacon|localStorage|cookie|dataLayer|gtag|etsy/);
 });
 
-function calculator() {
+function calculator(navigator = {}) {
   const values = { units:12,front:1800,back:0,rate:25,backRate:0,pack:0,base:0,miniThresh:1000,miniAmt:150 };
   const elements = {};
   const get = id => elements[id] ||= { value: String(values[id] ?? ''), textContent:'', attributes:{}, events:{}, classList:{toggle(){}}, setAttribute(k,v){this.attributes[k]=v}, addEventListener(k,fn){this.events[k]=fn} };
-  vm.runInNewContext(inline[0], { document:{getElementById:get}, Intl, navigator:{} });
+  vm.runInNewContext(inline[0], { document:{getElementById:get}, Intl, navigator });
   return {
     get,
     set(values) { for (const [k,v] of Object.entries(values)) get(k).value=String(v); get('units').events.input(); },
@@ -56,5 +56,28 @@ test('free calculator retains baseline math, repeat edits, minis and back-end pa
 test('copy/share fallback remains usable without clipboard or share APIs', () => {
   const c=calculator();
   c.click('copyEstimate'); assert.equal(c.get('shareStatus').textContent,'Copy was unavailable in this browser.');
-  c.click('shareCalculator'); assert.equal(c.get('shareStatus').textContent,'Copy was unavailable in this browser.');
+  c.click('shareCalculator'); assert.equal(c.get('shareStatus').textContent,'Copy the calculator link from the address bar.');
+});
+
+test('share never includes the estimate; explicit copy retains it and cancel writes nothing', async () => {
+  const url = 'https://carsalestrackerpro.com/tools/car-salesman-commission-calculator/';
+  const writes = [], shares = [];
+  const browser = { clipboard: { writeText: async text => { writes.push(text); } } };
+  const c = calculator(browser);
+  const share = async () => { c.click('shareCalculator'); await new Promise(setImmediate); };
+  c.click('copyEstimate');
+  assert.deepEqual(writes, ['For 12 cars, my estimated monthly car-sales commission is $5,400 ($450 per car). Estimate yours: ' + url]);
+  await share();
+  assert.equal(writes.at(-1), url);
+  browser.share = async data => { shares.push({ ...data }); };
+  await share();
+  assert.deepEqual(shares, [{ title: 'Car Salesman Commission Calculator', url }]);
+  assert.equal(c.get('shareStatus').textContent, 'Calculator shared.');
+  browser.share = async () => { throw { name: 'AbortError' }; };
+  await share();
+  assert.equal(writes.length, 2);
+  assert.equal(c.get('shareStatus').textContent, '');
+  browser.share = async () => { throw new Error('Share unavailable'); };
+  await share();
+  assert.deepEqual(writes.slice(1), [url, url]);
 });
