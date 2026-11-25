@@ -6,24 +6,24 @@ import vm from 'node:vm';
 const html = readFileSync(new URL('../tools/car-salesman-commission-calculator/index.html', import.meta.url), 'utf8');
 const inline = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]);
 
-test('one optional paid printable follows the result before newsletter and free tracker', () => {
+test('one temporarily unavailable printable follows the result before newsletter and free tracker', () => {
   assert.equal((html.match(/class="commission-printable"/g) || []).length, 1);
-  assert.match(html, /id="shareStatus"[\s\S]*?<\/section>\s*<aside class="commission-printable"/);
+  assert.match(html, /id="shareStatus"[\s\S]*?<\/section>\s*<aside class="commission-printable"[^>]*data-availability="unavailable"/);
   assert.match(html, /<\/aside>\s*<div data-dod-mount="calculator"><\/div>\s*<div class="cta-box">/);
-  assert.equal((html.match(/https:\/\/www.etsy.com\/listing\//g) || []).length, 1);
+  assert.equal((html.match(/href="https:\/\/www.etsy.com\/listing\//g) || []).length, 0);
   assert.match(html, /Optional paid printable/);
   assert.match(html, /16-page PDF · US Letter \+ A4 · Digital download, no physical item/);
   assert.match(html, /our own Andromeda Kinship Etsy shop/);
-  assert.match(html, /Current price and purchase terms on Etsy/);
+  assert.match(html, /Currently unavailable/);
   assert.match(html, /The calculator and web tracker stay free/);
   assert.match(html, /href="\/tracker\/">Open the free tracker/);
   assert.doesNotMatch(html, /\$9\.97|priceCurrency.*9\.97/);
 });
 
-test('paid link is accessible, opens safely, and transmits no calculator data', () => {
-  assert.match(html, /href="https:\/\/www.etsy.com\/listing\/4538788064\/car-sales-commission-tracker-printable" target="_blank" rel="noopener noreferrer" aria-describedby="printable-link-note"/);
+test('unavailable item has no purchase link and transmits no calculator data', () => {
+  assert.match(html, /data-etsy-url="https:\/\/www.etsy.com\/listing\/4538788064\/car-sales-commission-tracker-printable"/);
   assert.match(html, /aria-labelledby="commission-printable-title"/);
-  assert.match(html, /id="printable-link-note">[^<]*Opens in a new tab/);
+  assert.match(html, /id="printable-link-note">The printable isn’t available to buy right now/);
   assert.equal(inline.length, 1);
   assert.doesNotMatch(inline[0], /fetch\(|XMLHttpRequest|sendBeacon|localStorage|cookie|dataLayer|gtag|etsy/);
 });
